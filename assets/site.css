@@ -293,3 +293,42 @@ a.card:hover { text-decoration: none; transform: translateY(-3px); box-shadow: v
   .btn:hover, a.card:hover { transform: none; }
   * { transition: none !important; }
 }
+
+/* Region filter: Briefing, Insights, Coverage (Global · Americas · EMEA · APAC) */
+.region-bar { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem .8rem; margin: 0 0 1.4rem; padding: .7rem .9rem; background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); }
+.region-bar[hidden] { display: none; }
+.region-bar .region-label { font-size: var(--text-xs); font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); }
+.region-chips { display: flex; flex-wrap: wrap; gap: .35rem; }
+.region-chips button { font: inherit; font-size: var(--text-sm); padding: .3rem .85rem; border-radius: 100px; border: 1px solid var(--border-strong); background: var(--paper); color: var(--ink-mid); cursor: pointer; transition: all .15s ease; }
+.region-chips button:hover { border-color: var(--ink-soft); }
+.region-chips button[aria-pressed="true"] { background: var(--signal); border-color: var(--signal); color: #fff; }
+.region-chips button:focus-visible { outline: 2px solid var(--signal); outline-offset: 2px; }
+.region-note { font-size: var(--text-xs); color: var(--ink-soft); flex: 1 1 14em; }
+.region-tag { display: inline-block; font-size: .66rem; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--ink-soft); border: 1px solid var(--border-strong); border-radius: 100px; padding: .08rem .5rem; white-space: nowrap; }
+.card .region-tag { margin-left: .35rem; vertical-align: middle; }
+.brief-item .b-meta { display: flex; flex-direction: column; align-items: flex-start; gap: .4rem; }
+@media (max-width: 640px) { .brief-item .b-meta { flex-direction: row; align-items: center; } }
+[data-region].region-hidden { display: none !important; }
+[data-region].region-dim { opacity: .4; }
+/* Regional radar and calendar (Coverage, Briefing) */
+.radar { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 1rem; }
+.radar-col h3 { font-family: var(--font-display); font-weight: 400; font-size: var(--text-lg); margin-bottom: .6rem; }
+.radar-item { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: .9rem 1rem; margin-bottom: .7rem; box-shadow: var(--shadow); }
+.radar-item h4 { font-size: var(--text-sm); font-weight: 600; color: var(--ink); line-height: 1.4; margin-bottom: .25rem; }
+.radar-item p { font-size: var(--text-sm); color: var(--ink-mid); }
+.radar-item .src { font-size: var(--text-xs); color: var(--ink-faint); margin-top: .35rem; }
+.radar-item .src a { color: var(--ink-soft); text-decoration: underline; text-underline-offset: 2px; }
+.cal { width: 100%; border-collapse: collapse; font-size: var(--text-sm); background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+.cal th, .cal td { text-align: left; vertical-align: top; padding: .65rem .8rem; border-bottom: 1px solid var(--border); }
+.cal thead th { font-size: var(--text-xs); letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); background: var(--paper-alt); font-weight: 700; }
+.cal td.when { white-space: nowrap; font-weight: 600; color: var(--ink); }
+.cal td.where { white-space: nowrap; color: var(--ink-mid); }
+.cal td a { color: var(--ink-soft); text-decoration: underline; text-underline-offset: 2px; }
+.cal-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+@media (max-width: 640px) { .cal td.where { white-space: normal; } }
+.so-what .sig-src { display: block; margin-top: .35rem; font-size: var(--text-xs); color: var(--ink-faint); }
+.so-what .sig-src a { color: var(--ink-soft); text-decoration: underline; text-underline-offset: 2px; }
+.card .so-what a { color: var(--signal); }
+.tag-row { display: flex; flex-wrap: wrap; align-items: center; gap: .4rem; }
+.tag-row .region-tag { margin-left: 0; }
+[data-region-group][hidden] { display: none; }
