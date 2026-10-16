@@ -63,7 +63,7 @@ out.append(f'''
       <h1 style="max-width:17em;">ATS platforms, compared for the decision you're <em style="color:var(--signal);">actually</em> making.</h1>
       <p class="standfirst" style="max-width:40em;">{len(D.P)} platforms across five categories, from standalone ATS to HCM-suite recruiting. Filter to your situation, compare up to three side by side, and check what will really set your go-live date, from vendor selection onward. No vendor paid to be here, rank higher or be described favorably.</p>
       <div class="article-meta"><span>Reviewed {E(D.VERIFIED)}</span><span>{len(D.P)} platforms</span><span>Independent · unsponsored</span></div>
-      <nav class="ats-jump" aria-label="On this page"><a href="#finder">Find your shortlist</a><a href="#compare">Compare</a><a href="#implementation">What sets your go-live</a><a href="#landscape">The landscape</a><a href="#profiles">Platform profiles</a><a href="#rfp">RFP questions</a><a href="#method">How we review</a></nav>
+      <nav class="ats-jump" aria-label="On this page"><a href="#finder">Find your shortlist</a><a href="#compare">Compare</a><a href="#implementation">What sets your go-live</a><a href="#landscape">The landscape</a><a href="#profiles">Platform profiles</a><a href="#rfp">RFP questions</a><a href="#method">How we review</a><a href="/compare/crm/">Recruiting CRMs →</a></nav>
     </div>
   </section>''')
 
@@ -183,7 +183,7 @@ out.append(f'''
   <section class="section section-alt" id="landscape">
     <div class="wrap">
       <div class="section-head"><div><span class="kicker">The landscape</span><h2>Five kinds of <em>platform</em></h2></div></div>
-      <p class="lede">2025–26 reshaped ownership: Workday bought Paradox, SAP bought SmartRecruiters, Thoma Bravo took Dayforce private and Phenom bought two assessment companies. Ownership changes roadmaps, so it's on every profile below.</p>
+      <p class="lede">2025–26 reshaped ownership: Workday bought Paradox, SAP bought SmartRecruiters, Thoma Bravo took Dayforce private and Phenom made three acquisitions in 2026. Ownership changes roadmaps, so it's on every profile below.</p>
       <div class="grid grid-3">{"".join(land)}</div>
     </div>
   </section>''')
@@ -237,6 +237,7 @@ out.append(f'''
         <li><strong>No vendor pays.</strong> No sponsorships, affiliate links or paid placement, and no vendor reviews its profile before publication.</li>
         <li><strong>Production versus promise.</strong> AI is listed as "in production" only when the vendor says it is available; everything else is labeled announced, beta, preview or roadmap with its date.</li>
         <li><strong>Capabilities.</strong> "Native" means built into the product; "partial or add-on" means a separate module, a partner or limited depth; "not a strength" means we found no strong evidence, so ask.</li>
+        <li><strong>AI certification.</strong> "Certified" means an independent body certified the vendor's AI management (such as ISO/IEC 42001 or TrustArc). "Partial" means a published independent bias audit, or a certification whose scope doesn't name the product. Claims without published evidence count as none found.</li>
         <li><strong>Implementation.</strong> We don't publish timelines. They depend more on your resourcing, reviews, scope and readiness than on the platform, so we show what drives them and the questions that expose them. Delivery models describe how each platform is usually implemented; ask who will actually do yours.</li>
         <li><strong>Pricing.</strong> We describe how each vendor charges and where costs grow, not list prices, because enterprise prices are negotiated and change.</li>
         <li><strong>Freshness.</strong> Every profile shows when it was verified. We re-verify quarterly and after major vendor news. Spot something out of date? <a href="/about/">Tell us</a> and we'll fix it with a note.</li>
