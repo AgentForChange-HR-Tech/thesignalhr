@@ -63,7 +63,7 @@ out.append(f'''
       <h1 style="max-width:17em;">ATS platforms, compared for the decision you're <em style="color:var(--signal);">actually</em> making.</h1>
       <p class="standfirst" style="max-width:40em;">{len(D.P)} platforms across five categories, from standalone ATS to HCM-suite recruiting. Filter to your situation, compare up to three side by side, and check what will really set your go-live date, from vendor selection onward. No vendor paid to be here, rank higher or be described favorably.</p>
       <div class="article-meta"><span>Reviewed {E(D.VERIFIED)}</span><span>{len(D.P)} platforms</span><span>Independent · unsponsored</span></div>
-      <nav class="ats-jump" aria-label="On this page"><a href="#finder">Find your shortlist</a><a href="#compare">Compare</a><a href="#implementation">What sets your go-live</a><a href="#landscape">The landscape</a><a href="#profiles">Platform profiles</a><a href="#rfp">RFP questions</a><a href="#method">How we review</a><a href="/compare/crm/">Recruiting CRMs →</a></nav>
+      <nav class="ats-jump" aria-label="On this page"><a href="#finder">Find your shortlist</a><a href="#compare">Compare</a><a href="#implementation">What sets your go-live</a><a href="#landscape">The landscape</a><a href="#profiles">Platform profiles</a><a href="#rfp">RFP questions</a><a href="#method">How we review</a><a href="/compare/crm/">Recruiting CRMs →</a><a href="/compare/match/">Applicant match →</a></nav>
     </div>
   </section>''')
 

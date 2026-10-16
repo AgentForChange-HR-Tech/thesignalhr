@@ -76,7 +76,7 @@ out.append(f'''
       <h1 style="max-width:17em;">Recruiting CRMs: use the one you own, or <em style="color:var(--signal);">buy another?</em></h1>
       <p class="standfirst" style="max-width:41em;">{len(D.P)} platforms, from the CRM already inside your ATS or HCM suite to standalone CRMs that sit on top of it. Check whether a separate CRM would pay off, filter to your ATS, and compare up to three side by side. No vendor paid to be here, rank higher or be described favorably.</p>
       <div class="article-meta"><span>Reviewed {E(D.VERIFIED)}</span><span>{len(D.P)} platforms</span><span>Independent · unsponsored</span></div>
-      <nav class="ats-jump" aria-label="On this page"><a href="#need">Do you need one?</a><a href="#finder">Find your shortlist</a><a href="#compare">Compare</a><a href="#landscape">The landscape</a><a href="#profiles">Platform profiles</a><a href="#rfp">RFP questions</a><a href="#method">How we review</a><a href="/compare/ats/">ATS platforms →</a></nav>
+      <nav class="ats-jump" aria-label="On this page"><a href="#need">Do you need one?</a><a href="#finder">Find your shortlist</a><a href="#compare">Compare</a><a href="#landscape">The landscape</a><a href="#profiles">Platform profiles</a><a href="#rfp">RFP questions</a><a href="#method">How we review</a><a href="/compare/ats/">ATS platforms →</a><a href="/compare/match/">Applicant match →</a></nav>
     </div>
   </section>''')
 
