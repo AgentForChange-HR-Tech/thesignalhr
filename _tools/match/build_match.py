@@ -16,7 +16,7 @@ URL = "https://thesignalhr.com/compare/match/"
 TITLE = "Applicant Match Scores Compared (2026): 16 Platforms, Rated on Governance — The Signal HR"
 DESC = ("16 applicant match and ranking tools compared on what you'd need to defend a score: explanations, recruiter control, "
         "human review, bias audits and AI certification. Greenhouse, Workday HiredScore, Eightfold, Gem, hireEZ and more, "
-        "plus the hiring-AI rules in 17 places. No vendor pays.")
+        "plus the hiring-AI rules in 38 places across 21 countries and the EU. No vendor pays.")
 head = re.sub(r"<title>.*?</title>", f"<title>{TITLE.replace('&', '&amp;')}</title>", head, flags=re.S)
 for attr in ['name="description"', 'property="og:description"', 'name="twitter:description"']:
     head = re.sub(r'(<meta %s content=")[^"]*(">)' % re.escape(attr), lambda m: m.group(1) + E(DESC) + m.group(2), head)
@@ -42,6 +42,16 @@ CSS = open(os.path.join(HERE, "match.css"), encoding="utf-8").read()
 head = head.replace("</head>", f"<style>\n{CSS}\n</style>\n</head>")
 assert URL in head and "compare/ats/" not in head, "head still points at the template page"
 
+TOP = [j for j in D.JURIS if not j["parent"]]
+KIDS = {}
+for j in D.JURIS:
+    if j["parent"]:
+        KIDS.setdefault(j["parent"], []).append(j)
+N_PLACES = len(D.JURIS)
+N_COUNTRIES = len([j for j in TOP if j["id"] != "eu"])
+assert N_PLACES == 38 and N_COUNTRIES == 21, (N_PLACES, N_COUNTRIES)  # keep DESC above in step with the data
+def in_name(j):
+    return ("the " if j["name"].startswith(("United", "European")) else "") + j["name"]
 CAPN = dict(D.CAPS)
 LEVEL = {2: "Documented", 1: "Partial", 0: "Not documented"}
 AUDL = {2: "Recent, public", 1: "Older or narrower", 0: "None found"}
@@ -81,7 +91,7 @@ out.append(f'''
       <span class="kicker">Comparison Hub · Applicant match scores</span>
       <h1 style="max-width:17em;">Applicant match scores: <em style="color:var(--signal);">can you explain the number?</em></h1>
       <p class="standfirst" style="max-width:41em;">{len(D.P)} platforms that score or rank applicants, from the match score inside your ATS or HCM suite to talent-intelligence and sourcing tools. Rated on what you'd need to defend a score: explanations, recruiter control, human review, an off switch, published bias audits and AI certification. Start with the rules where you hire. No vendor paid to be here, rank higher or be described favorably.</p>
-      <div class="article-meta"><span>Reviewed {E(D.VERIFIED)}</span><span>{len(D.P)} platforms</span><span>{len(D.JURIS)} jurisdictions</span><span>Independent · unsponsored</span></div>
+      <div class="article-meta"><span>Reviewed {E(D.VERIFIED)}</span><span>{len(D.P)} platforms</span><span>Rules in {N_COUNTRIES} countries and the EU</span><span>Independent · unsponsored</span></div>
       <nav class="ats-jump" aria-label="On this page"><a href="#rules">Rules where you hire</a><a href="#finder">Find your shortlist</a><a href="#compare">Compare</a><a href="#landscape">The landscape</a><a href="#profiles">Platform profiles</a><a href="#rfp">RFP questions</a><a href="#method">How we review</a><a href="/compare/ats/">ATS platforms →</a><a href="/compare/crm/">Recruiting CRMs →</a></nav>
     </div>
   </section>''')
@@ -89,17 +99,31 @@ out.append(f'''
 # ---------- Step 1: the rules where you hire ----------
 jur_sets = []
 for reg, rname in D.REGIONS:
-    js = [j for j in D.JURIS if j["region"] == reg]
+    tops = [j for j in TOP if j["region"] == reg]
+    chips_html, subs = [], []
+    for j in tops:
+        kids = KIDS.get(j["id"], [])
+        n = f'<span class="chip-n" aria-hidden="true">+{len(kids)}</span>' if kids else ""
+        ctl = f' aria-controls="sub-{j["id"]}"' if kids else ""
+        chips_html.append(f'<label class="chip"><input type="checkbox" name="jur" value="{j["id"]}"{ctl}><span>{E(j["name"])}{n}</span></label>')
+        if kids:
+            other = D.OTHER.get(j["id"])
+            sel = ""
+            if other:
+                opts = "".join(f'<option value="{E(o)}">{E(o)}</option>' for o in other["options"])
+                sel = f'<label class="other"><span>{E(other["label"])}</span><select data-other="{j["id"]}"><option value="">Choose…</option>{opts}</select></label>'
+            kid_chips = "".join(f'<label class="chip"><input type="checkbox" name="jur" value="{k["id"]}" data-parent="{j["id"]}"><span>{E(k["name"])}</span></label>' for k in kids)
+            subs.append(f'<div class="sub" id="sub-{j["id"]}" data-sub="{j["id"]}" hidden><p class="sub-label">In {E(in_name(j))}, also hiring in:</p><div class="chips">{kid_chips}</div>{sel}</div>')
     jur_sets.append(f'''
           <fieldset class="jur-group"><legend>{E(rname)}</legend>
-            <div class="chips">{"".join(f'<label class="chip"><input type="checkbox" name="jur" value="{j["id"]}"><span>{E(j["name"])}</span></label>' for j in js)}</div>
-            <button type="button" class="linkbtn" data-all="{reg}">Select all {len(js)}</button>
+            <div class="chips">{"".join(chips_html)}</div>{"".join(subs)}
+            <button type="button" class="linkbtn" data-all="{reg}">Select all {len(tops)}</button>
           </fieldset>''')
 out.append(f'''
   <section class="section" id="rules" style="padding-top:0;">
     <div class="wrap">
       <div class="section-head"><div><span class="kicker">Step 1</span><h2>Before you switch a score on: <em>the rules where you hire</em></h2></div></div>
-      <p class="lede">A match score is the AI feature most often switched on without a review, and the one hiring-AI rules are written about. Pick where you hire and how the score will be used. What applies, the capabilities to insist on and the questions for your vendor build below.</p>
+      <p class="lede">A match score is the AI feature most often switched on without a review, and the one hiring-AI rules are written about. Pick the countries where you hire. Where a state, province or EU country adds its own rules, it opens underneath. Then say how the score will be used. What applies, the capabilities to insist on and the questions for your vendor build below.</p>
       <form id="rules-form" onsubmit="return false">
         <div class="jur-grid">{"".join(jur_sets)}
         </div>
@@ -111,7 +135,7 @@ out.append(f'''
         <div class="sum-head"><h3>What applies</h3><button type="button" class="btn btn-ghost" id="rules-reset">Clear</button></div>
         <div id="rules-out" aria-live="polite"><p class="sum-line">Pick at least one place you hire.</p></div>
         <div class="sum-actions" id="rules-actions" hidden><button type="button" class="btn btn-primary" id="rules-copy">Copy checklist</button><span class="small" id="rules-copied" aria-live="polite"></span></div>
-        <p class="disclaimer"><strong>Orientation, not legal advice.</strong> These are the {len(D.JURIS)} places we track, reviewed {E(D.VERIFIED)}. Coverage thresholds, exemptions and pending rules vary, and anti-discrimination and privacy law apply everywhere, listed or not. Check with counsel where you hire.</p>
+        <p class="disclaimer"><strong>Orientation, not legal advice.</strong> These are the {N_PLACES} places we track in {N_COUNTRIES} countries and the EU, reviewed {E(D.VERIFIED)}. Coverage thresholds, exemptions and pending rules vary, and anti-discrimination and privacy law apply everywhere, listed or not. Check with counsel where you hire.</p>
       </div>
     </div>
   </section>''')
@@ -202,7 +226,7 @@ out.append(f'''
         <li><strong>Ratings reflect public documentation.</strong> "Documented" means the vendor documents it publicly; "Partial" means claimed without detail, or limited; "Not documented" means we found nothing published, so ask. We rate the score as sold, not a test of the product.</li>
         <li><strong>Bias audits.</strong> "Recent, public" means an independent audit or continuous monitoring of the scoring feature, published within about the last 18 months. "Older or narrower" means older, undated, a single model, or hosted by a customer. Audit claims without a published summary count as none found.</li>
         <li><strong>AI certification.</strong> "Covers the product" means an independent certification of the vendor's AI management, such as ISO/IEC 42001 or TrustArc, that covers the vendor or the product. "Narrower scope" means its scope doesn't name the product.</li>
-        <li><strong>Rules where you hire.</strong> {len(D.JURIS)} jurisdictions with laws or guidance that bear on hiring scores, each linked to a source. It's orientation, not legal advice.</li>
+        <li><strong>Rules where you hire.</strong> {N_PLACES} jurisdictions in {N_COUNTRIES} countries and the EU, each linked to a source. Picking a state, province or EU country also shows the national or EU-wide rules. Where we don't track a place individually, the check says so instead of going quiet. It's orientation, not legal advice.</li>
         <li><strong>ATS integrations.</strong> Listed only when we found them on a marketplace, partner or help page, not from a vendor's "integrates with every ATS" claim.</li>
         <li><strong>Pricing.</strong> We describe how each vendor charges and where costs grow, not list prices, because enterprise prices are negotiated and change.</li>
         <li><strong>Freshness.</strong> Every profile shows when it was verified. We re-verify quarterly and after major vendor or legal news. Spot something out of date? <a href="/about/">Tell us</a> and we'll fix it with a note.</li>
@@ -215,7 +239,7 @@ if band:
     out.append(band.group(1))
 
 DATA = {"caps": D.CAPS, "cats": D.CATS, "atsn": ATSN, "reqn": REQN, "segn": SEGN, "scn": SCN, "p": D.P,
-        "juris": D.JURIS, "uses": D.USES, "obl": D.OBL, "oblask": D.OBL_ASK, "oblcaps": D.OBL_CAPS, "usecaps": D.USE_CAPS,
+        "juris": D.JURIS, "other": D.OTHER, "uses": D.USES, "obl": D.OBL, "oblask": D.OBL_ASK, "oblcaps": D.OBL_CAPS, "usecaps": D.USE_CAPS,
         "regn": REGN, "verified": D.VERIFIED}
 JS = open(os.path.join(HERE, "match.js"), encoding="utf-8").read()
 out.append('<div class="ats-tray" id="ats-tray" hidden><div class="wrap"><span id="ats-tray-names"></span><a class="btn btn-primary" href="#compare">Compare</a><button type="button" class="btn btn-ghost" id="ats-clear">Clear</button></div></div>')

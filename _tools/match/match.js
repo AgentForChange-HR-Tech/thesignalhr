@@ -5,7 +5,6 @@
   var CAPN = {}; D.caps.forEach(function (c) { CAPN[c[0]] = c[1]; });
   var OBLN = {}; D.obl.forEach(function (o) { OBLN[o[0]] = o[1]; });
   var USEN = {}; D.uses.forEach(function (u) { USEN[u[0]] = u[1]; });
-  var JBY = {}; D.juris.forEach(function (j) { JBY[j.id] = j; });
   var selected = [];
   var $ = function (s, r) { return (r || document).querySelector(s); };
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
@@ -143,16 +142,36 @@
   }
 
   // ---------- Step 1: the rules where you hire (orientation, not legal advice) ----------
+  // Countries (and the EU) are the first tier; states, provinces, cities and EU member states open under them.
+  // Picking a second-tier place always shows its country's (or the EU's) rules too.
   var USES_ORDER = ["rank", "filter", "auto"];
+  var KIDS = {};
+  D.juris.forEach(function (j) { if (j.parent) (KIDS[j.parent] = KIDS[j.parent] || []).push(j); });
+  function jbox(id) { return $('#rules-form input[name="jur"][value="' + id + '"]'); }
   function rulesState() {
-    var f = $("#rules-form");
-    var u = f.querySelector('input[name="use"]:checked');
-    return { jur: $$('input[name="jur"]:checked', f).map(function (i) { return i.value; }), use: u ? u.value : "rank" };
+    var f = $("#rules-form"), u = f.querySelector('input[name="use"]:checked'), other = {};
+    $$("select[data-other]", f).forEach(function (sel) {
+      var p = sel.getAttribute("data-other");
+      if (sel.value && jbox(p).checked) other[p] = sel.value;
+    });
+    return { jur: $$('input[name="jur"]:checked', f).map(function (i) { return i.value; }), other: other, use: u ? u.value : "rank" };
   }
+  function groups(s) {
+    var out = [];
+    D.juris.forEach(function (j) {
+      if (j.parent || s.jur.indexOf(j.id) < 0) return;
+      var kids = (KIDS[j.id] || []).filter(function (k) { return s.jur.indexOf(k.id) >= 0; });
+      out.push({ top: j, cards: [j].concat(kids), kids: kids, other: s.other[j.id] ? { name: s.other[j.id], def: D.other[j.id] } : null });
+    });
+    return out;
+  }
+  function allCards(gs) { var c = []; gs.forEach(function (g) { c = c.concat(g.cards); }); return c; }
+  function leafCount(gs) { var n = 0; gs.forEach(function (g) { n += (g.kids.length + (g.other ? 1 : 0)) || 1; }); return n; }
+  function placeCount(gs) { var n = 0; gs.forEach(function (g) { n += g.cards.length + (g.other ? 1 : 0); }); return n; }
   // notes that apply at the chosen use and every lower-risk use above "rank"
   function heightened(j, use) {
     var n = [], upto = USES_ORDER.indexOf(use);
-    USES_ORDER.forEach(function (u, i) { if (i > 0 && i <= upto && j.heightened[u]) n.push(j.heightened[u]); });
+    USES_ORDER.forEach(function (u, i) { if (i > 0 && i <= upto && j.heightened && j.heightened[u]) n.push(j.heightened[u]); });
     return n;
   }
   function useVerdict(use, js) {
@@ -162,12 +181,12 @@
     if (use === "filter") return { cls: "v-gaps", t: "Filtering on a score makes it part of the decision", d: "Hiding or prioritizing candidates by score is what most rules mean by a score that 'substantially assists' or 'materially influences' a decision." + where + " Plan notice, testing and a person who reviews below the line." };
     return { cls: "v-buy", t: "Ranking is the lowest-risk use, not a no-risk one", d: "Several rules apply whenever AI is used to screen, assess or rank applicants, even when recruiters review everyone. Notice and testing are the usual starting points." };
   }
-  function prioCaps(s, js) {
-    var caps = [];
+  function prioCaps(s, gs) {
+    var caps = [], js = allCards(gs);
     var add = function (c) { if (caps.indexOf(c) < 0) caps.push(c); };
     js.forEach(function (j) { j.must.forEach(function (m) { (D.oblcaps[m[0]] || []).forEach(add); }); });
     (D.usecaps[s.use] || []).forEach(add);
-    if (js.length > 1) add("switch");
+    if (leafCount(gs) > 1) add("switch");
     return D.caps.map(function (c) { return c[0]; }).filter(function (c) { return caps.indexOf(c) >= 0; });
   }
   function oblCounts(js) {
@@ -175,39 +194,66 @@
     js.forEach(function (j) { var seen = {}; j.must.forEach(function (m) { if (!seen[m[0]]) { seen[m[0]] = 1; n[m[0]] = (n[m[0]] || 0) + 1; } }); });
     return D.obl.filter(function (o) { return n[o[0]]; }).map(function (o) { return [o[0], o[1], n[o[0]]]; }).sort(function (a, b) { return b[2] - a[2]; });
   }
+  function srcLinks(list) {
+    return list.filter(Boolean).map(function (x) { return '<a href="' + esc(x[1]) + '" target="_blank" rel="noopener">' + esc(x[0]) + "</a>"; }).join(" · ");
+  }
+  var UNIT = { usfed: "states", canada: "provinces", eu: "EU countries" };
+  function jcard(j, s, g) {
+    var hn = heightened(j, s.use), kids = KIDS[j.id] || [];
+    var nudge = (!j.parent && kids.length && !g.kids.length && !g.other) ? '<p class="jnudge">Hiring in specific ' + UNIT[j.id] + "? " + kids.length + " add their own rules: pick them above.</p>" : "";
+    return '<article class="jcard' + (j.baseline ? " is-baseline" : "") + '">' +
+      '<div class="jtop"><h4>' + esc(j.card || j.name) + "</h4>" + (j.parent ? "" : '<span class="region-tag">' + esc(D.regn[j.region]) + "</span>") + "</div>" +
+      (j.baseline ? '<p class="jbase">No AI-specific hiring rule: general law applies</p>' : "") +
+      '<p class="jlaw">' + esc(j.law) + '</p><p class="jstatus">' + esc(j.status) + "</p>" +
+      '<p class="jwhen"><b>Applies when:</b> ' + esc(j.when) + "</p>" +
+      '<ul class="jmust">' + j.must.map(function (m) { return '<li><span class="obl o-' + m[0] + '">' + esc(OBLN[m[0]]) + "</span> " + esc(m[1]) + "</li>"; }).join("") + "</ul>" +
+      hn.map(function (t) { return '<p class="jhot"><b>For how you\'ll use it:</b> ' + esc(t) + "</p>"; }).join("") +
+      (j.watch ? '<p class="jwatch"><b>Watch:</b> ' + esc(j.watch) + "</p>" : "") + nudge +
+      '<p class="src">Source: ' + srcLinks([j.src, j.src2]) + "</p></article>";
+  }
+  function otherNote(g) {
+    var o = g.other, note = o.def.notes[o.name];
+    return note ? { text: note[0] + " Rules for " + (g.top.card || g.top.name) + " above still apply.", src: note[1] } : { text: o.def.text, src: null };
+  }
+  function othercard(g) {
+    var n = otherNote(g);
+    return '<article class="jcard is-other"><div class="jtop"><h4>' + esc(g.other.name) + '</h4></div><p class="jbase">Not tracked individually</p><p class="jwhen">' + esc(n.text) + "</p>" +
+      (n.src ? '<p class="src">Source: ' + srcLinks([n.src]) + "</p>" : "") + "</article>";
+  }
+  function syncSubs() {
+    $$("#rules-form [data-sub]").forEach(function (el) { el.hidden = !jbox(el.getAttribute("data-sub")).checked; });
+  }
   function renderRules() {
-    var s = rulesState(), outEl = $("#rules-out");
-    var js = D.juris.filter(function (j) { return s.jur.indexOf(j.id) >= 0; });
-    $("#rules-actions").hidden = !js.length;
-    if (!js.length) { outEl.innerHTML = '<p class="sum-line">Pick at least one place you hire.</p>'; return; }
-    var v = useVerdict(s.use, js), counts = oblCounts(js), caps = prioCaps(s, js);
+    var s = rulesState(), outEl = $("#rules-out"), gs = groups(s), js = allCards(gs);
+    syncSubs();
+    $("#rules-actions").hidden = !gs.length;
+    if (!gs.length) { outEl.innerHTML = '<p class="sum-line">Pick at least one country where you hire.</p>'; return; }
+    var v = useVerdict(s.use, js), counts = oblCounts(js), caps = prioCaps(s, gs), np = placeCount(gs);
     var h = '<div class="verdict ' + v.cls + '"><h4>' + esc(v.t) + "</h4><p>" + esc(v.d) + "</p></div>";
-    h += '<div class="obl-sum"><span>Across ' + js.length + " " + (js.length === 1 ? "place" : "places") + ":</span>" + counts.map(function (c) { return '<span class="obl o-' + c[0] + '">' + esc(c[1]) + " <b>" + c[2] + "</b></span>"; }).join("") + "</div>";
+    h += '<div class="obl-sum"><span>Across ' + np + " " + (np === 1 ? "place" : "places") + ":</span>" + counts.map(function (c) { return '<span class="obl o-' + c[0] + '">' + esc(c[1]) + " <b>" + c[2] + "</b></span>"; }).join("") + "</div>";
     if (caps.length) h += '<div class="prio-caps"><span>Capabilities to insist on:</span>' + caps.map(function (c) { return '<span class="cap">' + esc(CAPN[c]) + "</span>"; }).join("") + '<button type="button" class="btn btn-ghost" id="rules-apply">Apply to the finder</button></div>';
-    h += '<div class="jcards">' + js.map(function (j) {
-      var hn = heightened(j, s.use);
-      return '<article class="jcard">' +
-        '<div class="jtop"><h4>' + esc(j.name) + '</h4><span class="region-tag">' + esc(D.regn[j.region]) + "</span></div>" +
-        '<p class="jlaw">' + esc(j.law) + '</p><p class="jstatus">' + esc(j.status) + "</p>" +
-        '<p class="jwhen"><b>Applies when:</b> ' + esc(j.when) + "</p>" +
-        '<ul class="jmust">' + j.must.map(function (m) { return '<li><span class="obl o-' + m[0] + '">' + esc(OBLN[m[0]]) + "</span> " + esc(m[1]) + "</li>"; }).join("") + "</ul>" +
-        hn.map(function (t) { return '<p class="jhot"><b>For how you\'ll use it:</b> ' + esc(t) + "</p>"; }).join("") +
-        '<p class="src">Source: <a href="' + esc(j.src[1]) + '" target="_blank" rel="noopener">' + esc(j.src[0]) + "</a></p></article>";
-    }).join("") + "</div>";
+    h += gs.map(function (g) {
+      var n = g.cards.length + (g.other ? 1 : 0);
+      return '<div class="jgroup"><h4 class="jgroup-h">' + esc(g.top.name) + (n > 1 ? " <span>" + n + " places</span>" : "") + '</h4><div class="jcards">' +
+        g.cards.map(function (j) { return jcard(j, s, g); }).join("") + (g.other ? othercard(g) : "") + "</div></div>";
+    }).join("");
     h += '<h4 class="sum-qh">Ask your vendor</h4><ul class="sum-plat">' + counts.map(function (c) { return "<li><b>" + esc(c[1]) + ".</b> " + esc(D.oblask[c[0]]) + "</li>"; }).join("") + "</ul>";
     outEl.innerHTML = h;
   }
   function checklist() {
-    var s = rulesState();
-    var js = D.juris.filter(function (j) { return s.jur.indexOf(j.id) >= 0; });
+    var s = rulesState(), gs = groups(s);
     var txt = "Before we switch on an applicant match score: rules where we hire\nFrom The Signal HR (reviewed " + D.verified + "): https://thesignalhr.com/compare/match/#rules\nOrientation, not legal advice. Confirm with counsel.\n\nHow we'll use the score: " + USEN[s.use] + "\n";
-    js.forEach(function (j) {
-      txt += "\n" + j.name.toUpperCase() + " (" + j.law + "; " + j.status + ")\nApplies when: " + j.when + "\n";
-      j.must.forEach(function (m) { txt += "[ ] " + OBLN[m[0]] + ": " + m[1] + "\n"; });
-      heightened(j, s.use).forEach(function (t) { txt += "! " + t + "\n"; });
-      txt += "Source: " + j.src[1] + "\n";
+    gs.forEach(function (g) {
+      g.cards.forEach(function (j) {
+        txt += "\n" + (j.parent ? g.top.name + " > " : "") + (j.card || j.name).toUpperCase() + " (" + j.law + "; " + j.status + ")\nApplies when: " + j.when + "\n";
+        j.must.forEach(function (m) { txt += "[ ] " + OBLN[m[0]] + ": " + m[1] + "\n"; });
+        heightened(j, s.use).forEach(function (t) { txt += "! " + t + "\n"; });
+        if (j.watch) txt += "Watch: " + j.watch + "\n";
+        txt += "Source: " + j.src[1] + (j.src2 ? " ; " + j.src2[1] : "") + "\n";
+      });
+      if (g.other) { var n = otherNote(g); txt += "\n" + g.top.name + " > " + g.other.name.toUpperCase() + "\n" + n.text + "\n" + (n.src ? "Source: " + n.src[1] + "\n" : ""); }
     });
-    txt += "\nASK THE VENDOR\n" + oblCounts(js).map(function (c) { return "- " + D.oblask[c[0]]; }).join("\n") + "\n";
+    txt += "\nASK THE VENDOR\n" + oblCounts(allCards(gs)).map(function (c) { return "- " + D.oblask[c[0]]; }).join("\n") + "\n";
     return txt;
   }
   function copyChecklist() {
@@ -225,32 +271,35 @@
       if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(txt).then(function () { done(true); }, fallback);
       else fallback();
     } catch (err) { fallback(); }
-    ga("match_copy_checklist", { value: rulesState().jur.length });
+    ga("match_copy_checklist", { value: placeCount(groups(rulesState())) });
   }
   function applyCaps() {
-    var s = rulesState(), js = D.juris.filter(function (j) { return s.jur.indexOf(j.id) >= 0; }), caps = prioCaps(s, js);
+    var s = rulesState(), caps = prioCaps(s, groups(s));
     $$('#ats-filters input[name="must"]').forEach(function (i) { i.checked = caps.indexOf(i.value) >= 0; });
     render();
     var f = document.getElementById("finder"); if (f && f.scrollIntoView) f.scrollIntoView();
     ga("match_apply_caps", { event_label: caps.join(",") });
   }
+  function clearKids(pid) {
+    (KIDS[pid] || []).forEach(function (k) { jbox(k.id).checked = false; });
+    var sel = $('#rules-form select[data-other="' + pid + '"]'); if (sel) sel.value = "";
+  }
+  function topsIn(reg) { return D.juris.filter(function (j) { return !j.parent && j.region === reg; }); }
   function selectRegion(reg) {
-    var boxes = D.juris.filter(function (j) { return j.region === reg; }).map(function (j) { return $('#rules-form input[name="jur"][value="' + j.id + '"]'); });
-    var all = boxes.every(function (b) { return b.checked; });
-    boxes.forEach(function (b) { b.checked = !all; });
+    var tops = topsIn(reg), all = tops.every(function (j) { return jbox(j.id).checked; });
+    tops.forEach(function (j) { jbox(j.id).checked = !all; if (all) clearKids(j.id); });
     syncRegionButtons(); renderRules();
     ga("match_rules", { event_label: (all ? "clear:" : "all:") + reg });
   }
   function syncRegionButtons() {
     $$("#rules-form [data-all]").forEach(function (btn) {
-      var reg = btn.getAttribute("data-all");
-      var js = D.juris.filter(function (j) { return j.region === reg; });
-      var all = js.every(function (j) { return $('#rules-form input[name="jur"][value="' + j.id + '"]').checked; });
-      btn.textContent = all ? "Clear" : "Select all " + js.length;
+      var tops = topsIn(btn.getAttribute("data-all"));
+      btn.textContent = tops.every(function (j) { return jbox(j.id).checked; }) ? "Clear" : "Select all " + tops.length;
     });
   }
   function resetRules() {
     $$('#rules-form input[name="jur"]').forEach(function (i) { i.checked = false; });
+    $$("#rules-form select[data-other]").forEach(function (sel) { sel.value = ""; });
     var r = $('#rules-form input[name="use"][value="rank"]'); if (r) r.checked = true;
     $("#rules-copied").textContent = "";
     syncRegionButtons(); renderRules();
@@ -260,7 +309,11 @@
   document.addEventListener("change", function (e) {
     var t = e.target;
     if (t.matches("input[data-cmp]")) toggle(t.getAttribute("data-cmp"), t.checked);
-    else if (t.closest && t.closest("#rules-form")) { syncRegionButtons(); renderRules(); ga("match_rules", { event_label: t.name + ":" + t.value }); }
+    else if (t.closest && t.closest("#rules-form")) {
+      if (t.name === "jur" && !t.checked && KIDS[t.value]) clearKids(t.value);
+      syncRegionButtons(); renderRules();
+      ga("match_rules", { event_label: t.name ? t.name + ":" + t.value : "other:" + t.getAttribute("data-other") + ":" + t.value });
+    }
     else if (t.closest && t.closest("#ats-filters")) { render(); ga("match_filter", { event_label: t.name + ":" + t.value }); }
   });
   document.addEventListener("click", function (e) {
@@ -280,5 +333,5 @@
     }
   });
   if (location.hash && location.hash.indexOf("#p-") === 0) { var d = document.querySelector(location.hash); if (d) d.open = true; }
-  render(); renderCompare(); renderRules();
+  syncRegionButtons(); render(); renderCompare(); renderRules();
 })();
