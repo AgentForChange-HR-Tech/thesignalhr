@@ -229,7 +229,7 @@ out.append(f'''
         <li><strong>Rules where you hire.</strong> {N_PLACES} jurisdictions in {N_COUNTRIES} countries and the EU, each linked to a source. Picking a state, province or EU country also shows the national or EU-wide rules. Where we don't track a place individually, the check says so instead of going quiet. It's orientation, not legal advice.</li>
         <li><strong>ATS integrations.</strong> Listed only when we found them on a marketplace, partner or help page, not from a vendor's "integrates with every ATS" claim.</li>
         <li><strong>Pricing.</strong> We describe how each vendor charges and where costs grow, not list prices, because enterprise prices are negotiated and change.</li>
-        <li><strong>Freshness.</strong> Every profile shows when it was verified. We re-verify quarterly and after major vendor or legal news. Spot something out of date? <a href="/about/">Tell us</a> and we'll fix it with a note.</li>
+        <li><strong>Freshness.</strong> Every profile shows when it was verified. We re-verify quarterly and after major vendor or legal news. Spot something out of date? <a href="mailto:alex@thesignalhr.com">Tell us</a> and we'll fix it with a note. Every material change is in the <a href="/compare/#changelog">change log</a>.</li>
       </ul>
     </div>
   </section>''')

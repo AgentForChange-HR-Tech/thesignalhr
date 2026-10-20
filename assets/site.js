@@ -37,6 +37,8 @@
     /* Lightweight analytics events (GA4 if present) */
     document.querySelectorAll('a[href*="substack.com"]').forEach(function (a) {
       a.addEventListener("click", function () {
+        // the nav button scrolls to an on-page form when there is one (see Subscribe below), so it isn't an off-site click
+        if (a.classList.contains("nav-cta") && document.querySelector('iframe[src*="substack.com/embed"]')) return;
         if (typeof gtag === "function") {
           gtag("event", "substack_cta_click", { event_category: "conversion", event_label: location.pathname });
         }
@@ -95,4 +97,35 @@
     apply(NAMES[q] ? q : (NAMES[saved] ? saved : "all"), false);
   }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init); else init();
+})();
+
+/* Subscribe: the nav button scrolls to this page's embedded signup instead of leaving the site.
+   Measured in GA4: subscribe_cta (nav button scrolled to the form), subscribe_embed_focus (clicked into the
+   embedded form), and the existing substack_cta_click (left for Substack). Completed signups: Substack > Subscribers > source. */
+(function () {
+  var frame = document.querySelector('iframe[src*="substack.com/embed"]');
+  var send = function (name, params) { if (typeof gtag === "function") gtag("event", name, params); };
+  document.addEventListener("click", function (e) {
+    var a = e.target.closest && e.target.closest('a[href*="substack.com"]');
+    if (!a) return;
+    var where = a.classList.contains("nav-cta") ? "nav" : "other";
+    if (frame && where === "nav") {
+      e.preventDefault();
+      var box = frame.closest(".sub-card, .news-band") || frame;
+      box.scrollIntoView({ behavior: "smooth", block: "center" });
+      box.classList.add("sub-flash");
+      setTimeout(function () { box.classList.remove("sub-flash"); }, 1800);
+      send("subscribe_cta", { placement: where, page_path: location.pathname });
+    }
+  });
+  // The form is in a cross-origin frame, so count the moment focus moves into it.
+  if (frame) window.addEventListener("blur", function () {
+    setTimeout(function () {
+      var el = document.activeElement;
+      if (el && el.tagName === "IFRAME" && /substack\.com\/embed/.test(el.src) && !el.getAttribute("data-counted")) {
+        el.setAttribute("data-counted", "1");
+        send("subscribe_embed_focus", { page_path: location.pathname });
+      }
+    }, 0);
+  });
 })();

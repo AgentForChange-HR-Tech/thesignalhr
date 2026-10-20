@@ -332,3 +332,8 @@ a.card:hover { text-decoration: none; transform: translateY(-3px); box-shadow: v
 .tag-row { display: flex; flex-wrap: wrap; align-items: center; gap: .4rem; }
 .tag-row .region-tag { margin-left: 0; }
 [data-region-group][hidden] { display: none; }
+
+/* subscribe: brief highlight when the nav button scrolls to the embedded form */
+.sub-flash { box-shadow: 0 0 0 3px var(--signal); transition: box-shadow .3s ease; }
+.footer-bottom a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
+.footer-bottom a:hover { color: var(--signal); }

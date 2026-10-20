@@ -240,7 +240,7 @@ out.append(f'''
         <li><strong>AI certification.</strong> "Certified" means an independent body certified the vendor's AI management (such as ISO/IEC 42001 or TrustArc). "Partial" means a published independent bias audit, or a certification whose scope doesn't name the product. Claims without published evidence count as none found.</li>
         <li><strong>Implementation.</strong> We don't publish timelines. They depend more on your resourcing, reviews, scope and readiness than on the platform, so we show what drives them and the questions that expose them. Delivery models describe how each platform is usually implemented; ask who will actually do yours.</li>
         <li><strong>Pricing.</strong> We describe how each vendor charges and where costs grow, not list prices, because enterprise prices are negotiated and change.</li>
-        <li><strong>Freshness.</strong> Every profile shows when it was verified. We re-verify quarterly and after major vendor news. Spot something out of date? <a href="/about/">Tell us</a> and we'll fix it with a note.</li>
+        <li><strong>Freshness.</strong> Every profile shows when it was verified. We re-verify quarterly and after major vendor news. Spot something out of date? <a href="mailto:alex@thesignalhr.com">Tell us</a> and we'll fix it with a note. Every material change is in the <a href="/compare/#changelog">change log</a>.</li>
       </ul>
     </div>
   </section>''')
