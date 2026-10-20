@@ -57,7 +57,6 @@ CSS = """
 .kits-note{font-size:var(--text-xs);color:var(--ink-soft);margin-top:1rem;max-width:46em}
 .kits-thanks{margin-top:1rem;font-size:var(--text-sm);color:var(--ink);font-weight:600}
 .kits-thanks[hidden]{display:none}
-.shape p{color:var(--ink-mid);max-width:46em}
 """
 
 JS = """
@@ -131,13 +130,7 @@ def build():
       <div class="kits">{"".join(kit_card(k) for k in KITS)}
       </div>
       <p class="kits-thanks" id="kits-thanks" hidden aria-live="polite">Thanks. Launch news goes to the newsletter; subscribe below to hear first.</p>
-      <p class="kits-note">Voting sends no personal information. We count clicks in Google Analytics, along with conversations with buyers, to decide which kit to build first.</p>
-    </div>
-  </section>
-  <section class="section" style="padding-top:0;">
-    <div class="wrap shape">
-      <div class="section-head"><div><span class="kicker">Help shape it</span><h2>Making one of these <em>decisions</em> now?</h2></div></div>
-      <p>If you're running an ATS selection or rolling out AI screening in the next six months, a 30-minute conversation about how you're doing it shapes what goes in each kit. Email <a href="mailto:{EMAIL}">{EMAIL}</a>.</p>
+      <p class="kits-note">Voting sends no personal information. We count clicks in Google Analytics to decide which kit to build first.</p>
     </div>
   </section>
 {band}
