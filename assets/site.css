@@ -340,3 +340,6 @@ a.card:hover { text-decoration: none; transform: translateY(-3px); box-shadow: v
 
 /* newsletter band: links read on the dark band */
 .news-band p a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
+
+/* quiet pointer from a comparison to the matching buyer kit */
+.kit-hint { font-size: var(--text-sm); color: var(--ink-soft); margin-top: 1.4rem; max-width: 46em; }

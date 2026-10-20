@@ -137,6 +137,7 @@ out.append(f'''
         <div class="sum-actions" id="rules-actions" hidden><button type="button" class="btn btn-primary" id="rules-copy">Copy checklist</button><span class="small" id="rules-copied" aria-live="polite"></span></div>
         <p class="disclaimer"><strong>Orientation, not legal advice.</strong> These are the {N_PLACES} places we track in {N_COUNTRIES} countries and the EU, reviewed {E(D.VERIFIED)}. Coverage thresholds, exemptions and pending rules vary, and anti-discrimination and privacy law apply everywhere, listed or not. Check with counsel where you hire.</p>
       </div>
+      <p class="kit-hint">Need this kept current? The <a href="/kits/#kit-governance">Hiring-AI Governance Kit</a>, in development, adds a monthly rules update and notice drafts. Tell us if you'd use it.</p>
     </div>
   </section>''')
 

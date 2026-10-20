@@ -228,6 +228,7 @@ out.append(f'''
       <div class="section-head"><div><span class="kicker">Free to use</span><h2>The {len(D.RFP)}-question <em>RFP bank</em></h2></div></div>
       <p class="lede">Questions that separate demo theater from deployed reality. Ask them in this order; the discomfort is diagnostic.</p>
       <ol class="rfp">{rfp}</ol>
+      <p class="kit-hint">Want this as working files? The <a href="/kits/#kit-ats">ATS Selection Kit</a>, in development, adds an editable scorecard, a demo script and a business case. Tell us if you'd use it.</p>
     </div>
   </section>
   <section class="section" id="method">

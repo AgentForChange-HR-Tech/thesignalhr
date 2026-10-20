@@ -180,6 +180,51 @@ if old != page:
 NBCSS = "\n/* newsletter band: links read on the dark band */\n.news-band p a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }\n"
 rw("assets/site.css", lambda s: s if ".news-band p a" in s else s.rstrip("\n") + "\n" + NBCSS)
 
+# ---------------------------------------------------------------- quiet contextual links (no top-menu item until a kit is on sale)
+HINT_ATS = ('<p class="kit-hint">Want this as working files? The <a href="/kits/#kit-ats">ATS Selection Kit</a>, in development, '
+            'adds an editable scorecard, a demo script and a business case. Tell us if you\'d use it.</p>')
+HINT_GOV = ('<p class="kit-hint">Need this kept current? The <a href="/kits/#kit-governance">Hiring-AI Governance Kit</a>, in development, '
+            'adds a monthly rules update and notice drafts. Tell us if you\'d use it.</p>')
+def ats_hint(s, is_script):
+    if 'kit-hint' in s:
+        return s
+    if is_script:
+        old = '      <ol class="rfp">{rfp}</ol>\n'
+        assert s.count(old) == 1, "build_ats.py: RFP list not found"
+        return s.replace(old, old + "      " + HINT_ATS + "\n")
+    m = re.search(r'(<section class="section section-alt" id="rfp">.*?<ol class="rfp">.*?</ol>\n)', s, flags=re.S)
+    assert m, "ATS page: RFP list not found"
+    return s[:m.end()] + "      " + HINT_ATS + "\n" + s[m.end():]
+def gov_hint(s, is_script):
+    if 'kit-hint' in s:
+        return s
+    m = re.search(r'(Check with counsel where you hire\.</p>\n      </div>\n)', s)
+    assert m, "match: rules check end not found"
+    return s[:m.end()] + "      " + HINT_GOV + "\n" + s[m.end():]
+for f, fn, scr in [("_tools/ats/build_ats.py", ats_hint, True), ("compare/ats/index.html", ats_hint, False),
+                   ("_tools/match/build_match.py", gov_hint, True), ("compare/match/index.html", gov_hint, False)]:
+    if os.path.exists(f):
+        rw(f, lambda s, fn=fn, scr=scr: fn(s, scr))
+
+HUB_CARD = """        <a class="card" href="/kits/">
+          <span class="tag tag-amber">In development</span>
+          <h3>Buyer kits</h3>
+          <p>Working files for a decision in progress: an ATS Selection Kit and a Hiring-AI Governance Kit. Tell us which you'd use first.</p>
+          <span class="arrow">See the kits →</span>
+        </a>
+"""
+def hub_card(s):
+    if '<a class="card" href="/kits/">' in s:
+        return s
+    # last card in the hub grid, after the planned categories
+    m = re.search(r'(<div class="grid grid-2">.*?)(      </div>\n      <div class="feature-card)', s, flags=re.S)
+    assert m, "hub grid not found"
+    return s[:m.start(2)] + HUB_CARD + s[m.start(2):]
+rw("compare/index.html", hub_card)
+
+HINTCSS = "\n/* quiet pointer from a comparison to the matching buyer kit */\n.kit-hint { font-size: var(--text-sm); color: var(--ink-soft); margin-top: 1.4rem; max-width: 46em; }\n"
+rw("assets/site.css", lambda s: s if ".kit-hint" in s else s.rstrip("\n") + "\n" + HINTCSS)
+
 def sitemap(s):
     loc = "https://thesignalhr.com/kits/"
     if loc not in s:
