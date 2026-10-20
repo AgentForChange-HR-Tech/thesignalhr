@@ -11,6 +11,9 @@
   host.insertBefore(grid, items[0]);
   var first = function (t) { var m = String(t).replace(/\s+/g, " ").trim().match(/^.*?[.!?](?=\s+[A-Z"“(]|$)/); return m ? m[0] : String(t).trim(); };
   var send = function (name, p) { if (typeof gtag === "function") gtag("event", name, p); };
+  var EMAIL = "alex@thesignalhr.com";
+  var kicker = document.querySelector(".article-header .kicker");
+  var EDITION = kicker ? kicker.textContent.replace(/\s+/g, " ").trim() : "The Briefing";
   function setOpen(it, open) {
     it.classList.toggle("is-open", open);
     it.querySelector(".b-more").hidden = !open;
@@ -28,6 +31,17 @@
     if (sw) {   // so-what first: it's the point of each signal
       more.insertBefore(sw, more.firstChild);
     }
+    // respond by email: one reader, one signal, straight to the inbox (no public comments)
+    var respond = document.createElement("p");
+    respond.className = "b-respond";
+    var a = document.createElement("a");
+    a.href = "mailto:" + EMAIL + "?subject=" + encodeURIComponent("Re: " + (h.textContent || "").replace(/\s+/g, " ").trim()) +
+      "&body=" + encodeURIComponent("On this signal from " + EDITION + ":\n\n");
+    a.textContent = "Respond to this signal →";
+    a.addEventListener("click", function () { send("briefing_respond", { item: i + 1, page_path: location.pathname }); });
+    respond.appendChild(a);
+    respond.appendChild(document.createTextNode(" Replies go to Alex, not a public thread."));
+    more.appendChild(respond);
     var take = document.createElement("p");
     take.className = "b-take";
     take.textContent = sw ? first(sw.textContent.replace(/^\s*So what\s*·\s*/i, "")) : "";

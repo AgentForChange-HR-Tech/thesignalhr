@@ -344,6 +344,7 @@ a.card:hover { text-decoration: none; transform: translateY(-3px); box-shadow: v
 /* quiet pointer from a comparison to the matching buyer kit */
 .kit-hint { font-size: var(--text-sm); color: var(--ink-soft); margin-top: 1.4rem; max-width: 46em; }
 
+/* >>> briefing-cards (managed by _tools/site/briefing_cards.py) */
 /* Briefing as cards: each signal shows its headline and the first line of its "So what";
    "Read the signal" opens the full card across the row. Built in site.js from the existing markup. */
 .brief-cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; align-items: start; }
@@ -363,3 +364,6 @@ a.card:hover { text-decoration: none; transform: translateY(-3px); box-shadow: v
 .brief-cards .brief-item.region-hidden { display: none; }
 .brief-tools { display: flex; justify-content: flex-end; margin: 0 0 .7rem; }
 .brief-tools button { font: inherit; font-size: var(--text-sm); font-weight: 600; color: var(--signal); background: none; border: 0; padding: 0; cursor: pointer; text-decoration: underline; text-underline-offset: 2px; }
+.brief-cards .b-respond { font-size: var(--text-sm); color: var(--ink-soft); padding-top: .7rem; border-top: 1px solid var(--border); }
+.brief-cards .b-respond a { font-weight: 600; }
+/* <<< briefing-cards */

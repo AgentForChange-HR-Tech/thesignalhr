@@ -17,3 +17,5 @@
 .brief-cards .brief-item.region-hidden { display: none; }
 .brief-tools { display: flex; justify-content: flex-end; margin: 0 0 .7rem; }
 .brief-tools button { font: inherit; font-size: var(--text-sm); font-weight: 600; color: var(--signal); background: none; border: 0; padding: 0; cursor: pointer; text-decoration: underline; text-underline-offset: 2px; }
+.brief-cards .b-respond { font-size: var(--text-sm); color: var(--ink-soft); padding-top: .7rem; border-top: 1px solid var(--border); }
+.brief-cards .b-respond a { font-weight: 600; }
