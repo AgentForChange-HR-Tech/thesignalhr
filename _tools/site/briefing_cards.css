@@ -1,0 +1,19 @@
+/* Briefing as cards: each signal shows its headline and the first line of its "So what";
+   "Read the signal" opens the full card across the row. Built in site.js from the existing markup. */
+.brief-cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; align-items: start; }
+@media (max-width: 960px) { .brief-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 600px) { .brief-cards { grid-template-columns: 1fr; gap: .8rem; } }
+.brief-cards .brief-item { display: flex; flex-direction: column; gap: .6rem; background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.05rem 1.15rem 1.1rem; box-shadow: var(--shadow); scroll-margin-top: 90px; height: 100%; }
+.brief-cards .brief-item:last-child { border-bottom: 1px solid var(--border); }
+.brief-cards .brief-item .b-meta { flex-direction: row; align-items: center; flex-wrap: wrap; gap: .35rem; }
+.brief-cards .brief-item h3 { font-size: var(--text-base); font-weight: 600; line-height: 1.35; margin: 0; }
+.brief-cards .b-take { font-size: var(--text-sm); color: var(--ink-mid); line-height: 1.5; }
+.brief-cards .b-more[hidden] { display: none; }
+.brief-cards .b-more > * + * { margin-top: .6rem; }
+.brief-cards .b-open { margin-top: auto; align-self: flex-start; font: inherit; font-size: var(--text-sm); font-weight: 600; color: var(--signal); background: none; border: 0; padding: .2rem 0 0; cursor: pointer; }
+.brief-cards .b-open:focus-visible { outline: 2px solid var(--signal); outline-offset: 2px; }
+.brief-cards .brief-item.is-open { grid-column: 1 / -1; height: auto; }
+.brief-cards .brief-item.is-open .b-take { display: none; }
+.brief-cards .brief-item.region-hidden { display: none; }
+.brief-tools { display: flex; justify-content: flex-end; margin: 0 0 .7rem; }
+.brief-tools button { font: inherit; font-size: var(--text-sm); font-weight: 600; color: var(--signal); background: none; border: 0; padding: 0; cursor: pointer; text-decoration: underline; text-underline-offset: 2px; }
