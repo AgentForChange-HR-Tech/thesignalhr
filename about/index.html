@@ -152,7 +152,7 @@
       <li><strong>Context included.</strong> Every story carries a "so what": what it may mean in practice and what to check. It's one practitioner's read, labeled as analysis, not the final word.</li>
       <li><strong>Free stays free.</strong> The weekly briefing and the comparisons are free, for good. Readers, not vendors, will fund the work: paid <a href="/kits/">buyer kits</a> are in development.</li>
     </ul>
-    <h2>The method</h2>
+    <h2 id="method">The method</h2>
     <p>The Signal tracks a wide range of primary and secondary sources across ten domains — vendor announcements, regulatory texts, analyst research, funding data, and practitioner communities. Items make the cut on three tests: <em>Can it be verified</em> in a source we've opened? <em>Is it likely to matter</em> to the work HR teams are doing? <em>Can we add useful context</em> beyond restating it? Every briefing item links its sources, and every page shows when it was last updated. Each update goes through automated checks and a separate source-by-source fact-check before Alex approves it.</p>
     <h2 id="ai">How AI helps</h2>
     <p>AI tools help with the work behind The Signal: scanning sources for updates, drafting first versions of Briefing items, analysis and comparison profiles, and running a separate check of each claim against its cited source. AI can get things wrong, so every claim links to a source you can open, and Alex reviews and approves every update before it's published. Nothing publishes automatically.</p>
@@ -164,8 +164,12 @@
       <div class="news-band">
         <h2>Get the signal <em>each week</em>.</h2>
         <p>The weekly signal: what changed in HR tech, what it may mean, and what to check. Free forever. <a href="/kits/">See the buyer kits we're building</a>.</p>
-        <iframe src="https://thesignalhr.substack.com/embed" title="Subscribe to The Signal HR newsletter" loading="lazy"></iframe>
-        <p class="micro">No spam. Unsubscribe anytime.</p>
+        <form class="signal-sub" data-placement="band" action="https://thesignalhr.substack.com/api/v1/free?nojs=true" method="post" target="_blank" rel="noopener">
+          <input type="hidden" name="source" value="embed">
+          <label for="sub-band">Get the weekly signal by email</label>
+          <div class="signal-sub-row"><input id="sub-band" type="email" name="email" placeholder="you@company.com" autocomplete="email" required><button type="submit">Subscribe</button></div>
+          <small>Free. Substack sends the newsletter and opens in a new tab to confirm. Unsubscribe anytime.</small>
+        </form>
       </div>
     </div>
   </section>

@@ -91,7 +91,7 @@ out.append(f'''
       <span class="kicker">Comparison Hub · Applicant match scores</span>
       <h1 style="max-width:17em;">Applicant match scores: <em style="color:var(--signal);">can you explain the number?</em></h1>
       <p class="standfirst" style="max-width:41em;">{len(D.P)} platforms that score or rank applicants, from the match score inside your ATS or HCM suite to talent-intelligence and sourcing tools. Rated on what you'd need to defend a score: explanations, recruiter control, human review, an off switch, published bias audits and AI certification. Start with the rules where you hire. No vendor paid to be here, rank higher or be described favorably.</p>
-      <div class="article-meta"><span>Reviewed {E(D.VERIFIED)}</span><span>{len(D.P)} platforms</span><span>Rules in {N_COUNTRIES} countries and the EU</span><span>Independent · unsponsored</span><span><a href="/about/#ai">AI-assisted</a></span></div>
+      <div class="article-meta"><span>Reviewed {E(D.VERIFIED)}</span><span>Checked for changes {E(D.CHECKED)}</span><span>{len(D.P)} platforms</span><span>Rules in {N_COUNTRIES} countries and the EU</span><span>Independent · unsponsored</span><span><a href="/about/#ai">AI-assisted</a></span></div>
       <nav class="ats-jump" aria-label="On this page"><a href="#rules">Rules where you hire</a><a href="#finder">Find your shortlist</a><a href="#compare">Compare</a><a href="#landscape">The landscape</a><a href="#profiles">Platform profiles</a><a href="#rfp">RFP questions</a><a href="#method">How we review</a><a href="/compare/ats/">ATS platforms →</a><a href="/compare/crm/">Recruiting CRMs →</a></nav>
     </div>
   </section>''')
@@ -135,7 +135,7 @@ out.append(f'''
         <div class="sum-head"><h3>What applies</h3><button type="button" class="btn btn-ghost" id="rules-reset">Clear</button></div>
         <div id="rules-out" aria-live="polite"><p class="sum-line">Pick at least one place you hire.</p></div>
         <div class="sum-actions" id="rules-actions" hidden><button type="button" class="btn btn-primary" id="rules-copy">Copy checklist</button><span class="small" id="rules-copied" aria-live="polite"></span></div>
-        <p class="disclaimer"><strong>Orientation, not legal advice.</strong> These are the {N_PLACES} places we track in {N_COUNTRIES} countries and the EU, reviewed {E(D.VERIFIED)}. Coverage thresholds, exemptions and pending rules vary, and anti-discrimination and privacy law apply everywhere, listed or not. Check with counsel where you hire.</p>
+        <p class="disclaimer"><strong>Orientation, not legal advice.</strong> These are the {N_PLACES} places we track in {N_COUNTRIES} countries and the EU, reviewed {E(D.VERIFIED)} and checked for changes {E(D.CHECKED)}. Coverage thresholds, exemptions and pending rules vary, and anti-discrimination and privacy law apply everywhere, listed or not. Check with counsel where you hire.</p>
       </div>
       <p class="kit-hint">Need this kept current? The <a href="/kits/#kit-governance">Hiring-AI Governance Kit</a>, in development, adds a monthly rules update and notice drafts. Tell us if you'd use it.</p>
     </div>
@@ -196,7 +196,7 @@ for p in D.P:
             <div><h4>Governance</h4><ul class="caps">{caps}</ul><h4>Audit and certification evidence</h4><p>{E(p["gov"])}</p><h4>Strengths</h4>{ul(p["strengths"])}</div>
             <div><h4>Watch-outs</h4>{ul(p["watch"], "watch")}<h4>How it's priced</h4><p>{E(p["pricing"])}</p><h4>Ask in the demo</h4>{ul(p["ask"], "ask")}</div>
           </div>
-          <p class="src">Verified {E(D.VERIFIED)} · Sources: {src}</p>
+          <p class="src">Verified {E(D.VERIFIED)}{(" · Updated " + E(p["updated"])) if p.get("updated") else ""} · Sources: {src}</p>
         </div>
       </details>''')
 out.append(f'''
@@ -242,7 +242,7 @@ if band:
 
 DATA = {"caps": D.CAPS, "cats": D.CATS, "atsn": ATSN, "reqn": REQN, "segn": SEGN, "scn": SCN, "p": D.P,
         "juris": D.JURIS, "other": D.OTHER, "uses": D.USES, "obl": D.OBL, "oblask": D.OBL_ASK, "oblcaps": D.OBL_CAPS, "usecaps": D.USE_CAPS,
-        "regn": REGN, "verified": D.VERIFIED}
+        "regn": REGN, "verified": D.VERIFIED, "checked": D.CHECKED}
 JS = open(os.path.join(HERE, "match.js"), encoding="utf-8").read()
 out.append('<div class="ats-tray" id="ats-tray" hidden><div class="wrap"><span id="ats-tray-names"></span><a class="btn btn-primary" href="#compare">Compare</a><button type="button" class="btn btn-ghost" id="ats-clear">Clear</button></div></div>')
 out.append('<script type="application/json" id="ats-data">' + json.dumps(DATA, ensure_ascii=False).replace("</", "<\\/") + "</script>")

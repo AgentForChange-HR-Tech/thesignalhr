@@ -55,8 +55,11 @@ rw("insights/eu-ai-act-hr-deadline/index.html", eu_article)
 rw("insights/index.html", lambda s: s.replace("<h3>%s</h3>" % OLD_H, "<h3>%s</h3>" % NEW_H))
 
 # ---------------------------------------------------------------- 2. Hub review dates + change log
-REVIEWED = {"/compare/ats/": "Reviewed October 2026", "/compare/crm/": "Reviewed October 2026", "/compare/match/": "Reviewed October 2026"}
+REVIEWED = {"/compare/ats/": "Reviewed October 2026 · checked November 7, 2026", "/compare/crm/": "Reviewed October 2026 · checked November 7, 2026", "/compare/match/": "Reviewed October 2026 · checked November 7, 2026"}
 CHANGELOG = [  # newest first: (date, comparison, what changed)
+    ("November 7, 2026", "Applicant match", "Rules check updated: the EEOC's Uniform Guidelines rescission at White House review (October 16), Chile's Senate-passed delay to October 15, 2027, Saudi draft comment period closed, and Colorado's rules hearing (October 26)."),
+    ("November 7, 2026", "ATS platforms, Recruiting CRMs", "Checked for changes: iCIMS Hiring Agent marked as rolling out from October 26 (Fall release); Dayforce adds the Ribbon acquisition and agentic recruiting planned through 2027."),
+    ("November 6, 2026", "All comparisons", "Neutral-language pass: profiles describe typical use instead of who a platform is for, finders list full matches alphabetically, ratings say what is or isn't documented, and the CRM check summarizes your answers instead of giving a verdict."),
     ("October 19, 2026", "Applicant match", "Rules check goes two-tier: 38 places in 21 countries and the EU, down to US states, Canadian provinces and EU member states."),
     ("October 16, 2026", "Applicant match", "Launched: 16 platforms rated on governance, a rules check for 17 places, shortlist finder and RFP bank."),
     ("October 16, 2026", "Recruiting CRMs", "Launched: 17 platforms, a “do you need a separate CRM?” check, shortlist finder and RFP bank."),
@@ -131,7 +134,7 @@ PRIVACY = f"""
     <h2>What we collect, and why</h2>
     <ul>
       <li><strong>Analytics.</strong> Google Analytics 4 tells us which pages and tools get used: pages viewed, approximate location (country or city), device and browser, how you arrived, and interactions such as filter choices on comparison pages. It sets cookies (named <code>_ga</code>, kept for up to 13 months) to tell visits apart, only when your cookie choice allows it (see <a href="#cookies">Cookies and your choice</a>). Google signals and advertising features are off. We use it only to improve the site.</li>
-      <li><strong>Newsletter.</strong> If you subscribe, Substack collects your email address and sends the newsletter, under <a href="https://substack.com/privacy" target="_blank" rel="noopener">Substack's privacy policy</a>. The signup form on our pages is Substack's own embedded form.</li>
+      <li><strong>Newsletter.</strong> If you subscribe, Substack collects your email address and sends the newsletter, under <a href="https://substack.com/privacy" target="_blank" rel="noopener">Substack's privacy policy</a>. The signup form on our pages sends your email address straight to Substack when you press Subscribe; we don't store it.</li>
       <li><strong>Email.</strong> If you write to us, we keep your message and address so we can reply.</li>
       <li><strong>Settings in your browser.</strong> The site remembers your light or dark theme, your region filter and your cookie choice in your browser's local storage (<code>signal-theme</code>, <code>signal-region</code>, <code>signal-consent</code>). They stay on your device, and clearing your browser data removes them.</li>
       <li><strong>Tools on comparison pages.</strong> Answers you give in the checks and finders run in your browser. We don't store them. Which options people pick may be counted in analytics, without identifying you.</li>

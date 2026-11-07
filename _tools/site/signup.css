@@ -1,0 +1,22 @@
+/* Newsletter signup: an on-site form that hands the address to Substack (no Substack frame on page load) */
+.signal-sub { max-width: 31rem; }
+.signal-sub label { display: block; font-weight: 600; font-size: var(--text-sm); margin-bottom: .5rem; }
+.signal-sub-row { display: flex; border: 1.5px solid var(--ink); border-radius: 8px; overflow: hidden; background: var(--card); }
+.signal-sub-row input { flex: 1; min-width: 0; border: 0; padding: .85rem 1rem; font: inherit; font-size: var(--text-base); background: transparent; color: var(--ink); }
+.signal-sub-row input:focus { outline: none; }
+.signal-sub-row:focus-within { box-shadow: 0 0 0 3px var(--signal-soft); }
+.signal-sub-row button { border: 0; background: var(--ink); color: var(--paper); font: inherit; font-weight: 600; font-size: var(--text-sm); padding: 0 1.3rem; cursor: pointer; white-space: nowrap; }
+.signal-sub-row button:hover { background: var(--signal); color: #fff; }
+.signal-sub small { display: block; margin-top: .5rem; font-size: var(--text-xs); color: var(--ink-soft); }
+.signal-sub.sub-flash .signal-sub-row { box-shadow: 0 0 0 4px var(--signal-soft); }
+.news-band .signal-sub { margin: 0 auto; text-align: left; }
+.news-band .signal-sub label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.news-band .signal-sub-row { border-color: rgba(251, 250, 247, .55); background: rgba(251, 250, 247, .06); }
+.news-band .signal-sub-row input { color: inherit; }
+.news-band .signal-sub-row input::placeholder { color: rgba(251, 250, 247, .55); }
+.news-band .signal-sub-row button { background: var(--paper); color: var(--ink); }
+.news-band .signal-sub-row button:hover { background: var(--signal); color: #fff; }
+.news-band .signal-sub small { color: inherit; opacity: .6; text-align: center; }
+[data-theme="dark"] .news-band .signal-sub-row { border-color: var(--border-strong); background: var(--paper); }
+[data-theme="dark"] .news-band .signal-sub-row input::placeholder { color: var(--ink-faint); }
+[data-theme="dark"] .news-band .signal-sub-row button { background: var(--ink); color: var(--paper); }

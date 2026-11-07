@@ -2,6 +2,7 @@
 # Conventions: governance first; ratings reflect what vendors document publicly ("Not documented" means we
 # found no public documentation, not that the feature is missing — ask). No dollar figures. Sources on every claim.
 VERIFIED = "October 2026"
+CHECKED = "November 7, 2026"   # last check for changes since VERIFIED
 
 CATS = {
  "ats": "Score inside an ATS",
@@ -46,8 +47,8 @@ JURIS = [
   must=[("audit", "Compare selection rates by race, sex and ethnicity. A group rate below 80% of the top group's is the usual benchmark for adverse impact."),
         ("records", "Keep applications and hiring records for one year, and until any discrimination charge is resolved.")],
   heightened={}, baseline=True,
-  watch="The EEOC plans to rescind the Uniform Guidelines, including the 80% benchmark, from January 2027; Title VII disparate-impact claims remain. In Mobley v. Workday, age claims proceed against a screening vendor as the employer's agent.",
-  src=("Ogletree Deakins", "https://ogletree.com/insights-resources/blog-posts/the-eeocs-regulatory-agenda-10-signs-of-intent/"),
+  watch="The EEOC sent a final rule rescinding the Uniform Guidelines, including the 80% benchmark, to White House review on October 16, 2026, projecting a January 2027 effective date; Title VII disparate-impact claims remain. In Mobley v. Workday, age claims proceed against a screening vendor as the employer's agent.",
+  src=("Ogletree Deakins", "https://ogletree.com/insights-resources/blog-posts/eeoc-sends-oira-final-rule-rescinding-uniform-guidelines-on-employee-selection-procedures/"),
   src2=("Maynard Nexsen on Mobley v. Workday", "https://www.maynardnexsen.com/publication-emerging-liability-for-ai-driven-hiring-tools-key-developments-in-mobley-v-workday-inc")),
  dict(id="california", name="California", region="americas", parent="usfed", law="Civil Rights Council ADS rules; CPPA ADMT rules", status="In force since October 1, 2025; privacy rules from January 1, 2027",
   when="Any automated system that makes or facilitates employment decisions (civil-rights rules). Privacy rules apply to CCPA-covered businesses when the tool substantially replaces human decision-making.",
@@ -57,7 +58,8 @@ JURIS = [
  dict(id="colorado", name="Colorado", region="americas", parent="usfed", law="SB 26-189", status="From January 1, 2027 (enforcement awaits rules and a court stay)",
   when="The tool's output materially influences a hiring decision.",
   must=[("notice", "Clear notice before the tool influences a decision, for example in the job posting."), ("human", "Explanation within 30 days of an adverse outcome, a chance to correct data, and human review where commercially reasonable."), ("records", "Keep records for three years.")],
-  heightened={}, src=("Epstein Becker Green", "https://www.ebglaw.com/workforce-bulletin/inside-colorados-senate-bill-26-189-impacts-and-implications-for-employers")),
+  heightened={}, src=("Epstein Becker Green", "https://www.ebglaw.com/workforce-bulletin/inside-colorados-senate-bill-26-189-impacts-and-implications-for-employers"), src2=("Colorado Attorney General: rulemaking (hearing October 26, 2026)", "https://coag.gov/ai/"),
+  watch="The Attorney General held the rulemaking hearing on October 26, 2026; the law requires final rules before January 1, 2027."),
  dict(id="connecticut", name="Connecticut", region="americas", parent="usfed", law="CART Act (Public Act 26-15)", status="Partly in force since October 1, 2026; notices from October 1, 2027",
   when="The tool's output is a substantial factor in, or materially influences, a hiring decision.",
   must=[("audit", "Since October 1, 2026, using the tool is no defense to a discrimination claim; anti-bias testing may be considered."), ("notice", "From October 1, 2027: disclosure when AI interacts with applicants and written notice before it contributes to a decision.")],
@@ -126,8 +128,8 @@ JURIS = [
         ("notice", "Give meaningful information about the logic involved and the likely consequences."),
         ("assess", "Complete a data protection impact assessment before systematically evaluating candidates through automated processing.")],
   heightened={"auto": "Automatic rejection is the clearest case of a solely automated decision."},
-  watch="A bill to push the start date to December 1, 2027 is pending in the Senate.",
-  src=("Chambers Data Protection 2026: Chile", "https://practiceguides.chambers.com/practice-guides/data-protection-privacy-2026/chile"), src2=("Carey on the postponement bill", "https://www.carey.cl/gobierno-ingresa-proyecto-de-ley-que-posterga-en-un-ano-entrada-en-vigor-de-la-ley-sobre-proteccion-de-datos-personales")),
+  watch="On October 28, 2026 the Senate approved a bill moving the start date to October 15, 2027; it now goes to the Chamber of Deputies, and December 1, 2026 stands until the change is published.",
+  src=("Chambers Data Protection 2026: Chile", "https://practiceguides.chambers.com/practice-guides/data-protection-privacy-2026/chile"), src2=("Garrigues on the Senate vote", "https://www.garrigues.com/es_ES/noticia/senado-chileno-aprueba-proyecto-ley-busca-postergar-15-octubre-2027-entrada-vigencia-nueva")),
  dict(id="colombia", name="Colombia", region="americas", parent=None, law="Law 1581 of 2012; SIC External Circular 002 of 2024 (personal data in AI)", status="In force; no AI law yet",
   when="An employer uses candidates' personal data in an AI system, especially one likely to pose a high risk to their rights.",
   must=[("notice", "When asking for the candidate's authorization, say how and why their data will be processed, their rights, and who you are."),
@@ -193,7 +195,7 @@ JURIS = [
         ("notice", "Give candidates extra transparency information when processing involves automated decisions."),
         ("audit", "Check that scores don't discriminate by race, colour, sex, age, disability or marital status; the Labour Law ban covers applicants.")],
   heightened={"auto": "A decision based entirely on automated processing needs the candidate's explicit consent."},
-  watch="Draft amendments, open for comment until November 5, 2026, would make automated decisions an explicit assessment trigger.",
+  watch="Draft amendments, whose comment period closed November 5, 2026, would make automated decisions an explicit assessment trigger; they are not yet adopted.",
   src=("Clyde & Co", "https://www.clydeco.com/en/insights/2023/09/saudi-arabia-issues-implementing-regulations"), src2=("Clyde & Co on the 2026 draft", "https://www.clydeco.com/en/insights/2026/10/sdaia-publishes-draft-amendments-to-the-pdpl")),
  dict(id="southafrica", name="South Africa", region="emea", parent=None, law="POPIA s. 71 (automated decisions); Employment Equity Act ss. 6, 8", status="In force; no dedicated AI law",
   when="A decision with legal or substantial effect on a candidate rests solely on automated profiling, such as AI shortlisting.",

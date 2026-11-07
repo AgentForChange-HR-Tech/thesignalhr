@@ -62,7 +62,7 @@ out.append(f'''
       <span class="kicker">Comparison Hub · ATS &amp; recruiting platforms</span>
       <h1 style="max-width:17em;">ATS platforms, compared for <em style="color:var(--signal);">the decision you're making</em>.</h1>
       <p class="standfirst" style="max-width:40em;">{len(D.P)} platforms across five categories, from standalone ATS to HCM-suite recruiting. Filter to your situation, compare up to three side by side, and check what tends to set a go-live date, from vendor selection onward. No vendor paid to be here, rank higher or be described favorably.</p>
-      <div class="article-meta"><span>Reviewed {E(D.VERIFIED)}</span><span>{len(D.P)} platforms</span><span>Independent · unsponsored</span><span><a href="/about/#ai">AI-assisted</a></span></div>
+      <div class="article-meta"><span>Reviewed {E(D.VERIFIED)}</span><span>Checked for changes {E(D.CHECKED)}</span><span>{len(D.P)} platforms</span><span>Independent · unsponsored</span><span><a href="/about/#ai">AI-assisted</a></span></div>
       <nav class="ats-jump" aria-label="On this page"><a href="#finder">Find your shortlist</a><a href="#compare">Compare</a><a href="#implementation">What sets your go-live</a><a href="#landscape">The landscape</a><a href="#profiles">Platform profiles</a><a href="#rfp">RFP questions</a><a href="#method">How we review</a><a href="/compare/crm/">Recruiting CRMs →</a><a href="/compare/match/">Applicant match →</a></nav>
     </div>
   </section>''')
@@ -208,7 +208,7 @@ for p in D.P:
             <div><h4>Capabilities</h4><ul class="caps">{caps}</ul><h4>AI in production</h4>{ul(p["ai_live"])}{ai_next}<h4>AI governance evidence</h4><p>{E(p["gov"])}</p></div>
             <div><h4>How it's priced</h4><p>{E(p["pricing"])}</p>{ul(p["traps"], "watch")}<h4>Implementation</h4><p><strong>Delivery:</strong> {E(p["delivery"])}.</p><p class="small">{E(p["impl_note"])}</p><h4>Ask in the demo</h4>{ul(p["ask"], "ask")}</div>
           </div>
-          <p class="src">Verified {E(D.VERIFIED)} · Sources: {src}</p>
+          <p class="src">Verified {E(D.VERIFIED)}{(" · Updated " + E(p["updated"])) if p.get("updated") else ""} · Sources: {src}</p>
         </div>
       </details>''')
 out.append(f'''

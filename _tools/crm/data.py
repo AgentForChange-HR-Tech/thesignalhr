@@ -2,6 +2,7 @@
 # Same conventions as _tools/ats: no timeline estimates, pricing model only, AI split into
 # "in production" vs "announced/beta/roadmap" with dates, every claim sourced.
 VERIFIED = "October 2026"
+CHECKED = "November 7, 2026"   # last check for changes since VERIFIED
 
 CATS = {
  "ats": "CRM inside an ATS",
@@ -158,7 +159,7 @@ dict(id="ashby", name="Ashby", cat="ats", owner="Private (Ashby)", req="ashby",
  impl_note="Plan sequences, LinkedIn steps and permissions together, because only some roles can enroll candidates in sequences.",
  ask=["Run AI Talent Rediscovery on one of our requisitions: how many credits did it use, and how many does our tier include?","Show a university event from registration through check-in to follow-up on the Plus tier."],
  src=[("Ashby Sourcing & CRM","https://www.ashbyhq.com/platform/recruiting/sourcing-crm"),("Ashby pricing","https://www.ashbyhq.com/pricing"),("Ashby: AI Talent Rediscovery, May 2026","https://www.ashbyhq.com/product-updates/ai-talent-rediscovery"),("Ashby: Events","https://www.ashbyhq.com/product-updates/events"),("Ashby bias audit by FairNow, August 2024","https://www.ashbyhq.com/downloadables/ashby-bias-audit-08-2024.pdf")]),
-dict(id="icims", name="iCIMS CRM and CXM", cat="ats", owner="Private (iCIMS)", req=None, claims_other=True,
+dict(id="icims", name="iCIMS CRM and CXM", updated="November 7, 2026", cat="ats", owner="Private (iCIMS)", req=None, claims_other=True,
  owner_note="Independent enterprise recruiting vendor; Marc Thompson became CEO in May 2026. Sells a CRM and a higher Candidate Experience Management (CXM) package; the older Connect CRM is labeled legacy.",
  seg=["mid","ent"], models=["professional","volume","campus"], ats_int=["icims"],
  caps=dict(nurture=2,careersite=2,events=2,sourcing=2,rediscovery=2,internal=1,analytics=2,gov=2),
@@ -166,15 +167,15 @@ dict(id="icims", name="iCIMS CRM and CXM", cat="ats", owner="Private (iCIMS)", r
  notfor="Small teams, or buyers who license the base CRM and expect the AI agent and automation that come with CXM.",
  strengths=["The deepest marketing automation of the ATS vendors: behavior triggers, engagement scoring, A/B tests","Mature events and talent-community capture; AI Sourcing Agent included in CXM","TrustArc Responsible AI certification plus an independent bias audit"],
  watch=["Base CRM customers must move to CXM for the AI Sourcing Agent and automation","Texting, digital assistant, career-site CMS and video are add-ons","Legacy Connect customers face a migration with no published retirement date"],
- ai_live=["AI Sourcing Agent in CXM, searching the iCIMS database (Spring 2026 release; reaffirmed September 2026)","AI matching, engagement scoring and ranked lead lists","AI Talent Explorer matching across CXM search (July 2026)"],
- ai_next=["Hiring Agent in Microsoft Teams (planned October 2026)","Interview Scheduling Agent (expected by end of 2026)"],
+ ai_live=["Hiring Agent in Microsoft Teams (Fall 2026 release, rolling out from October 26, 2026)","AI Sourcing Agent in CXM, searching the iCIMS database (Spring 2026 release; reaffirmed September 2026)","AI matching, engagement scoring and ranked lead lists","AI Talent Explorer matching across CXM search (July 2026)"],
+ ai_next=["Interview Scheduling Agent (expected by end of 2026)"],
  gov="TrustArc TRUSTe Responsible AI certification (March 2025) and an independent NYC Local Law 144 audit by BABL AI (December 2023). Says it aligns with ISO/IEC 42001 but is not certified.",
  pricing="CRM and CXM are separately licensed modules on the ATS; CXM includes the AI Sourcing Agent. Texting, digital assistant, career sites and video are add-ons. Quote-based.",
  traps=["Buying 'CRM' and finding the AI agent and automation are CXM-only","Multichannel reach is priced as separate modules, so the CRM line understates the full stack"],
  delivery="iCIMS professional services",
  impl_note="Treat it as a recruitment marketing build: pipelines, talent-network forms, campaign content and ATS rediscovery all need owners.",
  ask=["Run the AI Sourcing Agent on one of our requisitions: which sources does it search, and what do we lose on CRM versus CXM?","Show a campus event from invitation through mobile check-in to nurture and source-of-hire attribution. Which pieces are add-ons?"],
- src=[("iCIMS candidate engagement (CXM)","https://icims.com/talent-cloud-recruiting/products/candidate-relationship-management-software/"),("iCIMS Spring Release 2026","https://www.icims.com/company/newsroom/springrelease2026/"),("iCIMS Summer Release 2026","https://www.icims.com/company/newsroom/summerrelease2026/"),("iCIMS TrustArc Responsible AI certification (syndicated release)","https://oleantimesherald.com/2025/03/05/icims-becomes-first-enterprise-recruiting-software-certified-for-responsible-ai-by-trustarc"),("BABL AI on its iCIMS audit","https://babl.ai/babl-ai-empowers-icims-as-a-strategic-leader-in-responsible-ai-practices"),("iCIMS CEO announcement 2026","https://www.icims.com/company/newsroom/ceoannouncement2026/")]),
+ src=[("iCIMS 2026 Fall Release, October 20, 2026","https://www.icims.com/company/newsroom/fallrelease2026/"),("iCIMS candidate engagement (CXM)","https://icims.com/talent-cloud-recruiting/products/candidate-relationship-management-software/"),("iCIMS Spring Release 2026","https://www.icims.com/company/newsroom/springrelease2026/"),("iCIMS Summer Release 2026","https://www.icims.com/company/newsroom/summerrelease2026/"),("iCIMS TrustArc Responsible AI certification (syndicated release)","https://oleantimesherald.com/2025/03/05/icims-becomes-first-enterprise-recruiting-software-certified-for-responsible-ai-by-trustarc"),("BABL AI on its iCIMS audit","https://babl.ai/babl-ai-empowers-icims-as-a-strategic-leader-in-responsible-ai-practices"),("iCIMS CEO announcement 2026","https://www.icims.com/company/newsroom/ceoannouncement2026/")]),
 dict(id="jobvite", name="Jobvite", cat="ats", owner="Employ Inc.", req="jobvite",
  owner_note="Employ's enterprise ATS, positioned for regulated, multi-brand hiring. Employ's AI features have tended to reach Lever first.",
  seg=["mid","ent"], models=["professional","volume"], ats_int=[],

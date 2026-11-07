@@ -1,7 +1,7 @@
 # Three regional insight articles (October 16, 2026). Body HTML is the prose only; build_articles.py wraps it.
 ARTICLES = [
 dict(
- slug="americas-ai-hiring-notice-2027",
+ slug="americas-ai-hiring-notice-2027", updated="November 7, 2026", updated_iso="2026-11-07", note="<strong>Update, November 7, 2026:</strong> On October 16, 2026 the EEOC sent a final rule rescinding the Uniform Guidelines, including the 80% benchmark, to White House review, projecting a January 2027 effective date. Colorado's Attorney General held the rulemaking hearing on October 26, 2026; the law requires final rules before January 1, 2027.",
  region="americas",
  tag=("Regulation", "tag-coral"),
  title="The January 1, 2027 cliff: one AI-hiring notice for a patchwork that didn't go away",
@@ -40,7 +40,7 @@ dict(
     <p>Then treat each new law as a configuration change: a new jurisdiction in the notice, a new retention period, a new review route. That's a far cheaper posture than starting a project every time a legislature adjourns.</p>
     <p>The patchwork didn't go away. It converged. Build to the common core once, before January 1.</p>
 ''',
- sources=[
+ sources=[("Ogletree Deakins: EEOC sends Uniform Guidelines rescission to OIRA", "https://ogletree.com/insights-resources/blog-posts/eeoc-sends-oira-final-rule-rescinding-uniform-guidelines-on-employee-selection-procedures/"), ("Colorado Attorney General: rulemaking", "https://coag.gov/ai/"), 
   ("Epstein Becker Green — Inside Colorado's SB 26-189", "https://www.ebglaw.com/workforce-bulletin/inside-colorados-senate-bill-26-189-impacts-and-implications-for-employers"),
   ("Proskauer — Major developments put Colorado's AI law on ice", "https://www.proskauer.com/blog/major-developments-put-colorados-ai-law-on-ice-ahead-of-implementation"),
   ("Bass Berry — The CPPA's regulations on automated decision-making", "https://bassberry.com/news/ccpa-sept-2025-update/"),
@@ -54,7 +54,7 @@ dict(
   ("Sheppard Mullin — Texas TRAIGA employer takeaways", "https://www.sheppard.com/insights/blogs/texas-joins-the-ai-regulation-wave-key-employer-takeaways-from-the-texas-responsible-artificial-intelligence-governance-act"),
  ]),
 dict(
- slug="eu-pay-transparency-2026-payroll",
+ slug="eu-pay-transparency-2026-payroll", updated="November 7, 2026", updated_iso="2026-11-07", note="<strong>Update, November 7, 2026:</strong> Greece's main provisions took effect on November 1, 2026, and the standfirst now gives the end of the reporting year as a date (December 31, 2026) instead of a countdown.",
  region="emea",
  tag=("Pay", "tag-amber"),
  title="Your 2026 payroll is already your first EU pay-gap report",
@@ -62,10 +62,10 @@ dict(
  crumb="Your 2026 payroll is your first EU pay-gap report",
  seo_title="EU Pay Transparency Directive: Why 2026 Payroll Is Your First Report — The Signal HR",
  desc="Most EU countries missed the June 7, 2026 deadline to transpose the Pay Transparency Directive, and Brussels refused to delay it. First pay-gap reports, due June 7, 2027, cover 2026 pay. What HR should do this quarter.",
- standfirst="Most EU countries missed the June 7 deadline to transpose the Pay Transparency Directive, and Brussels has refused to delay it. The first reports, due June 7, 2027, cover calendar-year 2026, which ends in eleven weeks.",
+ standfirst="Most EU countries missed the June 7 deadline to transpose the Pay Transparency Directive, and Brussels has refused to delay it. The first reports, due June 7, 2027, cover calendar-year 2026, which ends on December 31, 2026.",
  minutes=4,
  body='''
-    <p>The EU Pay Transparency Directive (2023/970) had to be written into national law by <strong>June 7, 2026</strong>. Only four member states made it on time: Italy, Malta, Slovakia and Lithuania. Greece followed, with its main provisions taking effect on November 1. Most of the rest have draft bills, partial measures or nothing published yet. On May 22, 2026, the Commission said it "does not envisage" including the directive in any simplification or "stop-the-clock" package.</p>
+    <p>The EU Pay Transparency Directive (2023/970) had to be written into national law by <strong>June 7, 2026</strong>. Only four member states made it on time: Italy, Malta, Slovakia and Lithuania. Greece followed; its main provisions took effect on November 1, 2026. Most of the rest have draft bills, partial measures or nothing published yet. On May 22, 2026, the Commission said it "does not envisage" including the directive in any simplification or "stop-the-clock" package.</p>
     <p>That combination has led many multinationals to conclude they have time. They have less than they think.</p>
     <h2>Why "not transposed yet" doesn't mean "not yet"</h2>
     <p>The directive's reporting dates are fixed in the directive itself. Employers with <strong>250 or more workers</strong> report every year, and those with <strong>150 to 249</strong> report every three years, with the first reports for both due by <strong>June 7, 2027</strong>. Employers with 100 to 149 workers start on June 7, 2031. Each report covers the previous calendar year.</p>

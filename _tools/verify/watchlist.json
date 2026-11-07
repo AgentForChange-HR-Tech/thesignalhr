@@ -1,22 +1,268 @@
 [
- {"id": "saudi-pdpl-draft", "fact": "Saudi PDPL draft amendments (comments closed November 5, 2026): adopted text may change the automated-decision trigger", "where": ["compare/match (Saudi Arabia)"], "source": "https://www.clydeco.com/en/insights/2026/10/sdaia-publishes-draft-amendments-to-the-pdpl", "recheck_by": "2026-11-16", "status": "open"},
- {"id": "india-dpdp-timeline", "fact": "India DPDP substantive duties from May 13, 2027; MeitY proposed shortening the timeline", "where": ["compare/match (India)", "insights/apac-automated-hiring-clock"], "source": "https://ssrana.in/articles/meity-notifies-final-digital-personal-data-protection-rules-2025/", "recheck_by": "2026-11-16", "status": "open"},
- {"id": "chile-delay-bill", "fact": "Chile Law 21,719 in force from December 1, 2026; a bill to delay it to December 1, 2027 is in the Senate", "where": ["compare/match (Chile)"], "source": "https://www.carey.cl/gobierno-ingresa-proyecto-de-ley-que-posterga-en-un-ano-entrada-en-vigor-de-la-ley-sobre-proteccion-de-datos-personales", "recheck_by": "2026-11-20", "status": "open"},
- {"id": "eeoc-uniform-guidelines", "fact": "EEOC plans to rescind the Uniform Guidelines (80% benchmark) in November 2026, effective January 2027", "where": ["compare/match (United States federal)"], "source": "https://ogletree.com/insights-resources/blog-posts/the-eeocs-regulatory-agenda-10-signs-of-intent/", "recheck_by": "2026-11-30", "status": "open"},
- {"id": "colorado-rules-stay", "fact": "Colorado SB 26-189 from January 1, 2027; rules pending and enforcement stayed by a court", "where": ["compare/match (Colorado)", "insights/americas-ai-hiring-notice-2027", "coverage calendar"], "source": "https://www.ebglaw.com/workforce-bulletin/inside-colorados-senate-bill-26-189-impacts-and-implications-for-employers", "recheck_by": "2026-11-30", "status": "open"},
- {"id": "mobley-v-workday", "fact": "Mobley v. Workday: ADEA collective preliminarily certified; decertification or appeal possible", "where": ["compare/match (United States federal)"], "source": "https://www.maynardnexsen.com/publication-emerging-liability-for-ai-driven-hiring-tools-key-developments-in-mobley-v-workday-inc", "recheck_by": "2026-12-01", "status": "open"},
- {"id": "us-state-preemption", "fact": "Federal executive order on state AI laws (no preemption by itself); any federal preemption law", "where": ["compare/match (United States federal)", "Briefing context"], "source": "https://www.lawandtheworkplace.com/2026/04/what-president-trumps-ai-executive-order-14365-means-for-employers/", "recheck_by": "2026-12-01", "status": "open"},
- {"id": "texas-ag-portal", "fact": "Texas TRAIGA complaint portal launch", "where": ["compare/match (Texas)"], "source": "https://www.duanemorris.com/alerts/texas_new_ai_law_is_now_in_effect_what_employers_need_to_know_about_traiga2_0526.html", "recheck_by": "2026-12-01", "status": "open"},
- {"id": "australia-apps", "fact": "Australia APPs 1.7-1.9 automated-decision transparency from December 10, 2026: change wording to 'in force since' after that date", "where": ["compare/match (Australia)", "insights/apac-automated-hiring-clock", "coverage calendar"], "source": "https://www.oaic.gov.au/news/media-centre/new-resources-on-transparency-for-use-of-ai-and-automated-decision-making", "recheck_by": "2026-12-11", "status": "open"},
- {"id": "spain-ai-bill", "fact": "Spain's national AI governance bill in Congress since June 2026", "where": ["compare/match (Spain)"], "source": "https://cms.law/en/esp/publication/claves-del-proyecto-de-ley-organica-de-inteligencia-artificial", "recheck_by": "2026-12-15", "status": "open"},
- {"id": "canada-c36", "fact": "Canada Bill C-36 (automated-decision explanations) awaiting second reading", "where": ["compare/match (Canada federal)"], "source": "https://www.parl.ca/legisinfo/en/bill/45-1/c-36", "recheck_by": "2026-12-15", "status": "open"},
- {"id": "california-admt", "fact": "California CPPA ADMT duties from January 1, 2027: change wording to 'in force since' after that date", "where": ["compare/match (California)", "insights/americas-ai-hiring-notice-2027"], "source": "https://bassberry.com/news/ccpa-sept-2025-update/", "recheck_by": "2027-01-04", "status": "open"},
- {"id": "delaware-hb380", "fact": "Delaware HB 380 automated-decision provisions from January 1, 2027", "where": ["compare/match ('Another state' note)"], "source": "https://www.morganlewis.com/pubs/2026/10/delaware-significantly-expands-its-consumer-data-privacy-law", "recheck_by": "2027-01-04", "status": "open"},
- {"id": "comparisons-quarterly", "fact": "Quarterly re-verification of all ATS, CRM and match profiles (verified October 2026)", "where": ["compare/ats", "compare/crm", "compare/match"], "source": "_tools/PUBLISHING.md Gate 6", "recheck_by": "2027-01-15", "status": "open"},
- {"id": "korea-fines", "fact": "South Korea AI Basic Act one-year grace period before fines ends around January 22, 2027", "where": ["compare/match (South Korea)", "insights/apac-automated-hiring-clock"], "source": "https://www.cooley.com/news/insight/2026/2026-01-27-south-koreas-ai-basic-act-overview-and-key-takeaways", "recheck_by": "2027-01-25", "status": "open"},
- {"id": "philippines-ai-bill", "fact": "Philippines AI bill treating hiring as high-risk in a House working group", "where": ["compare/match (Philippines)"], "source": "https://leglobal.law/2026/02/25/philippines-hiring-by-algorithm-what-philippine-employers-need-to-know-about-ai-in-recruitment/", "recheck_by": "2027-01-15", "status": "open"},
- {"id": "israel-ppa-guidance", "fact": "Israel Privacy Protection Authority AI guidance still a draft", "where": ["compare/match (Israel)"], "source": "https://practiceguides.chambers.com/practice-guides/data-protection-privacy-2026/israel", "recheck_by": "2027-01-15", "status": "open"},
- {"id": "uae-pdpl-regs", "fact": "UAE PDPL executive regulations not yet issued", "where": ["compare/match (United Arab Emirates)"], "source": "https://www.morganlewis.com/pubs/2026/06/uae-establishes-federal-authority-for-artificial-intelligence-and-data", "recheck_by": "2027-01-15", "status": "open"},
- {"id": "eu-ai-act-dates", "fact": "EU AI Act high-risk employment duties from December 2, 2027 (Digital Omnibus)", "where": ["compare/match (European Union)", "insights/eu-ai-act-hr-deadline"], "source": "https://eur-lex.europa.eu/eli/reg/2026/1744/oj/eng", "recheck_by": "2027-03-01", "status": "open"},
- {"id": "connecticut-notices", "fact": "Connecticut CART Act notices from October 1, 2027", "where": ["compare/match (Connecticut)"], "source": "https://www.ropesgray.com/en/insights/alerts/2026/06/connecticut-enacts-sweeping-ai-law-covering-employment-healthcare-and-online-safety", "recheck_by": "2027-09-15", "status": "open"}
+ {
+  "id": "chile-delay-bill",
+  "fact": "Chile Law 21,719 in force from December 1, 2026; the Senate approved on October 28, 2026 a bill moving it to October 15, 2027, now in the Chamber of Deputies",
+  "where": [
+   "compare/match (Chile)"
+  ],
+  "source": "https://www.garrigues.com/es_ES/noticia/senado-chileno-aprueba-proyecto-ley-busca-postergar-15-octubre-2027-entrada-vigencia-nueva",
+  "recheck_by": "2026-11-30",
+  "status": "open"
+ },
+ {
+  "id": "eeoc-uniform-guidelines",
+  "fact": "EEOC final rule rescinding the Uniform Guidelines at White House (OIRA) review since October 16, 2026; projected effective January 2027; not yet published",
+  "where": [
+   "compare/match (United States federal)"
+  ],
+  "source": "https://ogletree.com/insights-resources/blog-posts/eeoc-sends-oira-final-rule-rescinding-uniform-guidelines-on-employee-selection-procedures/",
+  "recheck_by": "2026-11-30",
+  "status": "open"
+ },
+ {
+  "id": "mobley-v-workday",
+  "fact": "Mobley v. Workday: ADEA collective preliminarily certified; decertification or appeal possible",
+  "where": [
+   "compare/match (United States federal)"
+  ],
+  "source": "https://www.maynardnexsen.com/publication-emerging-liability-for-ai-driven-hiring-tools-key-developments-in-mobley-v-workday-inc",
+  "recheck_by": "2026-12-01",
+  "status": "open"
+ },
+ {
+  "id": "us-state-preemption",
+  "fact": "Federal executive order on state AI laws (no preemption by itself); any federal preemption law",
+  "where": [
+   "compare/match (United States federal)",
+   "Briefing context"
+  ],
+  "source": "https://www.lawandtheworkplace.com/2026/04/what-president-trumps-ai-executive-order-14365-means-for-employers/",
+  "recheck_by": "2026-12-01",
+  "status": "open"
+ },
+ {
+  "id": "texas-ag-portal",
+  "fact": "Texas TRAIGA complaint portal launch",
+  "where": [
+   "compare/match (Texas)"
+  ],
+  "source": "https://www.duanemorris.com/alerts/texas_new_ai_law_is_now_in_effect_what_employers_need_to_know_about_traiga2_0526.html",
+  "recheck_by": "2026-12-01",
+  "status": "open"
+ },
+ {
+  "id": "australia-apps",
+  "fact": "Australia APPs 1.7-1.9 automated-decision transparency from December 10, 2026: change wording to 'in force since' after that date",
+  "where": [
+   "compare/match (Australia)",
+   "insights/apac-automated-hiring-clock",
+   "coverage calendar"
+  ],
+  "source": "https://www.oaic.gov.au/news/media-centre/new-resources-on-transparency-for-use-of-ai-and-automated-decision-making",
+  "recheck_by": "2026-12-11",
+  "status": "open"
+ },
+ {
+  "id": "india-dpdp-timeline",
+  "fact": "India DPDP: consent-manager provisions from November 13, 2026; substantive duties from May 13, 2027. MeitY's January 2026 proposal to shorten the timeline was not notified as of October 8, 2026",
+  "where": [
+   "compare/match (India)",
+   "insights/apac-automated-hiring-clock"
+  ],
+  "source": "https://theprivacylabs.com/blogs/dpdp-13-november-2026-what-starts",
+  "recheck_by": "2026-12-15",
+  "status": "open"
+ },
+ {
+  "id": "colorado-rules-stay",
+  "fact": "Colorado SB 26-189 from January 1, 2027; rulemaking hearing held October 26, 2026, final rules due before January 1, 2027; enforcement stayed by a court",
+  "where": [
+   "compare/match (Colorado)",
+   "insights/americas-ai-hiring-notice-2027",
+   "coverage calendar"
+  ],
+  "source": "https://coag.gov/ai/",
+  "recheck_by": "2026-12-15",
+  "status": "open"
+ },
+ {
+  "id": "spain-ai-bill",
+  "fact": "Spain's national AI governance bill in Congress since June 2026",
+  "where": [
+   "compare/match (Spain)"
+  ],
+  "source": "https://cms.law/en/esp/publication/claves-del-proyecto-de-ley-organica-de-inteligencia-artificial",
+  "recheck_by": "2026-12-15",
+  "status": "open"
+ },
+ {
+  "id": "canada-c36",
+  "fact": "Canada Bill C-36 (automated-decision explanations) awaiting second reading",
+  "where": [
+   "compare/match (Canada federal)"
+  ],
+  "source": "https://www.parl.ca/legisinfo/en/bill/45-1/c-36",
+  "recheck_by": "2026-12-15",
+  "status": "open"
+ },
+ {
+  "id": "california-admt",
+  "fact": "California CPPA ADMT duties from January 1, 2027: change wording to 'in force since' after that date",
+  "where": [
+   "compare/match (California)",
+   "insights/americas-ai-hiring-notice-2027"
+  ],
+  "source": "https://bassberry.com/news/ccpa-sept-2025-update/",
+  "recheck_by": "2027-01-04",
+  "status": "open"
+ },
+ {
+  "id": "delaware-hb380",
+  "fact": "Delaware HB 380 automated-decision provisions from January 1, 2027",
+  "where": [
+   "compare/match ('Another state' note)"
+  ],
+  "source": "https://www.morganlewis.com/pubs/2026/10/delaware-significantly-expands-its-consumer-data-privacy-law",
+  "recheck_by": "2027-01-04",
+  "status": "open"
+ },
+ {
+  "id": "saudi-pdpl-draft",
+  "fact": "Saudi PDPL draft amendments: comment period closed November 5, 2026; not yet adopted. Adopted text may change the automated-decision trigger",
+  "where": [
+   "compare/match (Saudi Arabia)"
+  ],
+  "source": "https://www.clydeco.com/en/insights/2026/10/sdaia-publishes-draft-amendments-to-the-pdpl",
+  "recheck_by": "2027-01-15",
+  "status": "open"
+ },
+ {
+  "id": "comparisons-quarterly",
+  "fact": "Quarterly re-verification of all ATS, CRM and match profiles (verified October 2026)",
+  "where": [
+   "compare/ats",
+   "compare/crm",
+   "compare/match"
+  ],
+  "source": "_tools/PUBLISHING.md Gate 6",
+  "recheck_by": "2027-01-15",
+  "status": "open"
+ },
+ {
+  "id": "philippines-ai-bill",
+  "fact": "Philippines AI bill treating hiring as high-risk in a House working group",
+  "where": [
+   "compare/match (Philippines)"
+  ],
+  "source": "https://leglobal.law/2026/02/25/philippines-hiring-by-algorithm-what-philippine-employers-need-to-know-about-ai-in-recruitment/",
+  "recheck_by": "2027-01-15",
+  "status": "open"
+ },
+ {
+  "id": "israel-ppa-guidance",
+  "fact": "Israel Privacy Protection Authority AI guidance still a draft",
+  "where": [
+   "compare/match (Israel)"
+  ],
+  "source": "https://practiceguides.chambers.com/practice-guides/data-protection-privacy-2026/israel",
+  "recheck_by": "2027-01-15",
+  "status": "open"
+ },
+ {
+  "id": "uae-pdpl-regs",
+  "fact": "UAE PDPL executive regulations not yet issued",
+  "where": [
+   "compare/match (United Arab Emirates)"
+  ],
+  "source": "https://www.morganlewis.com/pubs/2026/06/uae-establishes-federal-authority-for-artificial-intelligence-and-data",
+  "recheck_by": "2027-01-15",
+  "status": "open"
+ },
+ {
+  "id": "dhs-ics-deference",
+  "fact": "DHS proposal to end USCIS deference to prior approvals for H-1B, L-1 and other I-129 extensions (Federal Register October 14, 2026; comments close November 13, 2026); proposal only",
+  "where": [
+   "coverage (Mobility & Immigration)",
+   "coverage calendar"
+  ],
+  "source": "https://www.duanemorris.com/alerts/dhs_proposes_end_deference_prior_approvals_h1b_l1_other_form_I129_extensions_1026.html",
+  "recheck_by": "2027-01-15",
+  "status": "open"
+ },
+ {
+  "id": "uk-pay-in-adverts",
+  "fact": "UK government plans a legal requirement to publish pay in job adverts (announced November 5, 2026); legislation not yet introduced",
+  "where": [
+   "coverage (Talent Acquisition)",
+   "coverage radar"
+  ],
+  "source": "https://www.gov.uk/government/news/new-say-what-you-pay-law-to-help-young-people-into-work",
+  "recheck_by": "2027-01-15",
+  "status": "open"
+ },
+ {
+  "id": "sap-techwolf",
+  "fact": "SAP's acquisition of TechWolf expected to close in Q4 2026",
+  "where": [
+   "coverage (L&D & Skills)"
+  ],
+  "source": "https://news.sap.com/2026/10/sap-to-acquire-techwolf-evidence-based-work-age-of-ai/",
+  "recheck_by": "2027-01-15",
+  "status": "open"
+ },
+ {
+  "id": "dayforce-ribbon",
+  "fact": "Dayforce closed its Ribbon purchase (HR Brew, November 5, 2026); agentic recruiting experiences planned through 2027; no integration date",
+  "where": [
+   "compare/ats (Dayforce Recruiting)",
+   "coverage (HR Tech)",
+   "briefing 2026-11-02"
+  ],
+  "source": "https://www.hr-brew.com/stories/dayforce-closes-deal-to-acquire-ai-interviewing-platform-ribbon",
+  "recheck_by": "2027-01-15",
+  "status": "open"
+ },
+ {
+  "id": "icims-scheduling-agent",
+  "fact": "iCIMS Interview Scheduling Agent expected by the end of 2026",
+  "where": [
+   "compare/ats (iCIMS)",
+   "compare/crm (iCIMS)"
+  ],
+  "source": "https://www.icims.com/company/newsroom/fallrelease2026/",
+  "recheck_by": "2027-01-15",
+  "status": "open"
+ },
+ {
+  "id": "korea-fines",
+  "fact": "South Korea AI Basic Act one-year grace period before fines ends around January 22, 2027",
+  "where": [
+   "compare/match (South Korea)",
+   "insights/apac-automated-hiring-clock"
+  ],
+  "source": "https://www.cooley.com/news/insight/2026/2026-01-27-south-koreas-ai-basic-act-overview-and-key-takeaways",
+  "recheck_by": "2027-01-25",
+  "status": "open"
+ },
+ {
+  "id": "eu-ai-act-dates",
+  "fact": "EU AI Act high-risk employment duties from December 2, 2027 (Digital Omnibus)",
+  "where": [
+   "compare/match (European Union)",
+   "insights/eu-ai-act-hr-deadline"
+  ],
+  "source": "https://eur-lex.europa.eu/eli/reg/2026/1744/oj/eng",
+  "recheck_by": "2027-03-01",
+  "status": "open"
+ },
+ {
+  "id": "connecticut-notices",
+  "fact": "Connecticut CART Act notices from October 1, 2027",
+  "where": [
+   "compare/match (Connecticut)"
+  ],
+  "source": "https://www.ropesgray.com/en/insights/alerts/2026/06/connecticut-enacts-sweeping-ai-law-covering-employment-healthcare-and-online-safety",
+  "recheck_by": "2027-09-15",
+  "status": "open"
+ }
 ]

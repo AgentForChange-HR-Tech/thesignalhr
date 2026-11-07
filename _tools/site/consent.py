@@ -111,7 +111,7 @@ COOKIES = (
     "analytics cookies off by default in the EU, the UK, Switzerland, Brazil and Quebec. Your choice is kept in your browser for up to "
     "12 months (6 months if you say no). You can change it any time with <strong>Cookie settings</strong> at the bottom of every page, "
     'or here: <button type="button" class="cookie-link" data-consent-open>Cookie settings</button>.</p>\n'
-    "    <p>The newsletter signup form is Substack's own embedded form, covered by Substack's privacy policy. "
+    "    <p>Nothing from Substack loads until you press Subscribe; then Substack's page opens and its privacy policy applies. "
     "The site's fonts are served from this site, not from Google.</p>\n")
 PRIV_PAIRS = [
     ("we count visits so we know what's useful. We don't run ads,",

@@ -20,7 +20,7 @@ for a in ARTICLES:
     h = re.sub(r'(<link rel="canonical" href=")[^"]*(">)', lambda m: m.group(1) + url + m.group(2), h)
     h = re.sub(r'(<meta property="og:url" content=")[^"]*(">)', lambda m: m.group(1) + url + m.group(2), h)
     ld = {"@context": "https://schema.org", "@type": "Article", "headline": a["title"], "description": a["desc"],
-          "datePublished": "2026-10-16", "dateModified": "2026-10-16",
+          "datePublished": "2026-10-16", "dateModified": a.get("updated_iso", "2026-10-16") if a.get("updated") else "2026-10-16",
           "author": {"@type": "Person", "name": "Alex Rivera", "url": "https://thesignalhr.com/about/"},
           "publisher": {"@type": "Organization", "name": "The Signal HR", "url": "https://thesignalhr.com/"},
           "mainEntityOfPage": url, "about": LABEL[a["region"]]}
@@ -34,10 +34,10 @@ for a in ARTICLES:
       <span class="tag {a["tag"][1]}">{a["tag"][0]}</span> <span class="region-tag">{LABEL[a["region"]]}</span>
       <h1>{a["h1"]}</h1>
       <p class="standfirst">{E(a["standfirst"])}</p>
-      <div class="article-meta"><span>By Alex Rivera</span><span><a href="/about/#ai">AI-assisted</a></span><span>October 16, 2026</span><span>{a["minutes"]} min read</span></div>
+      <div class="article-meta"><span>By Alex Rivera</span><span><a href="/about/#ai">AI-assisted</a></span><span>October 16, 2026</span>{('<span>Updated ' + a["updated"] + '</span>') if a.get("updated") else ""}<span>{a["minutes"]} min read</span></div>
     </div>
   </section>
-  <div class="prose-wrap prose">{a["body"]}
+  <div class="prose-wrap prose">{(chr(10) + '    <p class="update-note">' + a["note"] + '</p>') if a.get("note") else ""}{a["body"]}
     <p><a href="/coverage/#calendar">See every upcoming date in the regional calendar →</a></p>
     <div class="sources"><strong>Sources</strong><ul>{src}</ul></div>
   </div>

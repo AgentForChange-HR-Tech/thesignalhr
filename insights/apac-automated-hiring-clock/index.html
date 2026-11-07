@@ -180,8 +180,12 @@
       <div class="news-band">
         <h2>Get the signal <em>each week</em>.</h2>
         <p>The weekly signal: what changed in HR tech, what it may mean, and what to check. Free forever. <a href="/kits/">See the buyer kits we're building</a>.</p>
-        <iframe src="https://thesignalhr.substack.com/embed" title="Subscribe to The Signal HR newsletter" loading="lazy"></iframe>
-        <p class="micro">No spam. Unsubscribe anytime.</p>
+        <form class="signal-sub" data-placement="band" action="https://thesignalhr.substack.com/api/v1/free?nojs=true" method="post" target="_blank" rel="noopener">
+          <input type="hidden" name="source" value="embed">
+          <label for="sub-band">Get the weekly signal by email</label>
+          <div class="signal-sub-row"><input id="sub-band" type="email" name="email" placeholder="you@company.com" autocomplete="email" required><button type="submit">Subscribe</button></div>
+          <small>Free. Substack sends the newsletter and opens in a new tab to confirm. Unsubscribe anytime.</small>
+        </form>
       </div>
     </div>
   </section>
