@@ -166,6 +166,7 @@ VOICE_WARN = [
     (r"\b(obviously|of course|make no mistake|needless to say|simply put|the truth is|everyone knows)\b", "talks down to readers"),
     (r"\bwhat most (people|teams|hr leaders|buyers|companies) (get wrong|miss|don't know)\b", "talks down to readers"),
     (r"\byou (must|need to) (decide|act|move|buy|choose)\b|\bbefore a vendor decides\b", "an order to readers; offer it as a question or a check"),
+    (r"\b\d+\+? years (of |inside |in |running |building )(enterprise )?(hr|recruiting|people)\b", "a years-of-experience figure; describe the experience without a number"),
 ]
 for f, raw in RAW.items():
     if is_archive(f):

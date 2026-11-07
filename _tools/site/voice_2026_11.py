@@ -186,6 +186,21 @@ rw("_tools/site/kits.py", pairs(KITS + [
 ]))
 rw("_tools/site/search_index.py", pairs([("_tools/GUARDRAILS.md, section 6).", "_tools/GUARDRAILS.md, section 7).")], required=False))
 
+# ---------------------------------------------------------------- no years-of-experience figure (Alex, November 7, 2026)
+YEARS = [
+    ("curated by Alex Rivera — 15 years inside enterprise HR technology.", "curated by Alex Rivera, a practitioner in enterprise HR technology."),
+    ("HR systems and AI strategy practitioner with 15 years of enterprise HR technology experience.",
+     "HR systems and AI strategy practitioner with hands-on enterprise HR technology experience."),
+    ("<strong>Practitioner-led</strong> — 15 years running enterprise HR systems",
+     "<strong>Practitioner-led</strong> — hands-on experience running enterprise HR systems"),
+    ("<strong>Alex Rivera</strong> — 15 years inside enterprise HR technology: running migrations,",
+     "<strong>Alex Rivera</strong> — a practitioner in enterprise HR technology: running migrations,"),
+    ("<strong>Alex Rivera</strong> has spent 15 years inside enterprise HR technology — running migrations,",
+     "<strong>Alex Rivera</strong> is a practitioner in enterprise HR technology, with hands-on experience running migrations,"),
+]
+for f in ("index.html", "about/index.html"):
+    rw(f, pairs(YEARS, required=False))
+
 # ---------------------------------------------------------------- rebuild the comparison pages from their sources
 def run(cmd):
     r = subprocess.run([sys.executable, "-B"] + cmd, capture_output=True, text=True)

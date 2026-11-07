@@ -25,7 +25,7 @@ The Signal is one practitioner sharing a resource with other practitioners. It i
 - **Don't put others down.** No swipes at other sites, analysts, vendors or readers ("affiliate pages in disguise", "vendor theater", "chatbots in a trench coat", "what most people get wrong"). Describe what we do, not what others get wrong.
 - **Readers are peers.** Don't tell readers what they need or must do, and don't promise outcomes ("decisions you can't get wrong", "walk in already knowing", "sound informed"). Many readers know their own systems, rules and organizations better than we do.
 - **Name the limits.** Say what isn't known, what's unclear or disputed, and where a reader's counsel, team or vendor will know more. The "so what" is one practitioner's read, labeled as analysis.
-- **Credentials, stated plainly.** Alex's experience is described as fact ("15 years in enterprise HR technology"), never as a trump card ("someone who has actually done it").
+- **Credentials, stated plainly.** Alex's experience is described as fact ("a practitioner in enterprise HR technology"), without a number of years, never as a trump card ("someone who has actually done it").
 - **Invite correction and context.** Make it easy to point out errors or add a different view, and log corrections in the open.
 - **Be open about AI.** AI tools help with research, drafting and source checks; the About page (/about/#ai) says how, bylines carry an "AI-assisted" link, and Alex approves every update before it's published. Never claim the site is made without AI ("not an algorithm", "human-written"), and update the About page when the process changes.
 - Neutral instructions inside tools are fine ("Pick the countries where you hire"). Telling readers how to run their organization is not.
