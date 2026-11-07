@@ -75,7 +75,7 @@ out.append(f'''
       <span class="kicker">Comparison Hub · Recruiting CRM</span>
       <h1 style="max-width:17em;">Recruiting CRMs: use the one you own, or <em style="color:var(--signal);">buy another?</em></h1>
       <p class="standfirst" style="max-width:41em;">{len(D.P)} platforms, from the CRM already inside your ATS or HCM suite to standalone CRMs that sit on top of it. Check whether a separate CRM would pay off, filter to your ATS, and compare up to three side by side. No vendor paid to be here, rank higher or be described favorably.</p>
-      <div class="article-meta"><span>Reviewed {E(D.VERIFIED)}</span><span>{len(D.P)} platforms</span><span>Independent · unsponsored</span></div>
+      <div class="article-meta"><span>Reviewed {E(D.VERIFIED)}</span><span>{len(D.P)} platforms</span><span>Independent · unsponsored</span><span><a href="/about/#ai">AI-assisted</a></span></div>
       <nav class="ats-jump" aria-label="On this page"><a href="#need">Do you need one?</a><a href="#finder">Find your shortlist</a><a href="#compare">Compare</a><a href="#landscape">The landscape</a><a href="#profiles">Platform profiles</a><a href="#rfp">RFP questions</a><a href="#method">How we review</a><a href="/compare/ats/">ATS platforms →</a><a href="/compare/match/">Applicant match →</a></nav>
     </div>
   </section>''')
@@ -109,7 +109,7 @@ out.append(f'''
   <section class="section" id="need" style="padding-top:0;">
     <div class="wrap">
       <div class="section-head"><div><span class="kicker">Step 1</span><h2>Do you need a <em>separate CRM?</em></h2></div></div>
-      <p class="lede">Most ATS platforms and HCM suites now include a CRM, and many teams already pay for one they barely use. Whether a separate CRM adds anything depends on how much pipeline work there is and who would run it. Answer what you know; a summary of your answers, the capabilities they point to and your question list build below.</p>
+      <p class="lede">Many ATS platforms and HCM suites now include CRM features, so a team may already license one. Whether a separate CRM adds anything depends on how much pipeline work there is and who would run it. Answer what you know; a summary of your answers, the capabilities they point to and your question list build below.</p>
       <form id="drivers" onsubmit="return false">{"".join(groups_html)}
       </form>
       <div class="card drivers-sum" id="drivers-sum">
@@ -201,7 +201,7 @@ out.append(f'''
   <section class="section section-alt" id="rfp">
     <div class="wrap" style="max-width:860px;">
       <div class="section-head"><div><span class="kicker">Free to use</span><h2>The {len(D.RFP)}-question <em>CRM RFP bank</em></h2></div></div>
-      <p class="lede">Questions that separate a demo's best campaign from what your recruiters will do on a Tuesday. The discomfort is diagnostic.</p>
+      <p class="lede">Questions to see how campaigns would run day to day, not only in a demo.</p>
       <ol class="rfp">{rfp}</ol>
     </div>
   </section>

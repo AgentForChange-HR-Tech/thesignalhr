@@ -3,14 +3,93 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-MGQ5MSQM2W"></script>
+<!-- >>> consent (managed by _tools/site/consent.py) -->
 <script>
+(function () {
+  // Cookie consent by location. Managed by _tools/site/consent.py: edit this file, then rerun it.
+  var ID = "G-MGQ5MSQM2W", KEY = "signal-consent", DAY = 864e5;
+  // Google consent mode: analytics cookies off by default where Google places the visitor's IP
+  var OPTIN_REGIONS = ["AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "HU", "IE", "IT", "LV",
+    "LT", "LU", "MT", "NL", "PL", "PT", "RO", "SK", "SI", "ES", "SE", "IS", "LI", "NO", "GB", "CH", "BR", "CA-QC"];
+  // The browser's time zone picks the default, on the device; nothing is sent. Unknown or UTC counts as opt-in.
+  var OPTIN_TZ = new RegExp("^(Europe/|Arctic/|Brazil/|Etc/" +
+    "|Atlantic/(Reykjavik|Canary|Madeira|Azores|Faroe|Faeroe)$" +
+    "|Asia/(Nicosia|Famagusta)$|Africa/Ceuta$|Indian/(Reunion|Mayotte)$|Canada/Eastern$" +
+    "|America/(Toronto|Montreal|Nipigon|Thunder_Bay|Blanc-Sablon|Guadeloupe|Martinique|Cayenne|Marigot|St_Barthelemy" +
+    "|Sao_Paulo|Bahia|Fortaleza|Recife|Maceio|Belem|Araguaina|Santarem|Manaus|Boa_Vista|Porto_Velho|Rio_Branco" +
+    "|Eirunepe|Cuiaba|Campo_Grande|Noronha)$" +
+    "|(GB|GB-Eire|Eire|Iceland|Poland|Portugal|CET|EET|MET|WET|UTC|UCT|GMT|Universal|Zulu)$)");
+  var tz = "";
+  try { tz = Intl.DateTimeFormat().resolvedOptions().timeZone || ""; } catch (e) {}
+  var tier = (!tz || OPTIN_TZ.test(tz)) ? "optin" : "notice";
+  var gpc = navigator.globalPrivacyControl === true || navigator.doNotTrack === "1" || window.doNotTrack === "1";
+
+  function read() {
+    try {
+      var v = JSON.parse(localStorage.getItem(KEY) || "null");
+      var keep = v && (v.c === "denied" ? 182 : 365) * DAY;
+      if (v && v.c && Date.now() - v.t < keep) return v.c;
+    } catch (e) {}
+    return "";
+  }
+  function save(c) { try { localStorage.setItem(KEY, JSON.stringify({ c: c, t: Date.now() })); } catch (e) {} }
+
+  var choice = read(), loaded = false;
+  var noop = function () {};
+  var push = function () { window.dataLayer.push(arguments); };
   window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-MGQ5MSQM2W');
+  window.gtag = noop;                         // nothing is queued or sent until analytics may run
+
+  function consent(a) {
+    return { analytics_storage: a, ad_storage: "denied", ad_user_data: "denied", ad_personalization: "denied" };
+  }
+  function load(granted) {
+    window["ga-disable-" + ID] = false;
+    window.gtag = push;
+    if (loaded) { push("consent", "update", { analytics_storage: "granted" }); return; }
+    loaded = true;
+    if (!granted) { var r = consent("denied"); r.region = OPTIN_REGIONS; push("consent", "default", r); }
+    push("consent", "default", consent("granted"));   // the region default above wins where it applies
+    push("set", "ads_data_redaction", true);
+    push("js", new Date());
+    push("config", ID, { cookie_expires: 33696000, allow_google_signals: false, allow_ad_personalization_signals: false });
+    var s = document.createElement("script");
+    s.async = true;
+    s.src = "https://www.googletagmanager.com/gtag/js?id=" + ID;
+    document.head.appendChild(s);
+  }
+  function clearCookies() {
+    var host = location.hostname, parts = host.split("."), doms = ["", host, "." + host];
+    if (parts.length > 2) doms.push("." + parts.slice(-2).join("."));
+    document.cookie.split(";").forEach(function (p) {
+      var n = p.split("=")[0].trim();
+      if (/^_ga/.test(n) || n === "_gid") {
+        doms.forEach(function (d) { document.cookie = n + "=; Max-Age=0; path=/" + (d ? "; domain=" + d : ""); });
+      }
+    });
+  }
+  function allow() { choice = "granted"; save(choice); load(true); }
+  function deny() {
+    choice = "denied"; save(choice);
+    if (loaded) push("consent", "update", { analytics_storage: "denied" });
+    window["ga-disable-" + ID] = true;
+    window.gtag = noop;
+    clearCookies();
+  }
+  function on() { return choice === "granted" || (tier === "notice" && !gpc && choice !== "denied"); }
+
+  if (choice === "granted") load(true);
+  else if (on()) load(false);
+
+  window.SignalConsent = {
+    tier: tier, gpc: gpc, allow: allow, deny: deny, on: on,
+    choice: function () { return choice; },
+    needsBanner: function () { return !gpc && (choice === "" || (choice === "noticed" && tier === "optin")); },
+    noticed: function () { if (tier === "notice" && choice === "") { choice = "noticed"; save(choice); } }
+  };
+})();
 </script>
+<!-- <<< consent -->
 
 <title>Privacy Policy — The Signal HR</title>
 <meta name="description" content="How The Signal HR handles your information: what analytics we use, how the Substack newsletter signup works, and what we never do with your data.">
@@ -26,9 +105,6 @@
 <meta name="twitter:description" content="How The Signal HR handles your information: what analytics we use, how the Substack newsletter signup works, and what we never do with your data.">
 <meta name="twitter:image" content="https://thesignalhr.com/og-cover.png">
 <meta name="robots" content="index, follow">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/site.css">
 <script>/* prevent theme flash */(function(){try{var t=localStorage.getItem("signal-theme")||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "Privacy policy", "url": "https://thesignalhr.com/privacy/", "dateModified": "2026-10-20", "publisher": {"@type": "Organization", "name": "The Signal HR", "url": "https://thesignalhr.com/"}}</script>
@@ -61,32 +137,40 @@
     <div class="prose-wrap">
       <span class="kicker">Privacy</span>
       <h1>Privacy, in <em style="color:var(--signal);">plain words</em>.</h1>
-      <div class="article-meta"><span>Effective October 20, 2026</span></div>
+      <div class="article-meta"><span>Effective October 20, 2026</span><span>Updated November 6, 2026</span></div>
     </div>
   </section>
   <div class="prose-wrap prose">
-    <p><strong>The short version:</strong> we count visits so we know what's useful. We don't run ads, we don't sell your information, and we never share it with HR-tech vendors. The newsletter signup is handled by Substack.</p>
+    <p><strong>The short version:</strong> we count visits so we know what's useful, and where the law asks for consent first, only if you allow it. We don't run ads, we don't sell your information, and we never share it with HR-tech vendors. The newsletter signup is handled by Substack.</p>
     <h2>Who we are</h2>
     <p>The Signal HR (thesignalhr.com) is an independent publication run by Alex Rivera. Questions about this policy: <a href="mailto:alex@thesignalhr.com">alex@thesignalhr.com</a>.</p>
     <h2>What we collect, and why</h2>
     <ul>
-      <li><strong>Analytics.</strong> Google Analytics 4 tells us which pages and tools get used: pages viewed, approximate location (country or city), device and browser, how you arrived, and interactions such as filter choices on comparison pages. It sets cookies (named <code>_ga</code>) to tell visits apart. We use it only to improve the site.</li>
+      <li><strong>Analytics.</strong> Google Analytics 4 tells us which pages and tools get used: pages viewed, approximate location (country or city), device and browser, how you arrived, and interactions such as filter choices on comparison pages. It sets cookies (named <code>_ga</code>, kept for up to 13 months) to tell visits apart, only when your cookie choice allows it (see <a href="#cookies">Cookies and your choice</a>). Google signals and advertising features are off. We use it only to improve the site.</li>
       <li><strong>Newsletter.</strong> If you subscribe, Substack collects your email address and sends the newsletter, under <a href="https://substack.com/privacy" target="_blank" rel="noopener">Substack's privacy policy</a>. The signup form on our pages is Substack's own embedded form.</li>
       <li><strong>Email.</strong> If you write to us, we keep your message and address so we can reply.</li>
-      <li><strong>Settings in your browser.</strong> The site remembers your light or dark theme and your region filter in your browser's local storage (<code>signal-theme</code>, <code>signal-region</code>). They stay on your device, and clearing your browser data removes them.</li>
+      <li><strong>Settings in your browser.</strong> The site remembers your light or dark theme, your region filter and your cookie choice in your browser's local storage (<code>signal-theme</code>, <code>signal-region</code>, <code>signal-consent</code>). They stay on your device, and clearing your browser data removes them.</li>
       <li><strong>Tools on comparison pages.</strong> Answers you give in the checks and finders run in your browser. We don't store them. Which options people pick may be counted in analytics, without identifying you.</li>
       <li><strong>Site search.</strong> Search runs in your browser. The words you search for may be counted in analytics, without identifying you, so we can see what people look for and what's missing. Please don't type personal information into it.</li>
     </ul>
     <h2>Services that handle data for us</h2>
     <ul>
       <li><strong>Google Analytics</strong> (Google): visit statistics.</li>
-      <li><strong>Google Fonts</strong> (Google): the site's fonts load from Google's servers, which receive your IP address.</li>
       <li><strong>Substack</strong>: newsletter signup and delivery.</li>
       <li><strong>GitHub Pages</strong> (GitHub): hosting, which keeps standard server logs.</li>
       <li><strong>Cloudflare</strong>: domain name services.</li>
       <li><strong>Google Workspace</strong> (Google): email.</li>
     </ul>
     <p>These providers may process data in the United States and other countries.</p>
+    <h2 id="cookies">Cookies and your choice</h2>
+    <p>The only cookies this site sets are Google Analytics cookies. Which default you get depends on where you are:</p>
+    <ul>
+      <li><strong>Europe (including the EU, the UK and Switzerland), Brazil, and Canada's Eastern time zone, which includes Quebec:</strong> analytics stays off unless you choose "Allow analytics".</li>
+      <li><strong>Everywhere else:</strong> analytics is on, and a notice on your first visit lets you turn it off.</li>
+      <li><strong>Privacy signals:</strong> if your browser sends Global Privacy Control or Do Not Track, analytics stays off unless you turn it on.</li>
+    </ul>
+    <p>To pick the default, the site reads your device's time-zone setting in your browser; it isn't sent to us or anyone else. If the time zone can't be read, analytics stays off until you choose. Google may also use the region of your IP address to keep analytics cookies off by default in the EU, the UK, Switzerland, Brazil and Quebec. Your choice is kept in your browser for up to 12 months (6 months if you say no). You can change it any time with <strong>Cookie settings</strong> at the bottom of every page, or here: <button type="button" class="cookie-link" data-consent-open>Cookie settings</button>.</p>
+    <p>The newsletter signup form is Substack's own embedded form, covered by Substack's privacy policy. The site's fonts are served from this site, not from Google.</p>
     <h2>What we don't do</h2>
     <ul>
       <li>No advertising, and no selling of personal information.</li>
@@ -97,6 +181,7 @@
     <p>Analytics data is kept for the retention period set in Google Analytics, no longer than 14 months. Emails are kept as long as needed to handle the conversation. Substack keeps your subscription until you unsubscribe.</p>
     <h2>Your choices and rights</h2>
     <ul>
+      <li>Change your analytics choice any time with <strong>Cookie settings</strong> at the bottom of every page.</li>
       <li>Block or delete cookies in your browser, or use <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener">Google's opt-out add-on</a> for Google Analytics.</li>
       <li>Unsubscribe from the newsletter with the link in any issue.</li>
       <li>Ask us what personal information we hold about you, or ask us to correct or delete it, by emailing <a href="mailto:alex@thesignalhr.com">alex@thesignalhr.com</a>.</li>
@@ -144,7 +229,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <span>© 2026 The Signal HR · Curated by Alex Rivera · <a href="/privacy/">Privacy</a> · <a href="/terms/">Terms</a></span>
+      <span>© 2026 The Signal HR · Curated by Alex Rivera · <a href="/privacy/">Privacy</a> · <a href="/terms/">Terms</a> · <button type="button" class="cookie-link" data-consent-open>Cookie settings</button></span>
       <span>No vendor pays. Ever.</span>
     </div>
   </div>

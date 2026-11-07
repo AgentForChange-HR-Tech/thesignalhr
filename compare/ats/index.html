@@ -3,32 +3,108 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-MGQ5MSQM2W"></script>
+<!-- >>> consent (managed by _tools/site/consent.py) -->
 <script>
+(function () {
+  // Cookie consent by location. Managed by _tools/site/consent.py: edit this file, then rerun it.
+  var ID = "G-MGQ5MSQM2W", KEY = "signal-consent", DAY = 864e5;
+  // Google consent mode: analytics cookies off by default where Google places the visitor's IP
+  var OPTIN_REGIONS = ["AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "HU", "IE", "IT", "LV",
+    "LT", "LU", "MT", "NL", "PL", "PT", "RO", "SK", "SI", "ES", "SE", "IS", "LI", "NO", "GB", "CH", "BR", "CA-QC"];
+  // The browser's time zone picks the default, on the device; nothing is sent. Unknown or UTC counts as opt-in.
+  var OPTIN_TZ = new RegExp("^(Europe/|Arctic/|Brazil/|Etc/" +
+    "|Atlantic/(Reykjavik|Canary|Madeira|Azores|Faroe|Faeroe)$" +
+    "|Asia/(Nicosia|Famagusta)$|Africa/Ceuta$|Indian/(Reunion|Mayotte)$|Canada/Eastern$" +
+    "|America/(Toronto|Montreal|Nipigon|Thunder_Bay|Blanc-Sablon|Guadeloupe|Martinique|Cayenne|Marigot|St_Barthelemy" +
+    "|Sao_Paulo|Bahia|Fortaleza|Recife|Maceio|Belem|Araguaina|Santarem|Manaus|Boa_Vista|Porto_Velho|Rio_Branco" +
+    "|Eirunepe|Cuiaba|Campo_Grande|Noronha)$" +
+    "|(GB|GB-Eire|Eire|Iceland|Poland|Portugal|CET|EET|MET|WET|UTC|UCT|GMT|Universal|Zulu)$)");
+  var tz = "";
+  try { tz = Intl.DateTimeFormat().resolvedOptions().timeZone || ""; } catch (e) {}
+  var tier = (!tz || OPTIN_TZ.test(tz)) ? "optin" : "notice";
+  var gpc = navigator.globalPrivacyControl === true || navigator.doNotTrack === "1" || window.doNotTrack === "1";
+
+  function read() {
+    try {
+      var v = JSON.parse(localStorage.getItem(KEY) || "null");
+      var keep = v && (v.c === "denied" ? 182 : 365) * DAY;
+      if (v && v.c && Date.now() - v.t < keep) return v.c;
+    } catch (e) {}
+    return "";
+  }
+  function save(c) { try { localStorage.setItem(KEY, JSON.stringify({ c: c, t: Date.now() })); } catch (e) {} }
+
+  var choice = read(), loaded = false;
+  var noop = function () {};
+  var push = function () { window.dataLayer.push(arguments); };
   window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-MGQ5MSQM2W');
+  window.gtag = noop;                         // nothing is queued or sent until analytics may run
+
+  function consent(a) {
+    return { analytics_storage: a, ad_storage: "denied", ad_user_data: "denied", ad_personalization: "denied" };
+  }
+  function load(granted) {
+    window["ga-disable-" + ID] = false;
+    window.gtag = push;
+    if (loaded) { push("consent", "update", { analytics_storage: "granted" }); return; }
+    loaded = true;
+    if (!granted) { var r = consent("denied"); r.region = OPTIN_REGIONS; push("consent", "default", r); }
+    push("consent", "default", consent("granted"));   // the region default above wins where it applies
+    push("set", "ads_data_redaction", true);
+    push("js", new Date());
+    push("config", ID, { cookie_expires: 33696000, allow_google_signals: false, allow_ad_personalization_signals: false });
+    var s = document.createElement("script");
+    s.async = true;
+    s.src = "https://www.googletagmanager.com/gtag/js?id=" + ID;
+    document.head.appendChild(s);
+  }
+  function clearCookies() {
+    var host = location.hostname, parts = host.split("."), doms = ["", host, "." + host];
+    if (parts.length > 2) doms.push("." + parts.slice(-2).join("."));
+    document.cookie.split(";").forEach(function (p) {
+      var n = p.split("=")[0].trim();
+      if (/^_ga/.test(n) || n === "_gid") {
+        doms.forEach(function (d) { document.cookie = n + "=; Max-Age=0; path=/" + (d ? "; domain=" + d : ""); });
+      }
+    });
+  }
+  function allow() { choice = "granted"; save(choice); load(true); }
+  function deny() {
+    choice = "denied"; save(choice);
+    if (loaded) push("consent", "update", { analytics_storage: "denied" });
+    window["ga-disable-" + ID] = true;
+    window.gtag = noop;
+    clearCookies();
+  }
+  function on() { return choice === "granted" || (tier === "notice" && !gpc && choice !== "denied"); }
+
+  if (choice === "granted") load(true);
+  else if (on()) load(false);
+
+  window.SignalConsent = {
+    tier: tier, gpc: gpc, allow: allow, deny: deny, on: on,
+    choice: function () { return choice; },
+    needsBanner: function () { return !gpc && (choice === "" || (choice === "noticed" && tier === "optin")); },
+    noticed: function () { if (tier === "notice" && choice === "") { choice = "noticed"; save(choice); } }
+  };
+})();
 </script>
+<!-- <<< consent -->
 
 <title>ATS &amp; Recruiting Platforms Compared (2026): 17 Platforms, Side by Side — The Signal HR</title>
-<meta name="description" content="17 ATS and recruiting platforms compared for HR leaders: Workday, SAP SuccessFactors, Oracle, iCIMS, Greenhouse, Ashby, SmartRecruiters, Avature, Phenom, Eightfold and more. Filter to your situation, compare side by side, and check what will really set your go-live date. No vendor pays.">
+<meta name="description" content="17 ATS and recruiting platforms compared for HR leaders: Workday, SAP SuccessFactors, Oracle, iCIMS, Greenhouse, Ashby, SmartRecruiters, Avature, Phenom, Eightfold and more. Filter to your situation, compare side by side, and check what tends to set a go-live date. No vendor pays.">
 <link rel="canonical" href="https://thesignalhr.com/compare/ats/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="The Signal HR">
 <meta property="og:title" content="ATS &amp; Recruiting Platforms Compared (2026): 17 Platforms, Side by Side — The Signal HR">
-<meta property="og:description" content="17 ATS and recruiting platforms compared for HR leaders: Workday, SAP SuccessFactors, Oracle, iCIMS, Greenhouse, Ashby, SmartRecruiters, Avature, Phenom, Eightfold and more. Filter to your situation, compare side by side, and check what will really set your go-live date. No vendor pays.">
+<meta property="og:description" content="17 ATS and recruiting platforms compared for HR leaders: Workday, SAP SuccessFactors, Oracle, iCIMS, Greenhouse, Ashby, SmartRecruiters, Avature, Phenom, Eightfold and more. Filter to your situation, compare side by side, and check what tends to set a go-live date. No vendor pays.">
 <meta property="og:url" content="https://thesignalhr.com/compare/ats/">
 <meta property="og:image" content="https://thesignalhr.com/og-cover.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="ATS &amp; Recruiting Platforms Compared (2026): 17 Platforms, Side by Side — The Signal HR">
-<meta name="twitter:description" content="17 ATS and recruiting platforms compared for HR leaders: Workday, SAP SuccessFactors, Oracle, iCIMS, Greenhouse, Ashby, SmartRecruiters, Avature, Phenom, Eightfold and more. Filter to your situation, compare side by side, and check what will really set your go-live date. No vendor pays.">
+<meta name="twitter:description" content="17 ATS and recruiting platforms compared for HR leaders: Workday, SAP SuccessFactors, Oracle, iCIMS, Greenhouse, Ashby, SmartRecruiters, Avature, Phenom, Eightfold and more. Filter to your situation, compare side by side, and check what tends to set a go-live date. No vendor pays.">
 <meta name="twitter:image" content="https://thesignalhr.com/og-cover.png">
 <meta name="robots" content="index, follow">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/site.css">
 <script>/* prevent theme flash */(function(){try{var t=localStorage.getItem("signal-theme")||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Article", "headline": "ATS and recruiting platforms compared", "datePublished": "2026-06-28", "dateModified": "2026-10-16", "author": {"@type": "Person", "name": "Alex Rivera"}, "publisher": {"@type": "Organization", "name": "The Signal HR", "url": "https://thesignalhr.com/"}, "mainEntityOfPage": "https://thesignalhr.com/compare/ats/"}, {"@type": "ItemList", "name": "ATS and recruiting platforms compared", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Greenhouse", "url": "https://thesignalhr.com/compare/ats/#p-greenhouse"}, {"@type": "ListItem", "position": 2, "name": "Ashby", "url": "https://thesignalhr.com/compare/ats/#p-ashby"}, {"@type": "ListItem", "position": 3, "name": "Lever", "url": "https://thesignalhr.com/compare/ats/#p-lever"}, {"@type": "ListItem", "position": 4, "name": "Gem", "url": "https://thesignalhr.com/compare/ats/#p-gem"}, {"@type": "ListItem", "position": 5, "name": "Workable", "url": "https://thesignalhr.com/compare/ats/#p-workable"}, {"@type": "ListItem", "position": 6, "name": "iCIMS", "url": "https://thesignalhr.com/compare/ats/#p-icims"}, {"@type": "ListItem", "position": 7, "name": "SmartRecruiters", "url": "https://thesignalhr.com/compare/ats/#p-smartrecruiters"}, {"@type": "ListItem", "position": 8, "name": "Workday Recruiting", "url": "https://thesignalhr.com/compare/ats/#p-workday"}, {"@type": "ListItem", "position": 9, "name": "Paradox", "url": "https://thesignalhr.com/compare/ats/#p-paradox"}, {"@type": "ListItem", "position": 10, "name": "SAP SuccessFactors Recruiting", "url": "https://thesignalhr.com/compare/ats/#p-sapsf"}, {"@type": "ListItem", "position": 11, "name": "Oracle Recruiting Cloud", "url": "https://thesignalhr.com/compare/ats/#p-oracle"}, {"@type": "ListItem", "position": 12, "name": "UKG Pro Recruiting", "url": "https://thesignalhr.com/compare/ats/#p-ukg"}, {"@type": "ListItem", "position": 13, "name": "Dayforce Recruiting", "url": "https://thesignalhr.com/compare/ats/#p-dayforce"}, {"@type": "ListItem", "position": 14, "name": "Avature", "url": "https://thesignalhr.com/compare/ats/#p-avature"}, {"@type": "ListItem", "position": 15, "name": "Phenom", "url": "https://thesignalhr.com/compare/ats/#p-phenom"}, {"@type": "ListItem", "position": 16, "name": "Eightfold", "url": "https://thesignalhr.com/compare/ats/#p-eightfold"}, {"@type": "ListItem", "position": 17, "name": "Bullhorn", "url": "https://thesignalhr.com/compare/ats/#p-bullhorn"}]}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "The Signal HR", "item": "https://thesignalhr.com/"}, {"@type": "ListItem", "position": 2, "name": "Comparison Hub", "item": "https://thesignalhr.com/compare/"}, {"@type": "ListItem", "position": 3, "name": "ATS Platforms", "item": "https://thesignalhr.com/compare/ats/"}]}]}</script>
@@ -207,9 +283,9 @@ ul.method{padding-left:1.1rem;display:grid;gap:.6rem;color:var(--ink-mid)}
   <section class="article-header">
     <div class="wrap">
       <span class="kicker">Comparison Hub · ATS &amp; recruiting platforms</span>
-      <h1 style="max-width:17em;">ATS platforms, compared for the decision you're <em style="color:var(--signal);">actually</em> making.</h1>
-      <p class="standfirst" style="max-width:40em;">17 platforms across five categories, from standalone ATS to HCM-suite recruiting. Filter to your situation, compare up to three side by side, and check what will really set your go-live date, from vendor selection onward. No vendor paid to be here, rank higher or be described favorably.</p>
-      <div class="article-meta"><span>Reviewed October 2026</span><span>17 platforms</span><span>Independent · unsponsored</span></div>
+      <h1 style="max-width:17em;">ATS platforms, compared for <em style="color:var(--signal);">the decision you're making</em>.</h1>
+      <p class="standfirst" style="max-width:40em;">17 platforms across five categories, from standalone ATS to HCM-suite recruiting. Filter to your situation, compare up to three side by side, and check what tends to set a go-live date, from vendor selection onward. No vendor paid to be here, rank higher or be described favorably.</p>
+      <div class="article-meta"><span>Reviewed October 2026</span><span>17 platforms</span><span>Independent · unsponsored</span><span><a href="/about/#ai">AI-assisted</a></span></div>
       <nav class="ats-jump" aria-label="On this page"><a href="#finder">Find your shortlist</a><a href="#compare">Compare</a><a href="#implementation">What sets your go-live</a><a href="#landscape">The landscape</a><a href="#profiles">Platform profiles</a><a href="#rfp">RFP questions</a><a href="#method">How we review</a><a href="/compare/crm/">Recruiting CRMs →</a><a href="/compare/match/">Applicant match →</a></nav>
     </div>
   </section>
@@ -630,7 +706,7 @@ ul.method{padding-left:1.1rem;display:grid;gap:.6rem;color:var(--ink-mid)}
   <section class="section section-alt" id="rfp">
     <div class="wrap" style="max-width:860px;">
       <div class="section-head"><div><span class="kicker">Free to use</span><h2>The 13-question <em>RFP bank</em></h2></div></div>
-      <p class="lede">Questions that separate demo theater from deployed reality. Ask them in this order; the discomfort is diagnostic.</p>
+      <p class="lede">Questions to take into demos, to see how a platform works in production as well as in the demo.</p>
       <ol class="rfp"><li>Show me, live, how a recruiter moves a candidate from application to offer. Count the clicks.</li><li>What does implementation require from my team, in hours per week, for how many weeks, and from which roles?</li><li>Which of your AI features make or influence selection decisions, and where is your bias audit for each (NYC Local Law 144)?</li><li>Which AI features can we switch off by country or state, and who in your company can change that setting?</li><li>Which AI features are generally available in our tier today, versus beta, preview or roadmap?</li><li>How are AI agents metered and billed, and what caps or alerts do we control?</li><li>What&#x27;s the all-in three-year cost for our volume, including modules and the integrations you assume we&#x27;ll add in year two?</li><li>Which three integrations do customers most regret assuming would &#x27;just work&#x27;?</li><li>Show hire sync into our HRIS with a real offer, including a change after acceptance.</li><li>What happens to our data, in what format, by when and at what cost, if we leave?</li><li>What did your last three price increases look like for existing customers at renewal?</li><li>Who owns our account after go-live, and how many accounts do they manage?</li><li>What&#x27;s on your roadmap that is dated and committed, versus directional?</li></ol>
       <p class="kit-hint">Want this as working files? The <a href="/kits/#kit-ats">ATS Selection Kit</a>, in development, adds an editable scorecard, a demo script and a business case. Tell us if you'd use it.</p>
     </div>
@@ -653,8 +729,8 @@ ul.method{padding-left:1.1rem;display:grid;gap:.6rem;color:var(--ink-mid)}
   <section class="section" style="padding-top:0;">
     <div class="wrap">
       <div class="news-band">
-        <h2>Walk into Monday <em>already knowing</em>.</h2>
-        <p>The weekly signal: what changed in HR tech, what it means, what to do. Free forever. <a href="/kits/">See the buyer kits we're building</a>.</p>
+        <h2>Get the signal <em>each week</em>.</h2>
+        <p>The weekly signal: what changed in HR tech, what it may mean, and what to check. Free forever. <a href="/kits/">See the buyer kits we're building</a>.</p>
         <iframe src="https://thesignalhr.substack.com/embed" title="Subscribe to The Signal HR newsletter" loading="lazy"></iframe>
         <p class="micro">No spam. Unsubscribe anytime.</p>
       </div>
@@ -948,7 +1024,7 @@ ul.method{padding-left:1.1rem;display:grid;gap:.6rem;color:var(--ink-mid)}
       </div>
     </div>
     <div class="footer-bottom">
-      <span>© 2026 The Signal HR · Curated by Alex Rivera · <a href="/privacy/">Privacy</a> · <a href="/terms/">Terms</a></span>
+      <span>© 2026 The Signal HR · Curated by Alex Rivera · <a href="/privacy/">Privacy</a> · <a href="/terms/">Terms</a> · <button type="button" class="cookie-link" data-consent-open>Cookie settings</button></span>
       <span>No vendor pays. Ever.</span>
     </div>
   </div>

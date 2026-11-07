@@ -35,7 +35,7 @@ KITS = [
                  "Candidate-notice and works-council briefing drafts to adapt with counsel",
                  "A vendor due-diligence questionnaire: audits, explanations, off switch",
                  "A bias-testing log with a review cadence",
-                 "A monthly update: what changed where you hire, and what to do"],
+                 "A monthly update: what changed where you hire, and what to check"],
          builds=[("applicant match comparison", "/compare/match/"), ("rules check for 38 places", "/compare/match/#rules")],
          note="Templates are drafts to adapt with your counsel, not legal advice."),
 ]
@@ -112,8 +112,8 @@ def build():
     assert f'<link rel="canonical" href="{url}">' in head
     band = re.search(r'(  <section class="section" style="padding-top:0;">\s*<div class="wrap">\s*<div class="news-band">.*?</section>)', main_tpl, flags=re.S)
     assert band, "newsletter band not found in About page"
-    band = band.group(1).replace("<h2>Walk into Monday <em>already knowing</em>.</h2>", "<h2>Hear when a kit <em>is ready</em>.</h2>")
-    band = re.sub(r"(<div class=\"news-band\">.*?<p>).*?(</p>)", lambda m: m.group(1) + "Launch news goes to the newsletter first, along with the weekly signal: what changed in HR tech, what it means, what to do. Free forever." + m.group(2), band, count=1, flags=re.S)
+    band = band.group(1).replace("<h2>Get the signal <em>each week</em>.</h2>", "<h2>Hear when a kit <em>is ready</em>.</h2>")
+    band = re.sub(r"(<div class=\"news-band\">.*?<p>).*?(</p>)", lambda m: m.group(1) + "Launch news goes to the newsletter first, along with the weekly signal: what changed in HR tech, what it may mean, and what to check. Free forever." + m.group(2), band, count=1, flags=re.S)
     main = f'''<main id="main">
 <div class="wrap"><nav class="crumbs" aria-label="Breadcrumb"><a href="/">The Signal</a><span>›</span>Buyer kits</nav></div>
 

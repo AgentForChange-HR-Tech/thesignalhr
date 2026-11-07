@@ -3,32 +3,108 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-MGQ5MSQM2W"></script>
+<!-- >>> consent (managed by _tools/site/consent.py) -->
 <script>
+(function () {
+  // Cookie consent by location. Managed by _tools/site/consent.py: edit this file, then rerun it.
+  var ID = "G-MGQ5MSQM2W", KEY = "signal-consent", DAY = 864e5;
+  // Google consent mode: analytics cookies off by default where Google places the visitor's IP
+  var OPTIN_REGIONS = ["AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "HU", "IE", "IT", "LV",
+    "LT", "LU", "MT", "NL", "PL", "PT", "RO", "SK", "SI", "ES", "SE", "IS", "LI", "NO", "GB", "CH", "BR", "CA-QC"];
+  // The browser's time zone picks the default, on the device; nothing is sent. Unknown or UTC counts as opt-in.
+  var OPTIN_TZ = new RegExp("^(Europe/|Arctic/|Brazil/|Etc/" +
+    "|Atlantic/(Reykjavik|Canary|Madeira|Azores|Faroe|Faeroe)$" +
+    "|Asia/(Nicosia|Famagusta)$|Africa/Ceuta$|Indian/(Reunion|Mayotte)$|Canada/Eastern$" +
+    "|America/(Toronto|Montreal|Nipigon|Thunder_Bay|Blanc-Sablon|Guadeloupe|Martinique|Cayenne|Marigot|St_Barthelemy" +
+    "|Sao_Paulo|Bahia|Fortaleza|Recife|Maceio|Belem|Araguaina|Santarem|Manaus|Boa_Vista|Porto_Velho|Rio_Branco" +
+    "|Eirunepe|Cuiaba|Campo_Grande|Noronha)$" +
+    "|(GB|GB-Eire|Eire|Iceland|Poland|Portugal|CET|EET|MET|WET|UTC|UCT|GMT|Universal|Zulu)$)");
+  var tz = "";
+  try { tz = Intl.DateTimeFormat().resolvedOptions().timeZone || ""; } catch (e) {}
+  var tier = (!tz || OPTIN_TZ.test(tz)) ? "optin" : "notice";
+  var gpc = navigator.globalPrivacyControl === true || navigator.doNotTrack === "1" || window.doNotTrack === "1";
+
+  function read() {
+    try {
+      var v = JSON.parse(localStorage.getItem(KEY) || "null");
+      var keep = v && (v.c === "denied" ? 182 : 365) * DAY;
+      if (v && v.c && Date.now() - v.t < keep) return v.c;
+    } catch (e) {}
+    return "";
+  }
+  function save(c) { try { localStorage.setItem(KEY, JSON.stringify({ c: c, t: Date.now() })); } catch (e) {} }
+
+  var choice = read(), loaded = false;
+  var noop = function () {};
+  var push = function () { window.dataLayer.push(arguments); };
   window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-MGQ5MSQM2W');
+  window.gtag = noop;                         // nothing is queued or sent until analytics may run
+
+  function consent(a) {
+    return { analytics_storage: a, ad_storage: "denied", ad_user_data: "denied", ad_personalization: "denied" };
+  }
+  function load(granted) {
+    window["ga-disable-" + ID] = false;
+    window.gtag = push;
+    if (loaded) { push("consent", "update", { analytics_storage: "granted" }); return; }
+    loaded = true;
+    if (!granted) { var r = consent("denied"); r.region = OPTIN_REGIONS; push("consent", "default", r); }
+    push("consent", "default", consent("granted"));   // the region default above wins where it applies
+    push("set", "ads_data_redaction", true);
+    push("js", new Date());
+    push("config", ID, { cookie_expires: 33696000, allow_google_signals: false, allow_ad_personalization_signals: false });
+    var s = document.createElement("script");
+    s.async = true;
+    s.src = "https://www.googletagmanager.com/gtag/js?id=" + ID;
+    document.head.appendChild(s);
+  }
+  function clearCookies() {
+    var host = location.hostname, parts = host.split("."), doms = ["", host, "." + host];
+    if (parts.length > 2) doms.push("." + parts.slice(-2).join("."));
+    document.cookie.split(";").forEach(function (p) {
+      var n = p.split("=")[0].trim();
+      if (/^_ga/.test(n) || n === "_gid") {
+        doms.forEach(function (d) { document.cookie = n + "=; Max-Age=0; path=/" + (d ? "; domain=" + d : ""); });
+      }
+    });
+  }
+  function allow() { choice = "granted"; save(choice); load(true); }
+  function deny() {
+    choice = "denied"; save(choice);
+    if (loaded) push("consent", "update", { analytics_storage: "denied" });
+    window["ga-disable-" + ID] = true;
+    window.gtag = noop;
+    clearCookies();
+  }
+  function on() { return choice === "granted" || (tier === "notice" && !gpc && choice !== "denied"); }
+
+  if (choice === "granted") load(true);
+  else if (on()) load(false);
+
+  window.SignalConsent = {
+    tier: tier, gpc: gpc, allow: allow, deny: deny, on: on,
+    choice: function () { return choice; },
+    needsBanner: function () { return !gpc && (choice === "" || (choice === "noticed" && tier === "optin")); },
+    noticed: function () { if (tier === "notice" && choice === "") { choice = "noticed"; save(choice); } }
+  };
+})();
 </script>
+<!-- <<< consent -->
 
 <title>HR Tech &amp; Agentic AI Intelligence for HR Leaders — The Signal HR</title>
-<meta name="description" content="Independent, practitioner-curated intelligence on HR technology and agentic AI — a weekly briefing, honest vendor comparisons where no vendor pays, and analysis built for CHROs and the people who have to lead the AI shift.">
+<meta name="description" content="Independent, practitioner-curated intelligence on HR technology and agentic AI — a weekly briefing, sourced vendor comparisons where no vendor pays, and analysis built for CHROs and the people who have to lead the AI shift.">
 <link rel="canonical" href="https://thesignalhr.com/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="The Signal HR">
 <meta property="og:title" content="The Signal HR — HR Tech &amp; Agentic AI Intelligence for HR Leaders">
-<meta property="og:description" content="Not the news — what the news means, and what to do about it. Independent, practitioner-built, and free. No vendor pays.">
+<meta property="og:description" content="What changed in HR tech, what it may mean, and what to check, with every source linked. Independent, practitioner-built, and free. No vendor pays.">
 <meta property="og:url" content="https://thesignalhr.com/">
 <meta property="og:image" content="https://thesignalhr.com/og-cover.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="The Signal HR — HR Tech &amp; Agentic AI Intelligence for HR Leaders">
-<meta name="twitter:description" content="Not the news — what the news means, and what to do about it. Independent, practitioner-built, and free.">
+<meta name="twitter:description" content="What changed in HR tech, what it may mean, and what to check, with every source linked. Independent, practitioner-built, and free.">
 <meta name="twitter:image" content="https://thesignalhr.com/og-cover.png">
 <meta name="robots" content="index, follow">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/site.css">
 <script>/* prevent theme flash */(function(){try{var t=localStorage.getItem("signal-theme")||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
 <script type="application/ld+json">
@@ -69,10 +145,10 @@
       <div>
         <span class="kicker">The Signal · Independent HR Intelligence</span>
         <h1>The AI shift in HR, filtered for the people who have to <em>lead it</em>.</h1>
-        <p class="sub">One practitioner-curated briefing across the HR landscape — so you walk into every decision already knowing what changed, what it means, and what to do about it.</p>
+        <p class="sub">One practitioner-curated briefing across the HR landscape: what changed, what it may mean, and the questions worth asking, with every source linked so you can check it yourself.</p>
         <div class="hero-actions">
           <a class="btn btn-primary" href="/briefing/">Read the latest Briefing</a>
-          <a class="btn btn-ghost" href="/compare/">Compare HR tech honestly</a>
+          <a class="btn btn-ghost" href="/compare/">Compare HR tech side by side</a>
         </div>
         <div class="hero-trust">
           <span>No vendor pays. Ever.</span>
@@ -82,7 +158,7 @@
       </div>
       <div class="sub-card">
         <p class="sub-card-title">Get the weekly signal</p>
-        <p>What changed in HR tech this week, what it means, and the one thing worth doing about it. Every week, free.</p>
+        <p>What changed in HR tech this week, what it may mean, and what to check. Every week, free.</p>
         <iframe src="https://thesignalhr.substack.com/embed" title="Subscribe to The Signal HR newsletter" loading="lazy"></iframe>
         <p class="micro">No spam. Unsubscribe anytime. Free today stays free.</p>
       </div>
@@ -136,8 +212,8 @@
       <div class="feature-card">
         <div>
           <span class="kicker">The Comparison Hub</span>
-          <h2>Most "best HR software" lists are affiliate pages in disguise. This isn't.</h2>
-          <p>Honest, side-by-side HR tech comparisons built by someone who has actually run enterprise migrations — not someone collecting referral fees. No vendor pays to be here, rank higher, or be described favorably.</p>
+          <h2>HR tech, side by side, with every claim sourced.</h2>
+          <p>Comparisons that describe what each platform documents, with sources and review dates, from a practitioner who has run enterprise HR migrations. No vendor pays to be here, rank higher, or be described favorably.</p>
           <div class="hero-actions">
             <a class="btn btn-primary" href="/compare/ats/">Open the ATS comparison</a>
             <a class="btn btn-ghost" style="color:inherit;border-color:currentColor;" href="/compare/">How it works</a>
@@ -160,7 +236,7 @@
       <div class="section-head">
         <div>
           <span class="kicker">Ten domains, one lens</span>
-          <h2>Everything that decides HR's <em>next decade</em></h2>
+          <h2>Ten areas shaping HR's <em>next decade</em></h2>
         </div>
         <a class="more" href="/coverage/">All coverage →</a>
       </div>
@@ -184,8 +260,8 @@
     <div class="wrap hero-grid">
       <div>
         <span class="kicker">Behind the signal</span>
-        <h2 style="font-family:var(--font-display);font-weight:400;font-size:var(--text-2xl);line-height:1.15;margin:.8rem 0 1rem;">Curated by a practitioner, <em style="color:var(--signal);">not an algorithm</em>.</h2>
-        <p class="muted">The Signal is curated by <strong>Alex Rivera</strong> — 15 years inside enterprise HR technology: running migrations, fixing broken implementations, and advising on HR systems &amp; AI strategy. Every item is read, judged, and placed in context before it reaches you. Not the news — what the news <em>means</em>, and what to do about it.</p>
+        <h2 style="font-family:var(--font-display);font-weight:400;font-size:var(--text-2xl);line-height:1.15;margin:.8rem 0 1rem;">Curated by a practitioner, <em style="color:var(--signal);">for practitioners</em>.</h2>
+        <p class="muted">The Signal is curated by <strong>Alex Rivera</strong> — 15 years inside enterprise HR technology: running migrations, fixing broken implementations, and advising on HR systems &amp; AI strategy. AI tools help with research, drafting and source checks, and Alex reviews and approves every update before it's published (<a href="/about/#ai">how AI helps</a>). It's one practitioner's read, with the sources linked so you can check them and draw your own conclusions.</p>
         <div class="hero-actions">
           <a class="btn btn-ghost" href="/about/">About the curator</a>
           <a class="btn btn-ghost" href="https://www.linkedin.com/in/alexrivera1/" target="_blank" rel="noopener">Connect on LinkedIn</a>
@@ -195,7 +271,7 @@
         <h3 style="font-size:var(--text-base);font-family:var(--font-body);font-weight:700;">The editorial promise</h3>
         <p>→ <strong>No vendor pays</strong> — no sponsorships, no affiliate links, no pay-to-rank.</p>
         <p>→ <strong>Signal over volume</strong> — one weekly briefing, not thirty daily alerts.</p>
-        <p>→ <strong>Judgment included</strong> — every story carries a "so what" for HR leaders.</p>
+        <p>→ <strong>Context included</strong> — every story carries a "so what": what it may mean in practice and what to check.</p>
         <p>→ <strong>Free stays free</strong> — the briefing and comparisons are free forever; readers, not vendors, will fund the work through <a href="/kits/">buyer kits</a>.</p>
       </div>
     </div>
@@ -205,8 +281,8 @@
   <section class="section" style="padding-top:0;">
     <div class="wrap">
       <div class="news-band">
-        <h2>Walk into Monday <em>already knowing</em>.</h2>
-        <p>Join HR leaders who get the weekly signal: what changed, what it means, what to do. Free forever. <a href="/kits/">See the buyer kits we're building</a>.</p>
+        <h2>Get the signal <em>each week</em>.</h2>
+        <p>The weekly signal: what changed, what it may mean, and what to check. Free forever. <a href="/kits/">See the buyer kits we're building</a>.</p>
         <iframe src="https://thesignalhr.substack.com/embed" title="Subscribe to The Signal HR newsletter" loading="lazy"></iframe>
         <p class="micro">No spam. Unsubscribe anytime.</p>
       </div>
@@ -251,7 +327,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <span>© 2026 The Signal HR · Curated by Alex Rivera · <a href="/privacy/">Privacy</a> · <a href="/terms/">Terms</a></span>
+      <span>© 2026 The Signal HR · Curated by Alex Rivera · <a href="/privacy/">Privacy</a> · <a href="/terms/">Terms</a> · <button type="button" class="cookie-link" data-consent-open>Cookie settings</button></span>
       <span>No vendor pays. Ever.</span>
     </div>
   </div>

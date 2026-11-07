@@ -4,7 +4,7 @@ Run from the repo root after any content change:
     python3 -B _tools/site/search_index.py
 Idempotent. No server and no third party: the index is a static file and the search runs in the
 reader's browser. Results are ordered only by how well they match the reader's words (see
-_tools/GUARDRAILS.md, section 6).
+_tools/GUARDRAILS.md, section 7).
 What gets indexed: Briefing signals (current and archive, each linking to #signal-N), Insights,
 Coverage, the comparison pages, every platform profile (linking to #p-<id>), every place in the
 applicant match rules check, and the other pages.

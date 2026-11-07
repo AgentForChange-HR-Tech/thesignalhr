@@ -34,7 +34,7 @@ for a in ARTICLES:
       <span class="tag {a["tag"][1]}">{a["tag"][0]}</span> <span class="region-tag">{LABEL[a["region"]]}</span>
       <h1>{a["h1"]}</h1>
       <p class="standfirst">{E(a["standfirst"])}</p>
-      <div class="article-meta"><span>By Alex Rivera</span><span>October 16, 2026</span><span>{a["minutes"]} min read</span></div>
+      <div class="article-meta"><span>By Alex Rivera</span><span><a href="/about/#ai">AI-assisted</a></span><span>October 16, 2026</span><span>{a["minutes"]} min read</span></div>
     </div>
   </section>
   <div class="prose-wrap prose">{a["body"]}

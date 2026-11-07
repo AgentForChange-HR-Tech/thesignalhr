@@ -3,14 +3,93 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-MGQ5MSQM2W"></script>
+<!-- >>> consent (managed by _tools/site/consent.py) -->
 <script>
+(function () {
+  // Cookie consent by location. Managed by _tools/site/consent.py: edit this file, then rerun it.
+  var ID = "G-MGQ5MSQM2W", KEY = "signal-consent", DAY = 864e5;
+  // Google consent mode: analytics cookies off by default where Google places the visitor's IP
+  var OPTIN_REGIONS = ["AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "HU", "IE", "IT", "LV",
+    "LT", "LU", "MT", "NL", "PL", "PT", "RO", "SK", "SI", "ES", "SE", "IS", "LI", "NO", "GB", "CH", "BR", "CA-QC"];
+  // The browser's time zone picks the default, on the device; nothing is sent. Unknown or UTC counts as opt-in.
+  var OPTIN_TZ = new RegExp("^(Europe/|Arctic/|Brazil/|Etc/" +
+    "|Atlantic/(Reykjavik|Canary|Madeira|Azores|Faroe|Faeroe)$" +
+    "|Asia/(Nicosia|Famagusta)$|Africa/Ceuta$|Indian/(Reunion|Mayotte)$|Canada/Eastern$" +
+    "|America/(Toronto|Montreal|Nipigon|Thunder_Bay|Blanc-Sablon|Guadeloupe|Martinique|Cayenne|Marigot|St_Barthelemy" +
+    "|Sao_Paulo|Bahia|Fortaleza|Recife|Maceio|Belem|Araguaina|Santarem|Manaus|Boa_Vista|Porto_Velho|Rio_Branco" +
+    "|Eirunepe|Cuiaba|Campo_Grande|Noronha)$" +
+    "|(GB|GB-Eire|Eire|Iceland|Poland|Portugal|CET|EET|MET|WET|UTC|UCT|GMT|Universal|Zulu)$)");
+  var tz = "";
+  try { tz = Intl.DateTimeFormat().resolvedOptions().timeZone || ""; } catch (e) {}
+  var tier = (!tz || OPTIN_TZ.test(tz)) ? "optin" : "notice";
+  var gpc = navigator.globalPrivacyControl === true || navigator.doNotTrack === "1" || window.doNotTrack === "1";
+
+  function read() {
+    try {
+      var v = JSON.parse(localStorage.getItem(KEY) || "null");
+      var keep = v && (v.c === "denied" ? 182 : 365) * DAY;
+      if (v && v.c && Date.now() - v.t < keep) return v.c;
+    } catch (e) {}
+    return "";
+  }
+  function save(c) { try { localStorage.setItem(KEY, JSON.stringify({ c: c, t: Date.now() })); } catch (e) {} }
+
+  var choice = read(), loaded = false;
+  var noop = function () {};
+  var push = function () { window.dataLayer.push(arguments); };
   window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-MGQ5MSQM2W');
+  window.gtag = noop;                         // nothing is queued or sent until analytics may run
+
+  function consent(a) {
+    return { analytics_storage: a, ad_storage: "denied", ad_user_data: "denied", ad_personalization: "denied" };
+  }
+  function load(granted) {
+    window["ga-disable-" + ID] = false;
+    window.gtag = push;
+    if (loaded) { push("consent", "update", { analytics_storage: "granted" }); return; }
+    loaded = true;
+    if (!granted) { var r = consent("denied"); r.region = OPTIN_REGIONS; push("consent", "default", r); }
+    push("consent", "default", consent("granted"));   // the region default above wins where it applies
+    push("set", "ads_data_redaction", true);
+    push("js", new Date());
+    push("config", ID, { cookie_expires: 33696000, allow_google_signals: false, allow_ad_personalization_signals: false });
+    var s = document.createElement("script");
+    s.async = true;
+    s.src = "https://www.googletagmanager.com/gtag/js?id=" + ID;
+    document.head.appendChild(s);
+  }
+  function clearCookies() {
+    var host = location.hostname, parts = host.split("."), doms = ["", host, "." + host];
+    if (parts.length > 2) doms.push("." + parts.slice(-2).join("."));
+    document.cookie.split(";").forEach(function (p) {
+      var n = p.split("=")[0].trim();
+      if (/^_ga/.test(n) || n === "_gid") {
+        doms.forEach(function (d) { document.cookie = n + "=; Max-Age=0; path=/" + (d ? "; domain=" + d : ""); });
+      }
+    });
+  }
+  function allow() { choice = "granted"; save(choice); load(true); }
+  function deny() {
+    choice = "denied"; save(choice);
+    if (loaded) push("consent", "update", { analytics_storage: "denied" });
+    window["ga-disable-" + ID] = true;
+    window.gtag = noop;
+    clearCookies();
+  }
+  function on() { return choice === "granted" || (tier === "notice" && !gpc && choice !== "denied"); }
+
+  if (choice === "granted") load(true);
+  else if (on()) load(false);
+
+  window.SignalConsent = {
+    tier: tier, gpc: gpc, allow: allow, deny: deny, on: on,
+    choice: function () { return choice; },
+    needsBanner: function () { return !gpc && (choice === "" || (choice === "noticed" && tier === "optin")); },
+    noticed: function () { if (tier === "notice" && choice === "") { choice = "noticed"; save(choice); } }
+  };
+})();
 </script>
+<!-- <<< consent -->
 
 <title>Recruiting CRMs Compared (2026): 17 Platforms, Side by Side — The Signal HR</title>
 <meta name="description" content="17 recruiting CRMs compared for HR leaders: Beamery, Gem, Phenom, Eightfold, Avature, Radancy and the CRM inside Workday, SAP, Oracle, iCIMS, Greenhouse and more. Check whether you need one, filter to your ATS and compare side by side. No vendor pays.">
@@ -26,9 +105,6 @@
 <meta name="twitter:description" content="17 recruiting CRMs compared for HR leaders: Beamery, Gem, Phenom, Eightfold, Avature, Radancy and the CRM inside Workday, SAP, Oracle, iCIMS, Greenhouse and more. Check whether you need one, filter to your ATS and compare side by side. No vendor pays.">
 <meta name="twitter:image" content="https://thesignalhr.com/og-cover.png">
 <meta name="robots" content="index, follow">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/site.css">
 <script>/* prevent theme flash */(function(){try{var t=localStorage.getItem("signal-theme")||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Article", "headline": "Recruiting CRMs compared", "datePublished": "2026-10-16", "dateModified": "2026-10-16", "author": {"@type": "Person", "name": "Alex Rivera"}, "publisher": {"@type": "Organization", "name": "The Signal HR", "url": "https://thesignalhr.com/"}, "mainEntityOfPage": "https://thesignalhr.com/compare/crm/"}, {"@type": "ItemList", "name": "Recruiting CRMs compared", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Greenhouse CRM", "url": "https://thesignalhr.com/compare/crm/#p-greenhouse"}, {"@type": "ListItem", "position": 2, "name": "Lever", "url": "https://thesignalhr.com/compare/crm/#p-lever"}, {"@type": "ListItem", "position": 3, "name": "Ashby", "url": "https://thesignalhr.com/compare/crm/#p-ashby"}, {"@type": "ListItem", "position": 4, "name": "iCIMS CRM and CXM", "url": "https://thesignalhr.com/compare/crm/#p-icims"}, {"@type": "ListItem", "position": 5, "name": "Jobvite", "url": "https://thesignalhr.com/compare/crm/#p-jobvite"}, {"@type": "ListItem", "position": 6, "name": "SmartRecruiters SmartCRM", "url": "https://thesignalhr.com/compare/crm/#p-smartrecruiters"}, {"@type": "ListItem", "position": 7, "name": "Workday Candidate Engagement", "url": "https://thesignalhr.com/compare/crm/#p-workday"}, {"@type": "ListItem", "position": 8, "name": "SAP SuccessFactors Recruiting: Candidate Experience", "url": "https://thesignalhr.com/compare/crm/#p-sapsf"}, {"@type": "ListItem", "position": 9, "name": "Oracle Recruiting CRM", "url": "https://thesignalhr.com/compare/crm/#p-oracle"}, {"@type": "ListItem", "position": 10, "name": "Gem", "url": "https://thesignalhr.com/compare/crm/#p-gem"}, {"@type": "ListItem", "position": 11, "name": "Beamery", "url": "https://thesignalhr.com/compare/crm/#p-beamery"}, {"@type": "ListItem", "position": 12, "name": "Phenom", "url": "https://thesignalhr.com/compare/crm/#p-phenom"}, {"@type": "ListItem", "position": 13, "name": "Eightfold", "url": "https://thesignalhr.com/compare/crm/#p-eightfold"}, {"@type": "ListItem", "position": 14, "name": "Avature", "url": "https://thesignalhr.com/compare/crm/#p-avature"}, {"@type": "ListItem", "position": 15, "name": "Radancy", "url": "https://thesignalhr.com/compare/crm/#p-radancy"}, {"@type": "ListItem", "position": 16, "name": "Symphony Talent", "url": "https://thesignalhr.com/compare/crm/#p-symphony"}, {"@type": "ListItem", "position": 17, "name": "PageUp Clinch", "url": "https://thesignalhr.com/compare/crm/#p-clinch"}]}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "The Signal HR", "item": "https://thesignalhr.com/"}, {"@type": "ListItem", "position": 2, "name": "Comparison Hub", "item": "https://thesignalhr.com/compare/"}, {"@type": "ListItem", "position": 3, "name": "Recruiting CRMs", "item": "https://thesignalhr.com/compare/crm/"}]}]}</script>
@@ -223,7 +299,7 @@ ul.method{padding-left:1.1rem;display:grid;gap:.6rem;color:var(--ink-mid)}
       <span class="kicker">Comparison Hub · Recruiting CRM</span>
       <h1 style="max-width:17em;">Recruiting CRMs: use the one you own, or <em style="color:var(--signal);">buy another?</em></h1>
       <p class="standfirst" style="max-width:41em;">17 platforms, from the CRM already inside your ATS or HCM suite to standalone CRMs that sit on top of it. Check whether a separate CRM would pay off, filter to your ATS, and compare up to three side by side. No vendor paid to be here, rank higher or be described favorably.</p>
-      <div class="article-meta"><span>Reviewed October 2026</span><span>17 platforms</span><span>Independent · unsponsored</span></div>
+      <div class="article-meta"><span>Reviewed October 2026</span><span>17 platforms</span><span>Independent · unsponsored</span><span><a href="/about/#ai">AI-assisted</a></span></div>
       <nav class="ats-jump" aria-label="On this page"><a href="#need">Do you need one?</a><a href="#finder">Find your shortlist</a><a href="#compare">Compare</a><a href="#landscape">The landscape</a><a href="#profiles">Platform profiles</a><a href="#rfp">RFP questions</a><a href="#method">How we review</a><a href="/compare/ats/">ATS platforms →</a><a href="/compare/match/">Applicant match →</a></nav>
     </div>
   </section>
@@ -231,7 +307,7 @@ ul.method{padding-left:1.1rem;display:grid;gap:.6rem;color:var(--ink-mid)}
   <section class="section" id="need" style="padding-top:0;">
     <div class="wrap">
       <div class="section-head"><div><span class="kicker">Step 1</span><h2>Do you need a <em>separate CRM?</em></h2></div></div>
-      <p class="lede">Most ATS platforms and HCM suites now include a CRM, and many teams already pay for one they barely use. Whether a separate CRM adds anything depends on how much pipeline work there is and who would run it. Answer what you know; a summary of your answers, the capabilities they point to and your question list build below.</p>
+      <p class="lede">Many ATS platforms and HCM suites now include CRM features, so a team may already license one. Whether a separate CRM adds anything depends on how much pipeline work there is and who would run it. Answer what you know; a summary of your answers, the capabilities they point to and your question list build below.</p>
       <form id="drivers" onsubmit="return false">
         <div class="dgroup" id="g-need">
           <div class="dgroup-head"><h3>What you need it for</h3><p>Whether a CRM has enough work to do to pay off.</p></div>
@@ -610,7 +686,7 @@ ul.method{padding-left:1.1rem;display:grid;gap:.6rem;color:var(--ink-mid)}
   <section class="section section-alt" id="rfp">
     <div class="wrap" style="max-width:860px;">
       <div class="section-head"><div><span class="kicker">Free to use</span><h2>The 13-question <em>CRM RFP bank</em></h2></div></div>
-      <p class="lede">Questions that separate a demo's best campaign from what your recruiters will do on a Tuesday. The discomfort is diagnostic.</p>
+      <p class="lede">Questions to see how campaigns would run day to day, not only in a demo.</p>
       <ol class="rfp"><li>Show a past applicant from a year ago being found, added to a campaign and tracked to hire. Count the clicks.</li><li>Which CRM features are in our quote, and which (texting, events, career site, AI matching) are add-ons, seats or consumption?</li><li>How does the CRM sync with our ATS: which records, in which direction, how often, and which system wins a conflict?</li><li>How are consent, opt-outs and retention handled by country, and can we export proof of consent for one person?</li><li>Which AI features rank, match or contact candidates, and where is the independent bias audit for each?</li><li>Which AI features are generally available in our tier today, versus beta, preview or roadmap?</li><li>Where do enriched contact details come from, and can we switch each source off?</li><li>How many of your customers have more than half their recruiters active in the CRM every week?</li><li>Which campaign templates, content and playbooks are included, and who builds our first campaigns?</li><li>How is source of hire attributed when a prospect touched three campaigns and an event?</li><li>What happens to our talent pools, campaign history and consent records if we leave: format, timing, cost?</li><li>What did your last three price increases look like for existing customers at renewal?</li><li>What&#x27;s on your CRM roadmap that is dated and committed, versus directional?</li></ol>
     </div>
   </section>
@@ -633,8 +709,8 @@ ul.method{padding-left:1.1rem;display:grid;gap:.6rem;color:var(--ink-mid)}
   <section class="section" style="padding-top:0;">
     <div class="wrap">
       <div class="news-band">
-        <h2>Walk into Monday <em>already knowing</em>.</h2>
-        <p>The weekly signal: what changed in HR tech, what it means, what to do. Free forever. <a href="/kits/">See the buyer kits we're building</a>.</p>
+        <h2>Get the signal <em>each week</em>.</h2>
+        <p>The weekly signal: what changed in HR tech, what it may mean, and what to check. Free forever. <a href="/kits/">See the buyer kits we're building</a>.</p>
         <iframe src="https://thesignalhr.substack.com/embed" title="Subscribe to The Signal HR newsletter" loading="lazy"></iframe>
         <p class="micro">No spam. Unsubscribe anytime.</p>
       </div>
@@ -956,7 +1032,7 @@ ul.method{padding-left:1.1rem;display:grid;gap:.6rem;color:var(--ink-mid)}
       </div>
     </div>
     <div class="footer-bottom">
-      <span>© 2026 The Signal HR · Curated by Alex Rivera · <a href="/privacy/">Privacy</a> · <a href="/terms/">Terms</a></span>
+      <span>© 2026 The Signal HR · Curated by Alex Rivera · <a href="/privacy/">Privacy</a> · <a href="/terms/">Terms</a> · <button type="button" class="cookie-link" data-consent-open>Cookie settings</button></span>
       <span>No vendor pays. Ever.</span>
     </div>
   </div>

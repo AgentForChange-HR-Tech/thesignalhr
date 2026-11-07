@@ -3,14 +3,93 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-MGQ5MSQM2W"></script>
+<!-- >>> consent (managed by _tools/site/consent.py) -->
 <script>
+(function () {
+  // Cookie consent by location. Managed by _tools/site/consent.py: edit this file, then rerun it.
+  var ID = "G-MGQ5MSQM2W", KEY = "signal-consent", DAY = 864e5;
+  // Google consent mode: analytics cookies off by default where Google places the visitor's IP
+  var OPTIN_REGIONS = ["AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "HU", "IE", "IT", "LV",
+    "LT", "LU", "MT", "NL", "PL", "PT", "RO", "SK", "SI", "ES", "SE", "IS", "LI", "NO", "GB", "CH", "BR", "CA-QC"];
+  // The browser's time zone picks the default, on the device; nothing is sent. Unknown or UTC counts as opt-in.
+  var OPTIN_TZ = new RegExp("^(Europe/|Arctic/|Brazil/|Etc/" +
+    "|Atlantic/(Reykjavik|Canary|Madeira|Azores|Faroe|Faeroe)$" +
+    "|Asia/(Nicosia|Famagusta)$|Africa/Ceuta$|Indian/(Reunion|Mayotte)$|Canada/Eastern$" +
+    "|America/(Toronto|Montreal|Nipigon|Thunder_Bay|Blanc-Sablon|Guadeloupe|Martinique|Cayenne|Marigot|St_Barthelemy" +
+    "|Sao_Paulo|Bahia|Fortaleza|Recife|Maceio|Belem|Araguaina|Santarem|Manaus|Boa_Vista|Porto_Velho|Rio_Branco" +
+    "|Eirunepe|Cuiaba|Campo_Grande|Noronha)$" +
+    "|(GB|GB-Eire|Eire|Iceland|Poland|Portugal|CET|EET|MET|WET|UTC|UCT|GMT|Universal|Zulu)$)");
+  var tz = "";
+  try { tz = Intl.DateTimeFormat().resolvedOptions().timeZone || ""; } catch (e) {}
+  var tier = (!tz || OPTIN_TZ.test(tz)) ? "optin" : "notice";
+  var gpc = navigator.globalPrivacyControl === true || navigator.doNotTrack === "1" || window.doNotTrack === "1";
+
+  function read() {
+    try {
+      var v = JSON.parse(localStorage.getItem(KEY) || "null");
+      var keep = v && (v.c === "denied" ? 182 : 365) * DAY;
+      if (v && v.c && Date.now() - v.t < keep) return v.c;
+    } catch (e) {}
+    return "";
+  }
+  function save(c) { try { localStorage.setItem(KEY, JSON.stringify({ c: c, t: Date.now() })); } catch (e) {} }
+
+  var choice = read(), loaded = false;
+  var noop = function () {};
+  var push = function () { window.dataLayer.push(arguments); };
   window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-MGQ5MSQM2W');
+  window.gtag = noop;                         // nothing is queued or sent until analytics may run
+
+  function consent(a) {
+    return { analytics_storage: a, ad_storage: "denied", ad_user_data: "denied", ad_personalization: "denied" };
+  }
+  function load(granted) {
+    window["ga-disable-" + ID] = false;
+    window.gtag = push;
+    if (loaded) { push("consent", "update", { analytics_storage: "granted" }); return; }
+    loaded = true;
+    if (!granted) { var r = consent("denied"); r.region = OPTIN_REGIONS; push("consent", "default", r); }
+    push("consent", "default", consent("granted"));   // the region default above wins where it applies
+    push("set", "ads_data_redaction", true);
+    push("js", new Date());
+    push("config", ID, { cookie_expires: 33696000, allow_google_signals: false, allow_ad_personalization_signals: false });
+    var s = document.createElement("script");
+    s.async = true;
+    s.src = "https://www.googletagmanager.com/gtag/js?id=" + ID;
+    document.head.appendChild(s);
+  }
+  function clearCookies() {
+    var host = location.hostname, parts = host.split("."), doms = ["", host, "." + host];
+    if (parts.length > 2) doms.push("." + parts.slice(-2).join("."));
+    document.cookie.split(";").forEach(function (p) {
+      var n = p.split("=")[0].trim();
+      if (/^_ga/.test(n) || n === "_gid") {
+        doms.forEach(function (d) { document.cookie = n + "=; Max-Age=0; path=/" + (d ? "; domain=" + d : ""); });
+      }
+    });
+  }
+  function allow() { choice = "granted"; save(choice); load(true); }
+  function deny() {
+    choice = "denied"; save(choice);
+    if (loaded) push("consent", "update", { analytics_storage: "denied" });
+    window["ga-disable-" + ID] = true;
+    window.gtag = noop;
+    clearCookies();
+  }
+  function on() { return choice === "granted" || (tier === "notice" && !gpc && choice !== "denied"); }
+
+  if (choice === "granted") load(true);
+  else if (on()) load(false);
+
+  window.SignalConsent = {
+    tier: tier, gpc: gpc, allow: allow, deny: deny, on: on,
+    choice: function () { return choice; },
+    needsBanner: function () { return !gpc && (choice === "" || (choice === "noticed" && tier === "optin")); },
+    noticed: function () { if (tier === "notice" && choice === "") { choice = "noticed"; save(choice); } }
+  };
+})();
 </script>
+<!-- <<< consent -->
 
 <title>Applicant Match Scores Compared (2026): 16 Platforms, Rated on Governance — The Signal HR</title>
 <meta name="description" content="16 applicant match and ranking tools compared on what you&#x27;d need to defend a score: explanations, recruiter control, human review, bias audits and AI certification. Greenhouse, Workday HiredScore, Eightfold, Gem, hireEZ and more, plus the hiring-AI rules in 38 places across 21 countries and the EU. No vendor pays.">
@@ -26,9 +105,6 @@
 <meta name="twitter:description" content="16 applicant match and ranking tools compared on what you&#x27;d need to defend a score: explanations, recruiter control, human review, bias audits and AI certification. Greenhouse, Workday HiredScore, Eightfold, Gem, hireEZ and more, plus the hiring-AI rules in 38 places across 21 countries and the EU. No vendor pays.">
 <meta name="twitter:image" content="https://thesignalhr.com/og-cover.png">
 <meta name="robots" content="index, follow">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/site.css">
 <script>/* prevent theme flash */(function(){try{var t=localStorage.getItem("signal-theme")||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");document.documentElement.setAttribute("data-theme",t);}catch(e){}})();</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Article", "headline": "Applicant match scores compared", "datePublished": "2026-10-16", "dateModified": "2026-10-16", "author": {"@type": "Person", "name": "Alex Rivera"}, "publisher": {"@type": "Organization", "name": "The Signal HR", "url": "https://thesignalhr.com/"}, "mainEntityOfPage": "https://thesignalhr.com/compare/match/"}, {"@type": "ItemList", "name": "Applicant match scores compared", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Greenhouse Talent Matching", "url": "https://thesignalhr.com/compare/match/#p-greenhouse"}, {"@type": "ListItem", "position": 2, "name": "Ashby criteria evaluation", "url": "https://thesignalhr.com/compare/match/#p-ashby"}, {"@type": "ListItem", "position": 3, "name": "Lever Talent Fit", "url": "https://thesignalhr.com/compare/match/#p-lever"}, {"@type": "ListItem", "position": 4, "name": "iCIMS candidate ranking", "url": "https://thesignalhr.com/compare/match/#p-icims"}, {"@type": "ListItem", "position": 5, "name": "SmartRecruiters Winston Match", "url": "https://thesignalhr.com/compare/match/#p-smartrecruiters"}, {"@type": "ListItem", "position": 6, "name": "Workday HiredScore", "url": "https://thesignalhr.com/compare/match/#p-workday"}, {"@type": "ListItem", "position": 7, "name": "Oracle Recruiting recommendations", "url": "https://thesignalhr.com/compare/match/#p-oracle"}, {"@type": "ListItem", "position": 8, "name": "SAP SuccessFactors applicant screening", "url": "https://thesignalhr.com/compare/match/#p-sapsf"}, {"@type": "ListItem", "position": 9, "name": "Eightfold match score", "url": "https://thesignalhr.com/compare/match/#p-eightfold"}, {"@type": "ListItem", "position": 10, "name": "Phenom Fit Score", "url": "https://thesignalhr.com/compare/match/#p-phenom"}, {"@type": "ListItem", "position": 11, "name": "Beamery Talent Match", "url": "https://thesignalhr.com/compare/match/#p-beamery"}, {"@type": "ListItem", "position": 12, "name": "Avature matching", "url": "https://thesignalhr.com/compare/match/#p-avature"}, {"@type": "ListItem", "position": 13, "name": "Gem AI Application Review", "url": "https://thesignalhr.com/compare/match/#p-gem"}, {"@type": "ListItem", "position": 14, "name": "hireEZ Applicant Match", "url": "https://thesignalhr.com/compare/match/#p-hireez"}, {"@type": "ListItem", "position": 15, "name": "SeekOut AI Recommendations", "url": "https://thesignalhr.com/compare/match/#p-seekout"}, {"@type": "ListItem", "position": 16, "name": "Findem applicant matching", "url": "https://thesignalhr.com/compare/match/#p-findem"}]}, {"@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "The Signal HR", "item": "https://thesignalhr.com/"}, {"@type": "ListItem", "position": 2, "name": "Comparison Hub", "item": "https://thesignalhr.com/compare/"}, {"@type": "ListItem", "position": 3, "name": "Applicant match scores", "item": "https://thesignalhr.com/compare/match/"}]}]}</script>
@@ -226,7 +302,7 @@ ul.method{padding-left:1.1rem;display:grid;gap:.6rem;color:var(--ink-mid)}
       <span class="kicker">Comparison Hub · Applicant match scores</span>
       <h1 style="max-width:17em;">Applicant match scores: <em style="color:var(--signal);">can you explain the number?</em></h1>
       <p class="standfirst" style="max-width:41em;">16 platforms that score or rank applicants, from the match score inside your ATS or HCM suite to talent-intelligence and sourcing tools. Rated on what you'd need to defend a score: explanations, recruiter control, human review, an off switch, published bias audits and AI certification. Start with the rules where you hire. No vendor paid to be here, rank higher or be described favorably.</p>
-      <div class="article-meta"><span>Reviewed October 2026</span><span>16 platforms</span><span>Rules in 21 countries and the EU</span><span>Independent · unsponsored</span></div>
+      <div class="article-meta"><span>Reviewed October 2026</span><span>16 platforms</span><span>Rules in 21 countries and the EU</span><span>Independent · unsponsored</span><span><a href="/about/#ai">AI-assisted</a></span></div>
       <nav class="ats-jump" aria-label="On this page"><a href="#rules">Rules where you hire</a><a href="#finder">Find your shortlist</a><a href="#compare">Compare</a><a href="#landscape">The landscape</a><a href="#profiles">Platform profiles</a><a href="#rfp">RFP questions</a><a href="#method">How we review</a><a href="/compare/ats/">ATS platforms →</a><a href="/compare/crm/">Recruiting CRMs →</a></nav>
     </div>
   </section>
@@ -234,7 +310,7 @@ ul.method{padding-left:1.1rem;display:grid;gap:.6rem;color:var(--ink-mid)}
   <section class="section" id="rules" style="padding-top:0;">
     <div class="wrap">
       <div class="section-head"><div><span class="kicker">Step 1</span><h2>Before you switch a score on: <em>the rules where you hire</em></h2></div></div>
-      <p class="lede">A match score is the AI feature most often switched on without a review, and the one hiring-AI rules are written about. Pick the countries where you hire. Where a state, province or EU country adds its own rules, it opens underneath. Then say how the score will be used. What applies, the capabilities these rules point to and the questions for your vendor build below.</p>
+      <p class="lede">A match score can arrive in a product release without a separate purchase or review, and many hiring-AI rules are written with scores like these in mind. Pick the countries where you hire. Where a state, province or EU country adds its own rules, it opens underneath. Then say how the score will be used. What applies, the capabilities these rules point to and the questions for your vendor build below.</p>
       <form id="rules-form" onsubmit="return false">
         <div class="jur-grid">
           <fieldset class="jur-group"><legend>Americas</legend>
@@ -289,7 +365,7 @@ ul.method{padding-left:1.1rem;display:grid;gap:.6rem;color:var(--ink-mid)}
   <section class="section section-alt" id="landscape">
     <div class="wrap">
       <div class="section-head"><div><span class="kicker">The landscape</span><h2>Four places a <em>score</em> comes from</h2></div></div>
-      <p class="lede">Scores are now in most recruiting stacks, often switched on in a release rather than bought. Ownership and litigation shape the risk: Workday owns HiredScore, SAP owns SmartRecruiters and is moving its recruiting there, Employ owns Lever, and Eightfold faces a class action over how candidate profiles are built. Assessments, video interviews and chatbot screening are out of scope here; they carry their own rules.</p>
+      <p class="lede">Scores are now common in recruiting platforms, and they can be switched on in a release rather than bought. Ownership and litigation shape the risk: Workday owns HiredScore, SAP owns SmartRecruiters and is moving its recruiting there, Employ owns Lever, and Eightfold faces a class action over how candidate profiles are built. Assessments, video interviews and chatbot screening are out of scope here; they carry their own rules.</p>
       <div class="grid grid-2"><div class="card"><span class="tag tag-signal">Score inside an ATS</span><p>The match or ranking feature in your applicant tracking system. Often the cheapest to switch on, and the one most often switched on without a governance review.</p><p class="members"><a href="#p-greenhouse">Greenhouse Talent Matching</a> · <a href="#p-ashby">Ashby criteria evaluation</a> · <a href="#p-lever">Lever Talent Fit</a> · <a href="#p-icims">iCIMS candidate ranking</a> · <a href="#p-smartrecruiters">SmartRecruiters Winston Match</a></p></div><div class="card"><span class="tag tag-teal">Score inside an HCM suite</span><p>Scoring inside Workday, Oracle or SAP SuccessFactors. One data model with the HCM; the AI is frequently a separate SKU or consumption-priced.</p><p class="members"><a href="#p-workday">Workday HiredScore</a> · <a href="#p-oracle">Oracle Recruiting recommendations</a> · <a href="#p-sapsf">SAP SuccessFactors applicant screening</a></p></div><div class="card"><span class="tag tag-coral">Talent intelligence platform</span><p>Skills-inference platforms that score applicants, past candidates and employees against roles, usually on top of your ATS.</p><p class="members"><a href="#p-eightfold">Eightfold match score</a> · <a href="#p-phenom">Phenom Fit Score</a> · <a href="#p-beamery">Beamery Talent Match</a> · <a href="#p-avature">Avature matching</a></p></div><div class="card"><span class="tag tag-amber">Sourcing and screening tool</span><p>Tools that rank sourced prospects and, increasingly, inbound applicants, next to your ATS. Watch where the profile data comes from.</p><p class="members"><a href="#p-gem">Gem AI Application Review</a> · <a href="#p-hireez">hireEZ Applicant Match</a> · <a href="#p-seekout">SeekOut AI Recommendations</a> · <a href="#p-findem">Findem applicant matching</a></p></div></div>
     </div>
   </section>
@@ -513,7 +589,7 @@ ul.method{padding-left:1.1rem;display:grid;gap:.6rem;color:var(--ink-mid)}
   <section class="section section-alt" id="rfp">
     <div class="wrap" style="max-width:860px;">
       <div class="section-head"><div><span class="kicker">Free to use</span><h2>The 12-question <em>match-score RFP bank</em></h2></div></div>
-      <p class="lede">Questions that show whether you could explain a score to a candidate, a regulator or a works council. If the vendor can't answer them, you won't be able to either.</p>
+      <p class="lede">Questions that show whether you could explain a score to a candidate, a regulator or a works council. A vendor's answers show how much of a score you'd be able to explain yourself.</p>
       <ol class="rfp"><li>Show, for one of our jobs, exactly what a recruiter sees next to a candidate&#x27;s score, and what would change it.</li><li>Who sets the criteria and weights: us, the model, or past hiring outcomes? Can we see and lock them per job?</li><li>Can the score automatically reject, advance, hide or contact anyone? What are the defaults, and who can change them?</li><li>Can we switch scoring off by country, state or job, and is every change logged?</li><li>Send the latest independent bias audit: auditor, date, data, the features covered and the impact ratios.</li><li>Will you give us score and outcome data for our own jobs so we can run our own audit?</li><li>Which data feeds a candidate&#x27;s profile beyond what they submitted, and can we switch each source off?</li><li>What do you provide for our candidate notices (NYC, Illinois, Colorado, California, Ontario, EU)?</li><li>Which AI certification do you hold, who issued it, and does its scope name this feature?</li><li>How do you test a new model version before release, and how will we know it changed?</li><li>Is scoring included in our license, a separate SKU, or consumption-priced?</li><li>If a candidate asks why they were rejected, what can we tell them from your system?</li></ol>
     </div>
   </section>
@@ -537,8 +613,8 @@ ul.method{padding-left:1.1rem;display:grid;gap:.6rem;color:var(--ink-mid)}
   <section class="section" style="padding-top:0;">
     <div class="wrap">
       <div class="news-band">
-        <h2>Walk into Monday <em>already knowing</em>.</h2>
-        <p>The weekly signal: what changed in HR tech, what it means, what to do. Free forever. <a href="/kits/">See the buyer kits we're building</a>.</p>
+        <h2>Get the signal <em>each week</em>.</h2>
+        <p>The weekly signal: what changed in HR tech, what it may mean, and what to check. Free forever. <a href="/kits/">See the buyer kits we're building</a>.</p>
         <iframe src="https://thesignalhr.substack.com/embed" title="Subscribe to The Signal HR newsletter" loading="lazy"></iframe>
         <p class="micro">No spam. Unsubscribe anytime.</p>
       </div>
@@ -924,7 +1000,7 @@ ul.method{padding-left:1.1rem;display:grid;gap:.6rem;color:var(--ink-mid)}
       </div>
     </div>
     <div class="footer-bottom">
-      <span>© 2026 The Signal HR · Curated by Alex Rivera · <a href="/privacy/">Privacy</a> · <a href="/terms/">Terms</a></span>
+      <span>© 2026 The Signal HR · Curated by Alex Rivera · <a href="/privacy/">Privacy</a> · <a href="/terms/">Terms</a> · <button type="button" class="cookie-link" data-consent-open>Cookie settings</button></span>
       <span>No vendor pays. Ever.</span>
     </div>
   </div>

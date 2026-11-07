@@ -7,6 +7,8 @@ Standard library only. Checks:
   structure    one h1, title, description, canonical = og:url, JSON-LD parses, internal links and sitemap resolve
   sources      every Briefing signal, Insight, platform profile and rules-check place cites a source
   guardrails   no persuading or ranking language in our voice (GUARDRAILS.md section 1); no relative dates
+  voice        practitioner to practitioner: no superlatives about ourselves, swipes at others or know-it-all framing (section 2)
+  privacy      analytics only through the consent loader, a Cookie settings link on every page, no Google Fonts (section 5)
   dates        stale "Verified" dates, "from <date>" statements whose date has passed, future "Updated" dates
   consistency  platform and place counts quoted on the Hub, homepage and Coverage match the data
   watchlist    time-sensitive facts whose recheck date has arrived (watchlist.json)
@@ -147,6 +149,62 @@ for f, raw in RAW.items():
         if not re.search(r"(Gartner|Forrester|IDC|Everest|named|says|said|claims|Magic Quadrant)", before, re.I):
             warn("guardrails", f"{f}: …{text[max(0, m.start() - 40):m.end() + 30]}…", "\"leader/laggard\" must be attributed to a named third party")
             break
+
+# ---------------------------------------------------------------- voice (section 2: practitioner to practitioner)
+VOICE = [
+    (r"\b(the )?most (reliable|trusted|accurate|authoritative)\b", "a superlative about ourselves; show reliability with sources, dates and corrections"),
+    (r"\bdefinitive\b(?! (merger |purchase |acquisition |sale )?agreement)|\bauthoritative\b", "claims authority; The Signal is one practitioner's read"),
+    (r"\bthe (benchmark|gold standard|go-to (source|resource|site))\b", "claims authority"),
+    (r"\bzero (mistakes|errors)\b|\b100% (accurate|reliable|correct)\b", "promises perfection; say how errors are caught and corrected"),
+    (r"\beverything you need\b|\ball you need to know\b", "over-claims completeness"),
+    (r"\bin disguise\b|\b(vendor|demo) theat(er|re)\b|\btrench coat\b|\breferral fees\b", "a swipe at others; describe what we do, not what others get wrong"),
+    (r"\bcompared honestly\b|\bhonest(,)? (side-by-side )?(vendor )?comparisons?\b|\bhr tech honestly\b", "implies others are dishonest"),
+    (r"\bnot an algorithm\b|\bno ai (is |was )?used\b|\bwritten without ai\b|\b100% human\b|\bhuman-written\b", "AI helps with this site; the About page says how"),
+    (r"\bcan't get wrong\b|\balready knowing\b|\bsound informed\b|\bwhat to do about it\b|\bdiscomfort is diagnostic\b", "know-it-all framing; offer what it may mean and what to check"),
+]
+VOICE_WARN = [
+    (r"\b(obviously|of course|make no mistake|needless to say|simply put|the truth is|everyone knows)\b", "talks down to readers"),
+    (r"\bwhat most (people|teams|hr leaders|buyers|companies) (get wrong|miss|don't know)\b", "talks down to readers"),
+    (r"\byou (must|need to) (decide|act|move|buy|choose)\b|\bbefore a vendor decides\b", "an order to readers; offer it as a question or a check"),
+]
+for f, raw in RAW.items():
+    if is_archive(f):
+        continue  # archived editions stay as published
+    text = visible(raw)
+    for pats, report in ((VOICE, err), (VOICE_WARN, warn)):
+        for pat, why in pats:
+            for m in re.finditer(pat, text, flags=re.I):
+                before = text[max(0, m.start() - 80):m.start()]
+                if ATTRIB.search(before) or re.search(r"[\"\u201c]\S*$", before):
+                    continue  # attributed or quoted
+                report("voice", f"{f}: …{text[max(0, m.start() - 40):m.end() + 40]}…", why)
+                break
+
+# ---------------------------------------------------------------- privacy (section 5: analytics only with consent)
+try:
+    CONSENT_JS = open(os.path.join(HERE, "..", "site", "consent_head.js"), encoding="utf-8").read().strip("\n")
+except OSError:
+    CONSENT_JS = None
+for f, raw in RAW.items():
+    if not re.search(r"<head>", raw):
+        continue
+    raw_tag = re.search(r'<script[^>]+src="https://www\.googletagmanager\.com/', raw)
+    if raw_tag:
+        err("privacy", f, "analytics tag loads without the consent check: run python3 -B _tools/site/consent.py")
+    m = re.search(r"<!-- >>> consent .*?<script>\n(.*?)\n</script>\n<!-- <<< consent -->", raw, flags=re.S)
+    if not m and not raw_tag:
+        warn("privacy", f, "no consent loader (and so no analytics): run consent.py if this page should count visits")
+    elif CONSENT_JS is not None and m.group(1) != CONSENT_JS:
+        err("privacy", f, "consent loader is out of date: rerun python3 -B _tools/site/consent.py")
+    if "<footer" in raw and "data-consent-open" not in raw:
+        err("privacy", f, "footer has no Cookie settings link: run consent.py")
+    if re.search(r"fonts\.(googleapis|gstatic)\.com", raw):
+        err("privacy", f, "Google Fonts sends visitors' IP addresses to Google; fonts are self-hosted in /assets/fonts")
+if "privacy/index.html" in RAW and 'id="cookies"' not in RAW["privacy/index.html"]:
+    err("privacy", "privacy/index.html", "the Cookies and your choice section is missing")
+for css in ("assets/site.css",):
+    if os.path.exists(css) and re.search(r"fonts\.(googleapis|gstatic)\.com", open(css, encoding="utf-8").read()):
+        err("privacy", css, "Google Fonts import in the stylesheet")
 
 # ---------------------------------------------------------------- dates
 for f, raw in RAW.items():

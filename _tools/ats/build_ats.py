@@ -15,7 +15,7 @@ foot = tpl[foot_start:]
 TITLE = "ATS &amp; Recruiting Platforms Compared (2026): 17 Platforms, Side by Side — The Signal HR"
 DESC = ("17 ATS and recruiting platforms compared for HR leaders: Workday, SAP SuccessFactors, Oracle, iCIMS, Greenhouse, "
         "Ashby, SmartRecruiters, Avature, Phenom, Eightfold and more. Filter to your situation, compare side by side, "
-        "and check what will really set your go-live date. No vendor pays.")
+        "and check what tends to set a go-live date. No vendor pays.")
 head = re.sub(r"<title>.*?</title>", f"<title>{TITLE}</title>", head, flags=re.S)
 for attr in ['name="description"', 'property="og:description"', 'name="twitter:description"']:
     head = re.sub(r'(<meta %s content=")[^"]*(">)' % re.escape(attr), lambda m: m.group(1) + E(DESC) + m.group(2), head)
@@ -60,9 +60,9 @@ out.append(f'''
   <section class="article-header">
     <div class="wrap">
       <span class="kicker">Comparison Hub · ATS &amp; recruiting platforms</span>
-      <h1 style="max-width:17em;">ATS platforms, compared for the decision you're <em style="color:var(--signal);">actually</em> making.</h1>
-      <p class="standfirst" style="max-width:40em;">{len(D.P)} platforms across five categories, from standalone ATS to HCM-suite recruiting. Filter to your situation, compare up to three side by side, and check what will really set your go-live date, from vendor selection onward. No vendor paid to be here, rank higher or be described favorably.</p>
-      <div class="article-meta"><span>Reviewed {E(D.VERIFIED)}</span><span>{len(D.P)} platforms</span><span>Independent · unsponsored</span></div>
+      <h1 style="max-width:17em;">ATS platforms, compared for <em style="color:var(--signal);">the decision you're making</em>.</h1>
+      <p class="standfirst" style="max-width:40em;">{len(D.P)} platforms across five categories, from standalone ATS to HCM-suite recruiting. Filter to your situation, compare up to three side by side, and check what tends to set a go-live date, from vendor selection onward. No vendor paid to be here, rank higher or be described favorably.</p>
+      <div class="article-meta"><span>Reviewed {E(D.VERIFIED)}</span><span>{len(D.P)} platforms</span><span>Independent · unsponsored</span><span><a href="/about/#ai">AI-assisted</a></span></div>
       <nav class="ats-jump" aria-label="On this page"><a href="#finder">Find your shortlist</a><a href="#compare">Compare</a><a href="#implementation">What sets your go-live</a><a href="#landscape">The landscape</a><a href="#profiles">Platform profiles</a><a href="#rfp">RFP questions</a><a href="#method">How we review</a><a href="/compare/crm/">Recruiting CRMs →</a><a href="/compare/match/">Applicant match →</a></nav>
     </div>
   </section>''')
@@ -226,7 +226,7 @@ out.append(f'''
   <section class="section section-alt" id="rfp">
     <div class="wrap" style="max-width:860px;">
       <div class="section-head"><div><span class="kicker">Free to use</span><h2>The {len(D.RFP)}-question <em>RFP bank</em></h2></div></div>
-      <p class="lede">Questions that separate demo theater from deployed reality. Ask them in this order; the discomfort is diagnostic.</p>
+      <p class="lede">Questions to take into demos, to see how a platform works in production as well as in the demo.</p>
       <ol class="rfp">{rfp}</ol>
       <p class="kit-hint">Want this as working files? The <a href="/kits/#kit-ats">ATS Selection Kit</a>, in development, adds an editable scorecard, a demo script and a business case. Tell us if you'd use it.</p>
     </div>

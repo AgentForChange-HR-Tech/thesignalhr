@@ -36,7 +36,7 @@ Rules:
 
 ### Gate 2: Automated validators
 
-`verify.py` must report **0 errors**. It checks structure and links, that every signal, profile and rule cites a source, guardrail language, stale or passed dates, numbers quoted across pages, the watchlist, employer and placeholder references, and the search index. Warnings are read and either fixed or explained in the review.
+`verify.py` must report **0 errors**. It checks structure and links, that every signal, profile and rule cites a source, guardrail and voice language, the cookie-consent loader and self-hosted fonts, stale or passed dates, numbers quoted across pages, the watchlist, employer and placeholder references, and the search index. Warnings are read and either fixed or explained in the review.
 
 ### Gate 3: Independent fact-check
 
@@ -45,6 +45,7 @@ A fresh session with no stake in the draft opens every source and checks every c
 ### Gate 4: Guardrails and risk review (part of the fact-check)
 
 - **Inform, don't persuade** (GUARDRAILS section 1).
+- **Voice** (GUARDRAILS section 2): practitioner to practitioner. No superlatives about The Signal, no swipes at other sites or vendors, no orders to readers, analysis framed as what a change may mean, limits named, and AI use described accurately.
 - **Named companies:** only facts from cited sources, attributed and in neutral words. Never characterize a company's intent. "Illegal", "violates", "fraud" and similar appear only when quoting a court or regulator's decision.
 - **Litigation:** complaints are described as allegations ("the complaint alleges"), from the docket or a Tier B report, and updated when outcomes change.
 - **Analysis is labeled.** The "So what" is analysis; facts and analysis don't blur.

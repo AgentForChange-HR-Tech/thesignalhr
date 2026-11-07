@@ -91,7 +91,7 @@ out.append(f'''
       <span class="kicker">Comparison Hub · Applicant match scores</span>
       <h1 style="max-width:17em;">Applicant match scores: <em style="color:var(--signal);">can you explain the number?</em></h1>
       <p class="standfirst" style="max-width:41em;">{len(D.P)} platforms that score or rank applicants, from the match score inside your ATS or HCM suite to talent-intelligence and sourcing tools. Rated on what you'd need to defend a score: explanations, recruiter control, human review, an off switch, published bias audits and AI certification. Start with the rules where you hire. No vendor paid to be here, rank higher or be described favorably.</p>
-      <div class="article-meta"><span>Reviewed {E(D.VERIFIED)}</span><span>{len(D.P)} platforms</span><span>Rules in {N_COUNTRIES} countries and the EU</span><span>Independent · unsponsored</span></div>
+      <div class="article-meta"><span>Reviewed {E(D.VERIFIED)}</span><span>{len(D.P)} platforms</span><span>Rules in {N_COUNTRIES} countries and the EU</span><span>Independent · unsponsored</span><span><a href="/about/#ai">AI-assisted</a></span></div>
       <nav class="ats-jump" aria-label="On this page"><a href="#rules">Rules where you hire</a><a href="#finder">Find your shortlist</a><a href="#compare">Compare</a><a href="#landscape">The landscape</a><a href="#profiles">Platform profiles</a><a href="#rfp">RFP questions</a><a href="#method">How we review</a><a href="/compare/ats/">ATS platforms →</a><a href="/compare/crm/">Recruiting CRMs →</a></nav>
     </div>
   </section>''')
@@ -123,7 +123,7 @@ out.append(f'''
   <section class="section" id="rules" style="padding-top:0;">
     <div class="wrap">
       <div class="section-head"><div><span class="kicker">Step 1</span><h2>Before you switch a score on: <em>the rules where you hire</em></h2></div></div>
-      <p class="lede">A match score is the AI feature most often switched on without a review, and the one hiring-AI rules are written about. Pick the countries where you hire. Where a state, province or EU country adds its own rules, it opens underneath. Then say how the score will be used. What applies, the capabilities these rules point to and the questions for your vendor build below.</p>
+      <p class="lede">A match score can arrive in a product release without a separate purchase or review, and many hiring-AI rules are written with scores like these in mind. Pick the countries where you hire. Where a state, province or EU country adds its own rules, it opens underneath. Then say how the score will be used. What applies, the capabilities these rules point to and the questions for your vendor build below.</p>
       <form id="rules-form" onsubmit="return false">
         <div class="jur-grid">{"".join(jur_sets)}
         </div>
@@ -174,7 +174,7 @@ out.append(f'''
   <section class="section section-alt" id="landscape">
     <div class="wrap">
       <div class="section-head"><div><span class="kicker">The landscape</span><h2>Four places a <em>score</em> comes from</h2></div></div>
-      <p class="lede">Scores are now in most recruiting stacks, often switched on in a release rather than bought. Ownership and litigation shape the risk: Workday owns HiredScore, SAP owns SmartRecruiters and is moving its recruiting there, Employ owns Lever, and Eightfold faces a class action over how candidate profiles are built. Assessments, video interviews and chatbot screening are out of scope here; they carry their own rules.</p>
+      <p class="lede">Scores are now common in recruiting platforms, and they can be switched on in a release rather than bought. Ownership and litigation shape the risk: Workday owns HiredScore, SAP owns SmartRecruiters and is moving its recruiting there, Employ owns Lever, and Eightfold faces a class action over how candidate profiles are built. Assessments, video interviews and chatbot screening are out of scope here; they carry their own rules.</p>
       <div class="grid grid-2">{"".join(land)}</div>
     </div>
   </section>''')
@@ -214,7 +214,7 @@ out.append(f'''
   <section class="section section-alt" id="rfp">
     <div class="wrap" style="max-width:860px;">
       <div class="section-head"><div><span class="kicker">Free to use</span><h2>The {len(D.RFP)}-question <em>match-score RFP bank</em></h2></div></div>
-      <p class="lede">Questions that show whether you could explain a score to a candidate, a regulator or a works council. If the vendor can't answer them, you won't be able to either.</p>
+      <p class="lede">Questions that show whether you could explain a score to a candidate, a regulator or a works council. A vendor's answers show how much of a score you'd be able to explain yourself.</p>
       <ol class="rfp">{rfp}</ol>
     </div>
   </section>

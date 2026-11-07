@@ -125,27 +125,35 @@ rw("about/index.html", lambda s: once(s,
 
 # ---------------------------------------------------------------- 3b. Privacy and terms pages (built from the About page)
 PRIVACY = f"""
-    <p><strong>The short version:</strong> we count visits so we know what's useful. We don't run ads, we don't sell your information, and we never share it with HR-tech vendors. The newsletter signup is handled by Substack.</p>
+    <p><strong>The short version:</strong> we count visits so we know what's useful, and where the law asks for consent first, only if you allow it. We don't run ads, we don't sell your information, and we never share it with HR-tech vendors. The newsletter signup is handled by Substack.</p>
     <h2>Who we are</h2>
     <p>The Signal HR (thesignalhr.com) is an independent publication run by Alex Rivera. Questions about this policy: <a href="mailto:{EMAIL}">{EMAIL}</a>.</p>
     <h2>What we collect, and why</h2>
     <ul>
-      <li><strong>Analytics.</strong> Google Analytics 4 tells us which pages and tools get used: pages viewed, approximate location (country or city), device and browser, how you arrived, and interactions such as filter choices on comparison pages. It sets cookies (named <code>_ga</code>) to tell visits apart. We use it only to improve the site.</li>
+      <li><strong>Analytics.</strong> Google Analytics 4 tells us which pages and tools get used: pages viewed, approximate location (country or city), device and browser, how you arrived, and interactions such as filter choices on comparison pages. It sets cookies (named <code>_ga</code>, kept for up to 13 months) to tell visits apart, only when your cookie choice allows it (see <a href="#cookies">Cookies and your choice</a>). Google signals and advertising features are off. We use it only to improve the site.</li>
       <li><strong>Newsletter.</strong> If you subscribe, Substack collects your email address and sends the newsletter, under <a href="https://substack.com/privacy" target="_blank" rel="noopener">Substack's privacy policy</a>. The signup form on our pages is Substack's own embedded form.</li>
       <li><strong>Email.</strong> If you write to us, we keep your message and address so we can reply.</li>
-      <li><strong>Settings in your browser.</strong> The site remembers your light or dark theme and your region filter in your browser's local storage (<code>signal-theme</code>, <code>signal-region</code>). They stay on your device, and clearing your browser data removes them.</li>
+      <li><strong>Settings in your browser.</strong> The site remembers your light or dark theme, your region filter and your cookie choice in your browser's local storage (<code>signal-theme</code>, <code>signal-region</code>, <code>signal-consent</code>). They stay on your device, and clearing your browser data removes them.</li>
       <li><strong>Tools on comparison pages.</strong> Answers you give in the checks and finders run in your browser. We don't store them. Which options people pick may be counted in analytics, without identifying you.</li>
     </ul>
     <h2>Services that handle data for us</h2>
     <ul>
       <li><strong>Google Analytics</strong> (Google): visit statistics.</li>
-      <li><strong>Google Fonts</strong> (Google): the site's fonts load from Google's servers, which receive your IP address.</li>
       <li><strong>Substack</strong>: newsletter signup and delivery.</li>
       <li><strong>GitHub Pages</strong> (GitHub): hosting, which keeps standard server logs.</li>
       <li><strong>Cloudflare</strong>: domain name services.</li>
       <li><strong>Google Workspace</strong> (Google): email.</li>
     </ul>
     <p>These providers may process data in the United States and other countries.</p>
+    <h2 id="cookies">Cookies and your choice</h2>
+    <p>The only cookies this site sets are Google Analytics cookies. Which default you get depends on where you are:</p>
+    <ul>
+      <li><strong>Europe (including the EU, the UK and Switzerland), Brazil, and Canada's Eastern time zone, which includes Quebec:</strong> analytics stays off unless you choose "Allow analytics".</li>
+      <li><strong>Everywhere else:</strong> analytics is on, and a notice on your first visit lets you turn it off.</li>
+      <li><strong>Privacy signals:</strong> if your browser sends Global Privacy Control or Do Not Track, analytics stays off unless you turn it on.</li>
+    </ul>
+    <p>To pick the default, the site reads your device's time-zone setting in your browser; it isn't sent to us or anyone else. If the time zone can't be read, analytics stays off until you choose. Google may also use the region of your IP address to keep analytics cookies off by default in the EU, the UK, Switzerland, Brazil and Quebec. Your choice is kept in your browser for up to 12 months (6 months if you say no). You can change it any time with <strong>Cookie settings</strong> at the bottom of every page, or here: <button type="button" class="cookie-link" data-consent-open>Cookie settings</button>.</p>
+    <p>The newsletter signup form is Substack's own embedded form, covered by Substack's privacy policy. The site's fonts are served from this site, not from Google.</p>
     <h2>What we don't do</h2>
     <ul>
       <li>No advertising, and no selling of personal information.</li>
@@ -156,6 +164,7 @@ PRIVACY = f"""
     <p>Analytics data is kept for the retention period set in Google Analytics, no longer than 14 months. Emails are kept as long as needed to handle the conversation. Substack keeps your subscription until you unsubscribe.</p>
     <h2>Your choices and rights</h2>
     <ul>
+      <li>Change your analytics choice any time with <strong>Cookie settings</strong> at the bottom of every page.</li>
       <li>Block or delete cookies in your browser, or use <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener">Google's opt-out add-on</a> for Google Analytics.</li>
       <li>Unsubscribe from the newsletter with the link in any issue.</li>
       <li>Ask us what personal information we hold about you, or ask us to correct or delete it, by emailing <a href="mailto:{EMAIL}">{EMAIL}</a>.</li>
