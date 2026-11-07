@@ -2,6 +2,7 @@
 (function () {
   var items = Array.prototype.slice.call(document.querySelectorAll("article.brief-item"));
   if (items.length < 3 || document.querySelector(".brief-cards")) return;
+  if (!items.every(function (it) { return it.querySelector(".so-what"); })) return;   // signal lists only, not the archive's list of editions
   var host = items[0].parentNode;
   if (!items.every(function (it) { return it.parentNode === host; })) return;
   // the list lives in a narrow reading column; cards get the full page width

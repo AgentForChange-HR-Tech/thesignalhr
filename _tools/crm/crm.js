@@ -60,11 +60,12 @@
       var r = evaluate(p, s);
       if (r.out) out.push([p, r.out]); else (r.gaps.length ? partial : strong).push([p, r]);
     });
-    var byScore = function (a, b) { return b[1].score - a[1].score || a[0].name.localeCompare(b[0].name); };
-    strong.sort(byScore); partial.sort(byScore);
+    // no ranking: full matches alphabetically; partial matches by fewest gaps, then alphabetically
+    var alpha = function (a, b) { return a[0].name.localeCompare(b[0].name); };
+    strong.sort(alpha); partial.sort(function (a, b) { return a[1].gaps.length - b[1].gaps.length || alpha(a, b); });
     var h = "";
-    if (strong.length) h += '<h3 class="group">Strong fits</h3>' + strong.map(function (x) { return card(x[0], x[1]); }).join("");
-    if (partial.length) h += '<h3 class="group">Possible fits, with gaps</h3>' + partial.map(function (x) { return card(x[0], x[1]); }).join("");
+    if (strong.length) h += '<h3 class="group">Matches all your filters</h3>' + strong.map(function (x) { return card(x[0], x[1]); }).join("");
+    if (partial.length) h += '<h3 class="group">Matches some of your filters</h3>' + partial.map(function (x) { return card(x[0], x[1]); }).join("");
     if (!h) h = "<p>No platform matches every filter. Remove a must-have to widen the list.</p>";
     $("#ats-results").innerHTML = h;
     $("#ats-count").textContent = strong.length + " strong " + (strong.length === 1 ? "fit" : "fits") + ", " + partial.length + " with gaps, " + out.length + " filtered out.";
@@ -79,7 +80,7 @@
 
   // ---------- Compare ----------
   function list(a) { return a && a.length ? "<ul>" + a.map(function (x) { return "<li>" + esc(x) + "</li>"; }).join("") + "</ul>" : "—"; }
-  var LV = { 2: "Native", 1: "Partial or add-on", 0: "Not a strength" }, GOVL = { 2: "Certified", 1: "Partial", 0: "None found" };
+  var LV = { 2: "Native", 1: "Partial or add-on", 0: "Not documented" }, GOVL = { 2: "Certified", 1: "Partial", 0: "None found" };
   function renderCompare() {
     var box = $("#ats-compare");
     if (selected.length < 2) {
@@ -93,8 +94,7 @@
     h += grp("Fit");
     h += row("Category", function (p) { return esc(D.cats[p.cat]); });
     h += row("Owner", function (p) { return esc(p.owner) + '<div class="small">' + esc(p.owner_note) + "</div>"; });
-    h += row("Best for", function (p) { return esc(p.best); });
-    h += row("Not for", function (p) { return esc(p.notfor); });
+    h += row("Typical use", function (p) { return esc(p.best); });
     h += row("ATS", function (p) { return esc(p.works); });
     h += grp("Capabilities");
     D.caps.forEach(function (c) { h += row(esc(c[1]), function (p) { var v = p.caps[c[0]]; return '<span class="lv lv-' + v + '"></span>' + (c[0] === "gov" ? GOVL[v] : LV[v]); }); });
@@ -151,10 +151,10 @@
     var score = 0; answered.forEach(function (f) { score += lvl(f.id); });
     var pct = score / (2 * answered.length);
     var readyMajors = F.filter(function (f) { return f.group === "ready" && lvl(f.id) === 2; }).length;
-    if (ANS.own === 2) return { cls: "v-own", t: "Start with the CRM you already license", d: "Pilot it on one hiring program with a named campaign owner before buying another. Where it falls short, the gaps tell you which capabilities to shortlist on." };
-    if (pct < 0.4) return { cls: "v-low", t: "The CRM features in your ATS are probably enough", d: "Talent pools, saved searches and basic email cover occasional pipelining. Revisit when repeat roles, events or hard-to-fill roles grow." };
-    if (readyMajors >= 2 || lvl("owner") === 2) return { cls: "v-gaps", t: "A CRM could pay off, but close the gaps first", d: "Without a campaign owner, clean data and a working ATS sync, a CRM becomes an expensive database. Fix the major gaps below before you buy." };
-    return { cls: "v-buy", t: "A dedicated CRM is likely worth evaluating", d: "Shortlist in Step 2 with the capabilities below, check the CRM inside your ATS or suite first, and take the questions into demos." };
+    if (ANS.own === 2) return { cls: "v-own", t: "You already license CRM features", d: "Your answers say your ATS or suite includes CRM features. Comparing what they cover with the capabilities below shows where any gaps are." };
+    if (pct < 0.4) return { cls: "v-low", t: "Your answers describe occasional pipeline needs", d: "Talent pools, saved searches and basic email in most ATS platforms cover occasional pipelining. Needs grow with repeat roles, events and hard-to-fill roles." };
+    if (readyMajors >= 2 || lvl("owner") === 2) return { cls: "v-gaps", t: "Your answers show readiness gaps", d: "Any CRM depends on a campaign owner, clean data and a working ATS sync. The gaps below are the ones your answers flagged." };
+    return { cls: "v-buy", t: "Your answers describe sustained pipeline needs", d: "The capabilities below match the needs you described. Step 2 filters platforms by them, including the CRM inside your ATS or suite, and the questions are there for demos." };
   }
   function prioCaps() {
     var caps = [];
@@ -180,11 +180,11 @@
     var v = verdict(), h = "";
     var answered = F.filter(function (f) { return ANS[f.id] != null; });
     if (!v) {
-      h = '<p class="sum-line">Answer at least two questions under "What you need it for" to see a verdict.' + (answered.length ? " " + answered.length + " of " + F.length + " answered." : "") + "</p>";
+      h = '<p class="sum-line">Answer at least two questions under "What you need it for" to see a summary.' + (answered.length ? " " + answered.length + " of " + F.length + " answered." : "") + "</p>";
     } else {
       h = '<div class="verdict ' + v.cls + '"><h4>' + esc(v.t) + "</h4><p>" + esc(v.d) + "</p></div>";
       var caps = prioCaps();
-      if (caps.length) h += '<div class="prio-caps"><span>Capabilities to prioritize:</span>' + caps.map(function (c) { return '<span class="cap">' + esc(CAPN[c]) + "</span>"; }).join("") + '<button type="button" class="btn btn-ghost" id="drivers-apply">Apply to the finder</button></div>';
+      if (caps.length) h += '<div class="prio-caps"><span>Capabilities your answers point to:</span>' + caps.map(function (c) { return '<span class="cap">' + esc(CAPN[c]) + "</span>"; }).join("") + '<button type="button" class="btn btn-ghost" id="drivers-apply">Apply to the finder</button></div>';
       var risks = F.filter(function (f) { return kindOf(f) === "risk" && (lvl(f.id) || 0) > 0; });
       risks.sort(function (a, b) { return lvl(b.id) - lvl(a.id); });
       if (risks.length) h += '<h4 class="sum-qh">Gaps to close</h4><ul class="sum-list">' + risks.map(function (f) {

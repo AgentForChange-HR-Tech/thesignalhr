@@ -97,7 +97,7 @@ for path in sorted(glob.glob("**/index.html", recursive=True)):
     kicker = first(r'<span class="kicker">(.*?)</span>', main)
 
     # Briefing editions: index each signal, not the page
-    if url.startswith("/briefing/") and "brief-item" in main:
+    if url.startswith("/briefing/") and '<div class="so-what">' in main:
         edition = kicker.replace("· Archived", "").strip(" ·")
         for i, block in enumerate(re.findall(r'<article class="brief-item"[^>]*>(.*?)</article>', main, flags=re.S), start=1):
             head = first(r"<h3[^>]*>(.*?)</h3>", block)

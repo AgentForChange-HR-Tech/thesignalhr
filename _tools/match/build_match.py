@@ -123,7 +123,7 @@ out.append(f'''
   <section class="section" id="rules" style="padding-top:0;">
     <div class="wrap">
       <div class="section-head"><div><span class="kicker">Step 1</span><h2>Before you switch a score on: <em>the rules where you hire</em></h2></div></div>
-      <p class="lede">A match score is the AI feature most often switched on without a review, and the one hiring-AI rules are written about. Pick the countries where you hire. Where a state, province or EU country adds its own rules, it opens underneath. Then say how the score will be used. What applies, the capabilities to insist on and the questions for your vendor build below.</p>
+      <p class="lede">A match score is the AI feature most often switched on without a review, and the one hiring-AI rules are written about. Pick the countries where you hire. Where a state, province or EU country adds its own rules, it opens underneath. Then say how the score will be used. What applies, the capabilities these rules point to and the questions for your vendor build below.</p>
       <form id="rules-form" onsubmit="return false">
         <div class="jur-grid">{"".join(jur_sets)}
         </div>
@@ -189,7 +189,7 @@ for p in D.P:
       <details class="profile" id="p-{p["id"]}">
         <summary><span class="pname">{E(p["name"])}</span><span class="tag {CATTAG[p["cat"]]}">{E(D.CATS[p["cat"]])}</span><span class="powner">{E(p["owner"])}</span></summary>
         <div class="pbody">
-          <p class="pbest"><strong>Best for:</strong> {E(p["best"])} <strong>Not for:</strong> {E(p["notfor"])}</p>
+          <p class="pbest"><strong>Typical use:</strong> {E(p["best"])}</p>
           <p class="pmeta">{E(fit)} · {E(p["works"])}</p>
           <div class="pgrid">
             <div><h4>What the recruiter sees</h4><p>{E(p["output"])}</p><h4>How the score is set</h4><p>{E(p["how"])}</p><h4>Automatic actions</h4><p>{E(p["auto"])}</p></div>
@@ -223,6 +223,7 @@ out.append(f'''
       <div class="section-head"><div><span class="kicker">Independence</span><h2>How we <em>review</em></h2></div></div>
       <ul class="method">
         <li><strong>No vendor pays.</strong> No sponsorships, affiliate links or paid placement, and no vendor reviews its profile before publication.</li>
+        <li><strong>No recommendations.</strong> We describe what each platform documents. We don't rank platforms or tell you which to choose: the finder only shows which platforms match the filters you pick.</li>
         <li><strong>Scope.</strong> Scores, grades and rankings computed from applications, résumés and profiles. Assessments, games, video interviews and conversational screening are out of scope: they work differently and carry their own rules.</li>
         <li><strong>Ratings reflect public documentation.</strong> "Documented" means the vendor documents it publicly; "Partial" means claimed without detail, or limited; "Not documented" means we found nothing published, so ask. We rate the score as sold, not a test of the product.</li>
         <li><strong>Bias audits.</strong> "Recent, public" means an independent audit or continuous monitoring of the scoring feature, published within about the last 18 months. "Older or narrower" means older, undated, a single model, or hosted by a customer. Audit claims without a published summary count as none found.</li>

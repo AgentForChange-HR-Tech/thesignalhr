@@ -141,7 +141,7 @@ dict(
       <li><strong>Rewrite candidate notices for India</strong> and agree a 72-hour breach workflow with every HR vendor before May 2027.</li>
       <li><strong>Label AI-generated recruiting content</strong> in China, and keep a record of what was generated.</li>
     </ol>
-    <p>Asia-Pacific won't hand you one law to comply with. It will hand you a calendar, and the first date is eight weeks away.</p>
+    <p>Asia-Pacific won't hand you one law to comply with. It will hand you a calendar, and the first date is December 10, 2026.</p>
 ''',
  sources=[
   ("OAIC — New resources on transparency for AI and automated decision-making", "https://www.oaic.gov.au/news/media-centre/new-resources-on-transparency-for-use-of-ai-and-automated-decision-making"),

@@ -51,11 +51,12 @@
       var r = evaluate(p, s);
       if (r.out) out.push([p, r.out]); else (r.gaps.length ? partial : strong).push([p, r]);
     });
-    var byScore = function (a, b) { return b[1].score - a[1].score || a[0].name.localeCompare(b[0].name); };
-    strong.sort(byScore); partial.sort(byScore);
+    // no ranking: full matches alphabetically; partial matches by fewest gaps, then alphabetically
+    var alpha = function (a, b) { return a[0].name.localeCompare(b[0].name); };
+    strong.sort(alpha); partial.sort(function (a, b) { return a[1].gaps.length - b[1].gaps.length || alpha(a, b); });
     var h = "";
-    if (strong.length) h += '<h3 class="group">Strong fits</h3>' + strong.map(function (x) { return card(x[0], x[1]); }).join("");
-    if (partial.length) h += '<h3 class="group">Possible fits, with gaps</h3>' + partial.map(function (x) { return card(x[0], x[1]); }).join("");
+    if (strong.length) h += '<h3 class="group">Matches all your filters</h3>' + strong.map(function (x) { return card(x[0], x[1]); }).join("");
+    if (partial.length) h += '<h3 class="group">Matches some of your filters</h3>' + partial.map(function (x) { return card(x[0], x[1]); }).join("");
     if (!h) h = "<p>No platform matches every filter. Remove a must-have to widen the list.</p>";
     $("#ats-results").innerHTML = h;
     $("#ats-count").textContent = strong.length + " strong " + (strong.length === 1 ? "fit" : "fits") + ", " + partial.length + " with gaps, " + out.length + " filtered out.";
@@ -68,7 +69,7 @@
     syncChecks();
   }
   function list(a) { return a && a.length ? "<ul>" + a.map(function (x) { return "<li>" + esc(x) + "</li>"; }).join("") + "</ul>" : "—"; }
-  var LV = { 2: "Native", 1: "Partial or add-on", 0: "Not a strength" }, GOVL = { 2: "Certified", 1: "Partial", 0: "None found" };
+  var LV = { 2: "Native", 1: "Partial or add-on", 0: "Not documented" }, GOVL = { 2: "Certified", 1: "Partial", 0: "None found" };
   function renderCompare() {
     var box = $("#ats-compare");
     if (selected.length < 2) {
@@ -82,8 +83,7 @@
     h += grp("Fit");
     h += row("Category", function (p) { return esc(D.cats[p.cat]); });
     h += row("Owner", function (p) { return esc(p.owner) + '<div class="small">' + esc(p.owner_note) + "</div>"; });
-    h += row("Best for", function (p) { return esc(p.best); });
-    h += row("Not for", function (p) { return esc(p.notfor); });
+    h += row("Typical use", function (p) { return esc(p.best); });
     h += row("HRIS", function (p) { return esc(D.hrisn[p.hris]); });
     h += grp("Capabilities");
     D.caps.forEach(function (c) { h += row(esc(c[1]), function (p) { var v = p.caps[c[0]]; return '<span class="lv lv-' + v + '"></span>' + (c[0] === "gov" ? GOVL[v] : LV[v]); }); });

@@ -43,7 +43,8 @@ The Signal is objective. It informs readers; it never persuades a person or a co
   - Site-wide scripts in `_tools/site/` are idempotent; rerun them after template changes.
 - Tag every Briefing, Insights and Coverage item with a region (see `_tools/regional/README.md`).
 - After any content change, rebuild site search: `python3 -B _tools/site/search_index.py`.
-- Check before committing: every internal link resolves, one h1 per page, canonical and Open Graph tags present.
+- Before committing, run the validators: `python3 -B _tools/verify/verify.py`. Zero errors is required; read every warning.
+- Follow the six publishing gates in `_tools/PUBLISHING.md`: sourcing, validators, independent fact-check, risk review, Alex's approval, and corrections and freshness after publishing.
 - Commit locally; Alex reviews and pushes. Never push, deploy or change DNS.
 
 ## 6. Search

@@ -40,7 +40,7 @@ head = re.sub(r"<style>\n/\* ATS comparison page.*?</style>\n", "", head, flags=
 head = head.replace("</head>", f"<style>\n{CSS}\n</style>\n</head>")
 
 CAPN = dict(D.CAPS)
-LEVEL = {2: ("Native", "lv-2"), 1: ("Partial or add-on", "lv-1"), 0: ("Not a strength", "lv-0")}
+LEVEL = {2: ("Native", "lv-2"), 1: ("Partial or add-on", "lv-1"), 0: ("Not documented", "lv-0")}
 GOVL = {2: "Certified", 1: "Partial", 0: "None found"}
 HRISN = {"any": "Works with any HRIS", "workday": "Requires Workday HCM", "sap": "Requires SAP SuccessFactors",
          "oracle": "Requires Oracle Fusion HCM", "ukg": "Requires UKG Pro", "dayforce": "Requires Dayforce"}
@@ -200,7 +200,7 @@ for p in D.P:
       <details class="profile" id="p-{p["id"]}">
         <summary><span class="pname">{E(p["name"])}</span><span class="tag {CATTAG[p["cat"]]}">{E(D.CATS[p["cat"]])}</span><span class="powner">{E(p["owner"])}</span></summary>
         <div class="pbody">
-          <p class="pbest"><strong>Best for:</strong> {E(p["best"])} <strong>Not for:</strong> {E(p["notfor"])}</p>
+          <p class="pbest"><strong>Typical use:</strong> {E(p["best"])}</p>
           <p class="pmeta">{E(fit)} · {E(HRISN[p["hris"]])}</p>
           <p class="powner-note">{E(p["owner_note"])}</p>
           <div class="pgrid">
@@ -236,8 +236,9 @@ out.append(f'''
       <div class="section-head"><div><span class="kicker">Independence</span><h2>How we <em>review</em></h2></div></div>
       <ul class="method">
         <li><strong>No vendor pays.</strong> No sponsorships, affiliate links or paid placement, and no vendor reviews its profile before publication.</li>
+        <li><strong>No recommendations.</strong> We describe what each platform documents. We don't rank platforms or tell you which to choose: the finder only shows which platforms match the filters you pick.</li>
         <li><strong>Production versus promise.</strong> AI is listed as "in production" only when the vendor says it is available; everything else is labeled announced, beta, preview or roadmap with its date.</li>
-        <li><strong>Capabilities.</strong> "Native" means built into the product; "partial or add-on" means a separate module, a partner or limited depth; "not a strength" means we found no strong evidence, so ask.</li>
+        <li><strong>Capabilities.</strong> "Native" means built into the product; "partial or add-on" means a separate module, a partner or limited depth; "not documented" means we found no published evidence, so ask: it may exist.</li>
         <li><strong>AI certification.</strong> "Certified" means an independent body certified the vendor's AI management (such as ISO/IEC 42001 or TrustArc). "Partial" means a published independent bias audit, or a certification whose scope doesn't name the product. Claims without published evidence count as none found.</li>
         <li><strong>Implementation.</strong> We don't publish timelines. They depend more on your resourcing, reviews, scope and readiness than on the platform, so we show what drives them and the questions that expose them. Delivery models describe how each platform is usually implemented; ask who will actually do yours.</li>
         <li><strong>Pricing.</strong> We describe how each vendor charges and where costs grow, not list prices, because enterprise prices are negotiated and change.</li>

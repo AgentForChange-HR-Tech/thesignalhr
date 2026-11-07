@@ -42,7 +42,7 @@ head = head.replace("</head>", f"<style>\n{CSS}\n</style>\n</head>")
 assert URL in head and "compare/ats/" not in head, "head still points at the template page"
 
 CAPN = dict(D.CAPS)
-LEVEL = {2: ("Native", "lv-2"), 1: ("Partial or add-on", "lv-1"), 0: ("Not a strength", "lv-0")}
+LEVEL = {2: ("Native", "lv-2"), 1: ("Partial or add-on", "lv-1"), 0: ("Not documented", "lv-0")}
 GOVL = {2: "Certified", 1: "Partial", 0: "None found"}
 ATSN = dict(D.ATS_OPTS)
 REQN = {"workday": "Workday HCM and Workday Recruiting", "sap": "SAP SuccessFactors Recruiting", "oracle": "Oracle Fusion Cloud HCM",
@@ -109,12 +109,12 @@ out.append(f'''
   <section class="section" id="need" style="padding-top:0;">
     <div class="wrap">
       <div class="section-head"><div><span class="kicker">Step 1</span><h2>Do you need a <em>separate CRM?</em></h2></div></div>
-      <p class="lede">Most ATS platforms and HCM suites now include a CRM, and many teams already pay for one they barely use. A separate CRM pays off when there is enough pipeline work to do and someone to do it. Answer what you know; the verdict, the capabilities to prioritize and your question list build below.</p>
+      <p class="lede">Most ATS platforms and HCM suites now include a CRM, and many teams already pay for one they barely use. Whether a separate CRM adds anything depends on how much pipeline work there is and who would run it. Answer what you know; a summary of your answers, the capabilities they point to and your question list build below.</p>
       <form id="drivers" onsubmit="return false">{"".join(groups_html)}
       </form>
       <div class="card drivers-sum" id="drivers-sum">
-        <div class="sum-head"><h3>Your verdict</h3><button type="button" class="btn btn-ghost" id="drivers-reset">Reset answers</button></div>
-        <div id="drivers-out" aria-live="polite"><p class="sum-line">Answer at least two questions under "What you need it for" to see a verdict.</p></div>
+        <div class="sum-head"><h3>What your answers show</h3><button type="button" class="btn btn-ghost" id="drivers-reset">Reset answers</button></div>
+        <div id="drivers-out" aria-live="polite"><p class="sum-line">Answer at least two questions under "What you need it for" to see a summary.</p></div>
         <details class="qdetails" id="drivers-qwrap">
           <summary><span id="drivers-qsum">Questions to ask, by who answers them ({nq})</span></summary>
           <p class="small">Questions behind the gaps you flag are marked Priority and move to the top.</p>
@@ -175,7 +175,7 @@ for p in D.P:
       <details class="profile" id="p-{p["id"]}">
         <summary><span class="pname">{E(p["name"])}</span><span class="tag {CATTAG[p["cat"]]}">{E(D.CATS[p["cat"]])}</span><span class="powner">{E(p["owner"])}</span></summary>
         <div class="pbody">
-          <p class="pbest"><strong>Best for:</strong> {E(p["best"])} <strong>Not for:</strong> {E(p["notfor"])}</p>
+          <p class="pbest"><strong>Typical use:</strong> {E(p["best"])}</p>
           <p class="pmeta">{E(fit)} · {E(p["works"])}</p>
           <p class="powner-note">{E(p["owner_note"])}</p>
           <div class="pgrid">
@@ -210,8 +210,9 @@ out.append(f'''
       <div class="section-head"><div><span class="kicker">Independence</span><h2>How we <em>review</em></h2></div></div>
       <ul class="method">
         <li><strong>No vendor pays.</strong> No sponsorships, affiliate links or paid placement, and no vendor reviews its profile before publication.</li>
+        <li><strong>No recommendations.</strong> We describe what each platform documents. We don't rank platforms or tell you which to choose: the finder only shows which platforms match the filters you pick.</li>
         <li><strong>Production versus promise.</strong> AI is listed as "in production" only when the vendor says it is available; everything else is labeled announced, beta, preview or roadmap with its date.</li>
-        <li><strong>Capabilities.</strong> Ratings describe the CRM as sold in its CRM tier or module. "Native" means built in; "partial or add-on" means a further module, a partner or limited depth; "not a strength" means we found no strong evidence, so ask. What needs an extra license is in each profile's pricing and cost traps.</li>
+        <li><strong>Capabilities.</strong> Ratings describe the CRM as sold in its CRM tier or module. "Native" means built in; "partial or add-on" means a further module, a partner or limited depth; "not documented" means we found no published evidence, so ask: it may exist. What needs an extra license is in each profile's pricing and cost traps.</li>
         <li><strong>AI certification.</strong> "Certified" means an independent body certified the vendor's AI management (such as ISO/IEC 42001 or TrustArc). "Partial" means a published independent bias audit, or a certification whose scope doesn't name the product. Claims without published evidence count as none found.</li>
         <li><strong>ATS integrations.</strong> Listed only when we found them on a marketplace, partner or help page, not from a vendor's "integrates with every ATS" claim.</li>
         <li><strong>Implementation.</strong> We don't publish timelines. They depend on your campaign capacity, data, consent and ATS sync more than on the platform, so the Step 1 check shows those drivers and the questions that expose them.</li>

@@ -76,11 +76,12 @@
       var r = evaluate(p, s);
       if (r.out) out.push([p, r.out]); else (r.gaps.length ? partial : strong).push([p, r]);
     });
-    var byScore = function (a, b) { return b[1].score - a[1].score || a[0].name.localeCompare(b[0].name); };
-    strong.sort(byScore); partial.sort(byScore);
+    // no ranking: full matches alphabetically; partial matches by fewest gaps, then alphabetically
+    var alpha = function (a, b) { return a[0].name.localeCompare(b[0].name); };
+    strong.sort(alpha); partial.sort(function (a, b) { return a[1].gaps.length - b[1].gaps.length || alpha(a, b); });
     var h = "";
-    if (strong.length) h += '<h3 class="group">Strong fits</h3>' + strong.map(function (x) { return card(x[0], x[1]); }).join("");
-    if (partial.length) h += '<h3 class="group">Possible fits, with gaps</h3>' + partial.map(function (x) { return card(x[0], x[1]); }).join("");
+    if (strong.length) h += '<h3 class="group">Matches all your filters</h3>' + strong.map(function (x) { return card(x[0], x[1]); }).join("");
+    if (partial.length) h += '<h3 class="group">Matches some of your filters</h3>' + partial.map(function (x) { return card(x[0], x[1]); }).join("");
     if (!h) h = "<p>No platform matches every filter. Remove a must-have to widen the list.</p>";
     $("#ats-results").innerHTML = h;
     $("#ats-count").textContent = strong.length + " strong " + (strong.length === 1 ? "fit" : "fits") + ", " + partial.length + " with gaps, " + out.length + " filtered out.";
@@ -108,8 +109,7 @@
     h += grp("Fit");
     h += row("Category", function (p) { return esc(D.cats[p.cat]); });
     h += row("Owner", function (p) { return esc(p.owner); });
-    h += row("Best for", function (p) { return esc(p.best); });
-    h += row("Not for", function (p) { return esc(p.notfor); });
+    h += row("Typical use", function (p) { return esc(p.best); });
     h += row("ATS", function (p) { return esc(p.works); });
     h += row("Scores", function (p) { return esc(p.scores.map(function (m) { return D.scn[m]; }).join(", ")); });
     h += grp("How the score works");
@@ -231,7 +231,7 @@
     var v = useVerdict(s.use, js), counts = oblCounts(js), caps = prioCaps(s, gs), np = placeCount(gs);
     var h = '<div class="verdict ' + v.cls + '"><h4>' + esc(v.t) + "</h4><p>" + esc(v.d) + "</p></div>";
     h += '<div class="obl-sum"><span>Across ' + np + " " + (np === 1 ? "place" : "places") + ":</span>" + counts.map(function (c) { return '<span class="obl o-' + c[0] + '">' + esc(c[1]) + " <b>" + c[2] + "</b></span>"; }).join("") + "</div>";
-    if (caps.length) h += '<div class="prio-caps"><span>Capabilities to insist on:</span>' + caps.map(function (c) { return '<span class="cap">' + esc(CAPN[c]) + "</span>"; }).join("") + '<button type="button" class="btn btn-ghost" id="rules-apply">Apply to the finder</button></div>';
+    if (caps.length) h += '<div class="prio-caps"><span>Capabilities these rules point to:</span>' + caps.map(function (c) { return '<span class="cap">' + esc(CAPN[c]) + "</span>"; }).join("") + '<button type="button" class="btn btn-ghost" id="rules-apply">Apply to the finder</button></div>';
     h += gs.map(function (g) {
       var n = g.cards.length + (g.other ? 1 : 0);
       return '<div class="jgroup"><h4 class="jgroup-h">' + esc(g.top.name) + (n > 1 ? " <span>" + n + " places</span>" : "") + '</h4><div class="jcards">' +
