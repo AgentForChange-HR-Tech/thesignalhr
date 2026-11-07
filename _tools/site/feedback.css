@@ -1,0 +1,9 @@
+.page-feedback { border-top: 1px solid var(--border); }
+.page-feedback .pf-row { display: flex; flex-wrap: wrap; align-items: center; gap: .6rem 1rem; padding: 1.1rem 0; font-size: var(--text-sm); color: var(--ink-mid); }
+.page-feedback .pf-q { font-weight: 600; color: var(--ink); }
+.page-feedback button { font: inherit; font-size: var(--text-sm); padding: .3rem .9rem; border-radius: 6px; border: 1px solid var(--border-strong); background: transparent; color: var(--ink); cursor: pointer; }
+.page-feedback button:hover:not(:disabled) { border-color: var(--ink); }
+.page-feedback button[aria-pressed="true"] { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.page-feedback button:disabled { cursor: default; }
+.page-feedback .pf-mail { margin-left: auto; font-weight: 500; }
+@media (max-width: 560px) { .page-feedback .pf-mail { margin-left: 0; width: 100%; } }

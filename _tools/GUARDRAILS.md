@@ -26,7 +26,7 @@ The Signal is one practitioner sharing a resource with other practitioners. It i
 - **Readers are peers.** Don't tell readers what they need or must do, and don't promise outcomes ("decisions you can't get wrong", "walk in already knowing", "sound informed"). Many readers know their own systems, rules and organizations better than we do.
 - **Name the limits.** Say what isn't known, what's unclear or disputed, and where a reader's counsel, team or vendor will know more. The "so what" is one practitioner's read, labeled as analysis.
 - **Credentials, stated plainly.** Alex's experience is described as fact ("a practitioner in enterprise HR technology"), without a number of years, never as a trump card ("someone who has actually done it").
-- **Invite correction and context.** Make it easy to point out errors or add a different view, and log corrections in the open.
+- **Invite correction and context.** Make it easy to point out errors or add a different view, and log corrections in the open. Reader feedback changes content only through evidence: a suggested correction is checked against its source like any other claim, vendor outreach never changes content, and readers are never quoted without written permission.
 - **Be open about AI.** AI tools help with research, drafting and source checks; the About page (/about/#ai) says how, bylines carry an "AI-assisted" link, and Alex approves every update before it's published. Never claim the site is made without AI ("not an algorithm", "human-written"), and update the About page when the process changes.
 - Neutral instructions inside tools are fine ("Pick the countries where you hire"). Telling readers how to run their organization is not.
 
@@ -58,6 +58,8 @@ The Signal is one practitioner sharing a resource with other practitioners. It i
   - Applicant match: `python3 -B _tools/match/build_match.py compare/ats/index.html compare/match/index.html`
   - Regional radar and calendar: `python3 -B _tools/regional/build_regional.py YYYY-MM-DD`
   - Cookie consent, footer link and self-hosted fonts: `python3 -B _tools/site/consent.py` (rerun after adding a page).
+  - Front page: `python3 -B _tools/site/frontpage.py` (after the Briefing, Coverage, Insights or a comparison changes).
+  - Newsletter signup form and page feedback: `python3 -B _tools/site/signup.py` and `python3 -B _tools/site/feedback.py`.
   - Site-wide scripts in `_tools/site/` are idempotent; rerun them after template changes.
 - Tag every Briefing, Insights and Coverage item with a region (see `_tools/regional/README.md`).
 - After any content change, rebuild site search: `python3 -B _tools/site/search_index.py`.

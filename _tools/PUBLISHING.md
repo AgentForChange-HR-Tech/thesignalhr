@@ -15,6 +15,7 @@ Read with `_tools/GUARDRAILS.md`. Where they differ, the stricter rule wins.
 | Fact-checker (validate) | Scheduled task "Signal HR fact-check", a separate session with no memory of the draft | Mondays, after the writer | Only to correct a figure, date or name that its cited source clearly contradicts; every change logged |
 | Validators | `python3 -B _tools/verify/verify.py` | Every run, by every role | No. Errors block publishing |
 | Freshness auditor | Scheduled task "Signal HR freshness audit" | Monthly | No. Writes a report with proposed updates |
+| Feedback triage | Scheduled task "Signal HR feedback triage" | Fridays | No. Reads reader email (read-only) and writes `editorial/feedback/`: corrections to verify, ideas, questions, vendor outreach (never acted on), noise (counted only) |
 | Editor-in-chief (approve) | Alex | Before every push | Yes. Only Alex pushes; nothing publishes itself |
 
 ## The six gates
